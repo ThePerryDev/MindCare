@@ -70,11 +70,9 @@
     "EXPO_DEVTOOLS_LISTEN_ADDRESS": "0.0.0.0"
   },
 
-  // Features adicionais
+  // Features adicionais (sem docker-in-docker)
   "features": {
     "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   }
 }
-
