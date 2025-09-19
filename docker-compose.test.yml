@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # Backend para testes
+  backend-test:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.test
+    container_name: mindcare-backend-test
+    environment:
+      - NODE_ENV=test
+
+    networks:
+      - mindcare-test-network
+
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    command: >
+      sh -c "
+
+        npm test -- --coverage --watchAll=false --testResultsProcessor=jest-junit
+      "
+
+  # Frontend para testes
+  frontend-test:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.test
+    container_name: mindcare-frontend-test
+    environment:
+      - NODE_ENV=test
+      - CI=true
+    networks:
+      - mindcare-test-network
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: >
+      sh -c "
+        echo 'Executando linting...' &&
+        npx eslint . --ext .ts,.tsx,.js,.jsx --format json --output-file eslint-report.json || true &&
+        echo 'Verificando formatação...' &&
+        npx prettier --check . --write=false || true &&
+        echo 'Executando testes...' &&
+        npm test -- --coverage --watchAll=false --testResultsProcessor=jest-junit
+      "
+
+
+networks:
+  mindcare-test-network:
+    driver: bridge
+

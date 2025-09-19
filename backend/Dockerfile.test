@@ -1,0 +1,24 @@
+# Dockerfile para testes do Backend
+FROM node:18-alpine
+
+# Definir diretório de trabalho
+WORKDIR /app
+
+# Instalar dependências do sistema
+RUN apk add --no-cache git
+
+# Copiar arquivos de dependências
+COPY package*.json ./
+
+# Instalar dependências
+RUN npm install
+
+# Instalar dependências de desenvolvimento para testes
+RUN npm install
+
+# Copiar código fonte
+COPY . .
+
+# Comando padrão para executar testes
+CMD ["npm", "test"]
+
