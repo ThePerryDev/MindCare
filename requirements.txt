@@ -1,0 +1,30 @@
+# =====================
+# Core (NumPy stack)
+# =====================
+numpy>=2.1,<3.0
+pandas>=2.2.3,<2.4
+scipy>=1.14,<1.16
+scikit-learn>=1.5.2,<1.6
+joblib==1.4.2
+
+# =====================
+# API
+# =====================
+fastapi>=0.114,<0.116
+uvicorn[standard]>=0.30,<0.31
+pydantic>=2.9,<2.10
+python-dotenv>=1.0,<1.1
+
+# =====================
+# Deep Learning (opcional)
+# Observação: TensorFlow 2.16.x não suporta Python 3.13.
+# Estes pins só serão instalados se o Python for < 3.13.
+# =====================
+tensorflow-cpu==2.16.2; python_version < "3.13"
+keras==3.4.1; python_version < "3.13"
+
+# =====================
+# Hugging Face (opcional)
+# =====================
+transformers>=4.44,<4.47
+datasets>=2.21,<2.22

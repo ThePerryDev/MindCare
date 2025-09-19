@@ -1,0 +1,36 @@
+# Ambiente virtual
+.venv/
+venv/
+
+# Cache e temporários
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.joblib
+
+# Modelos treinados
+models/
+!models/.gitkeep
+
+# Dados locais
+data/raw/
+data/processed/
+!data/.gitkeep
+
+# Arquivos de log
+*.log
+
+# Configurações locais
+.env
+.env.*
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Notebooks
+*.ipynb_checkpoints/
