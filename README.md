@@ -11,7 +11,7 @@
 | **Willian** | PLN-004 | XX-011 | XX-018 | XX-025 | XX-032 | XX-039 | XX-046 |
 | **Bianca**   | PLN-005 | LDM-012 | LDM-019 | XX-026 | XX-033 | XX-040 | XX-047 |
 | **Daniel**   | PLN-006 | XX-013 | XX-020 | XX-027 | XX-034 | XX-041 | XX-048 |
-| **Heclair**   | PLN-007 | XX-014 | XX-021 | XX-028 | XX-035 | XX-042 | XX-049 |
+| **Heclair**   | PLN-007 | PLN-014 | PLN-021 | XX-028 | XX-035 | XX-042 | XX-049 |
 | ****   |  |  |  |  |  |  |  |
 | ****   |  |  |  |  |  |  |  |
 | ****   |  |  |  |  |  |  |  |
