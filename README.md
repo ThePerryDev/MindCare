@@ -10,7 +10,7 @@
 | **Claudia**    | PLN-003 | EPP-001 | XX-017 | XX-024 | XX-031 | XX-038 | XX-045 |
 | **Willian** | PLN-004 | EPP-002 | LDM-018 | XX-025 | XX-032 | XX-039 | XX-046 |
 | **Bianca**   | PLN-005 | LDM-012 | LDM-019 | XX-026 | XX-033 | XX-040 | XX-047 |
-| **Daniel**   | PLN-006 | QT-001 | XX-020 | XX-027 | XX-034 | XX-041 | XX-048 |
+| **Daniel**   | PLN-006 | QT-013 | QT-020 | XX-027 | XX-034 | XX-041 | XX-048 |
 | **Heclair**   | PLN-007 | PLN-014 | PLN-021 | XX-028 | XX-035 | XX-042 | XX-049 |
 | ****   |  |  |  |  |  |  |  |
 | ****   |  |  |  |  |  |  |  |
