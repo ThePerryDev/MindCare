@@ -9,7 +9,7 @@
 | **Franciele**    | PLN-002 | XX-009 | XX-016 | XX-023 | XX-030 | XX-037 | XX-044 |
 | **Claudia**    | PLN-003 | XX-010 | XX-017 | XX-024 | XX-031 | XX-038 | XX-045 |
 | **Willian** | PLN-004 | XX-011 | XX-018 | XX-025 | XX-032 | XX-039 | XX-046 |
-| **Bianca**   | PLN-005 | XX-012 | XX-019 | XX-026 | XX-033 | XX-040 | XX-047 |
+| **Bianca**   | PLN-005 | LDM-012 | LDM-019 | XX-026 | XX-033 | XX-040 | XX-047 |
 | **Daniel**   | PLN-006 | XX-013 | XX-020 | XX-027 | XX-034 | XX-041 | XX-048 |
 | **Heclair**   | PLN-007 | XX-014 | XX-021 | XX-028 | XX-035 | XX-042 | XX-049 |
 | ****   |  |  |  |  |  |  |  |
