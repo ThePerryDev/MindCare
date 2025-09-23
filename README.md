@@ -8,7 +8,7 @@
 | **Eduardo**   | PLN-001 | EPP-003 | LDM-015 | XX-022 | XX-029 | XX-036 | XX-043 |
 | **Franciele**    | PLN-002 | LDM-001 | LDM-016 | XX-023 | XX-030 | XX-037 | XX-044 |
 | **Claudia**    | PLN-003 | EPP-001 | XX-017 | XX-024 | XX-031 | XX-038 | XX-045 |
-| **Willian** | PLN-004 | EPP-002 | XX-018 | XX-025 | XX-032 | XX-039 | XX-046 |
+| **Willian** | PLN-004 | EPP-002 | LDM-018 | XX-025 | XX-032 | XX-039 | XX-046 |
 | **Bianca**   | PLN-005 | LDM-012 | LDM-019 | XX-026 | XX-033 | XX-040 | XX-047 |
 | **Daniel**   | PLN-006 | QT-001 | XX-020 | XX-027 | XX-034 | XX-041 | XX-048 |
 | **Heclair**   | PLN-007 | XX-014 | XX-021 | XX-028 | XX-035 | XX-042 | XX-049 |
