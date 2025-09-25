@@ -1,0 +1,29 @@
+# Virtualenv
+.venv/
+venv/
+ENV/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.joblib
+
+# Models e relatórios treinados
+/models/*
+!/models/.gitkeep
+
+# Dados locais
+/data/*
+!/data/.gitkeep
+
+# Logs
+*.log
+*.txt
+
+# VSCode / IDE
+.vscode/
+.idea/
+*.swp

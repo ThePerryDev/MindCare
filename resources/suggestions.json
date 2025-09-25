@@ -1,0 +1,63 @@
+{
+  "fallback_prompts": [
+    "Entendo. Pode contar um pouco mais sobre como você está se sentindo?",
+    "Obrigado por compartilhar. Você poderia descrever o que aconteceu ou o que está te preocupando?",
+    "Estou aqui com você. Quando isso acontece, o que você sente no corpo?",
+    "Quer tentar colocar em uma palavra: ansiedade, tristeza, raiva, medo, estresse, neutro, feliz?"
+  ],
+  "risk_responses": {
+    "intro": "Sinto muito que você esteja se sentindo assim. Obrigado por confiar e contar.",
+    "contacts": [
+      "Brasil: CVV 188 (24h) ou acesse cvv.org.br",
+      "Emergência: SAMU 192 / Polícia 190"
+    ],
+    "follow_up": "Quer que eu te ajude a encontrar um serviço local ou um número agora? Posso ficar aqui e ouvir."
+  },
+  "suggestions": {
+    "ansiedade": [
+      "Exercício de respiração 4-7-8: Inspire contando 4, segure 7, solte em 8. Repita 4 vezes.",
+      "Aterramento 5-4-3-2-1: observe 5 coisas que você vê, 4 que sente ao toque, 3 que escuta, 2 cheiros e 1 sabor.",
+      "Relaxe os ombros conscientemente por 30 segundos; perceba a diferença na tensão."
+    ],
+    "estresse": [
+      "Respiração diafragmática: 3 min respirando pelo nariz, enchendo o abdômen, soltando lentamente.",
+      "Pausa de alongamento: pescoço, ombros e punhos por 2–3 minutos.",
+      "Liste 3 prioridades pequenas para hoje e faça apenas a primeira agora."
+    ],
+    "triste": [
+      "Escrita livre por 5 minutos: coloque no papel o que está sentindo sem julgar.",
+      "Contato social breve: envie uma mensagem para alguém de confiança.",
+      "Caminhada leve de 10 minutos prestando atenção na respiração e nos passos."
+    ],
+    "tristeza": [
+      "Escrita livre por 5 minutos: coloque no papel o que está sentindo sem julgar.",
+      "Contato social breve: envie uma mensagem para alguém de confiança.",
+      "Caminhada leve de 10 minutos prestando atenção na respiração e nos passos."
+    ],
+    "raiva": [
+      "Respiração quadrada: 4s inspirar, 4s segurar, 4s soltar, 4s segurar — por 2–3 minutos.",
+      "Descarga física segura: 20 agachamentos lentos ou apertar/soltar as mãos 30x.",
+      "Técnica do tempo-out: afaste-se por 5 minutos antes de responder a alguém."
+    ],
+    "medo": [
+      "Visualização de local seguro por 2 minutos: imagine um lugar calmo com detalhes sensoriais.",
+      "Reestruturação suave: pergunte a si mesmo 'Qual seria um resultado possível e manejável?'",
+      "Respiração nasal lenta por 3 minutos, focando no ar entrando e saindo."
+    ],
+    "feliz": [
+      "Saboreie o momento: descreva 3 detalhes bons deste instante.",
+      "Gratidão breve: pense em 1 pessoa/acontecimento pelo qual é grato hoje.",
+      "Compartilhe a alegria: mande uma mensagem positiva para alguém."
+    ],
+    "neutro": [
+      "Check-in corporal de 60s: note ombros, testa e mandíbula; relaxe cada área.",
+      "Planeje um micro-passo produtivo de 5 minutos.",
+      "Respire profundamente 5 vezes e alongue a coluna."
+    ],
+    "nojo": [
+      "Técnica do distanciamento: descreva a situação na 3ª pessoa por 1–2 minutos.",
+      "Respiração lenta pelo nariz por 2 minutos, focando no alongamento da expiração.",
+      "Exposição gradual mental: reflita por 60s no que é tolerável agora e avance devagar."
+    ]
+  }
+}
