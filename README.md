@@ -45,10 +45,10 @@
 
 | **Willian**   | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **16/09/2025**   | PLN-004 | XXX |
-| **18/09/2025**   | EPP-011 | XXX |
-| **22/09/2025**   | LDM-018 | XXX |
-| **24/09/2025**   | XX-025 | XXX |
+| **16/09/2025**   | PLN-004 | Briefing Inicial |
+| **18/09/2025**   | EPP-011 | Wireframe do Projeto |
+| **22/09/2025**   | LDM-018 | Desenvolvido Opção de Design das Telas de Login, Cadastros, Splash, Carregando. |
+| **24/09/2025**   | LDM-025 | Desenvolvido Opção de Design das Telas de Home e Chatbot. |
 | **26/09/2025**   | XX-032 | XXX |
 | **30/09/2025**   | XX-039 | XXX |
 | **02/10/2025**   | XX-046 | XXX |
