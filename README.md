@@ -3,12 +3,22 @@
 
 # Sprint 1
 
+| **NOME**   | **16/09/2025** | **18/09/2025** | **22/09/2025** | **24/09/2025** | **26/09/2025** | **30/09/2025** | **02/10/2025** |
+|-----------|---------------|---------------|---------------|---------------|---------------|---------------|---------------|
+| **Eduardo**   | PLN-001 | EPP-008 | LDM-015 | LDM-022 | XX-029 | XX-036 | XX-043 |
+| **Franciele**    | PLN-002 | LDM-009 | LDM-016 | LDM-023 | XX-030 | XX-037 | XX-044 |
+| **Claudia**    | PLN-003 | EPP-010 | LDM-017 | LDM-024 | XX-031 | XX-038 | XX-045 |
+| **Willian** | PLN-004 | EPP-011 | LDM-018 | XX-025 | XX-032 | XX-039 | XX-046 |
+| **Bianca**   | PLN-005 | LDM-012 | LDM-019 | LDM-026 | XX-033 | XX-040 | XX-047 |
+| **Daniel**   | PLN-006 | QT-013 | QT-020 | QT-027 | XX-034 | XX-041 | XX-048 |
+| **Heclair**   | PLN-007 | PLN-014 | PLN-021 | PLN-028 | XX-035 | XX-042 | XX-049 |
+
 | **Eduardo**   | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **16/09/2025**   | PLN-001 | XXX |
-| **18/09/2025**   | EPP-008 | XXX |
-| **22/09/2025**   | LDM-015 | XXX |
-| **24/09/2025**   | XX-022 | XXX |
+| **16/09/2025**   | PLN-001 | Estruturação do projeto |
+| **18/09/2025**   | EPP-008 | Design de components no Figma |
+| **22/09/2025**   | LDM-015 | Correção na estruturação da pasta FrontEnd e no React Native |
+| **24/09/2025**   | LDM-022 | Criação de componentes reutilizáveis e correções no FrontEnd |
 | **26/09/2025**   | XX-029 | XXX |
 | **30/09/2025**   | XX-036 | XXX |
 | **02/10/2025**   | XX-043 | XXX |
