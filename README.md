@@ -15,10 +15,10 @@
 
 | **Franciele**   | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **16/09/2025**   | PLN-002 | XXX |
-| **18/09/2025**   | LDM-009 | XXX |
-| **22/09/2025**   | LDM-016 | XXX |
-| **24/09/2025**   | LDM-023 | XXX |
+| **16/09/2025**   | PLN-002 | Estruturação do projeto |
+| **18/09/2025**   | LDM-009 | Finalizando preparação do ambiente de DEV para equipe |
+| **22/09/2025**   | LDM-016 | Criação de banco, conexão e rotas (Users) |
+| **24/09/2025**   | LDM-023 | Refinamento técnico (tasks-BE) |
 | **26/09/2025**   | XX-030 | XXX |
 | **30/09/2025**   | XX-037 | XXX |
 | **02/10/2025**   | XX-044 | XXX |
