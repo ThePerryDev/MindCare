@@ -1,0 +1,19 @@
+services:
+  expo-app:
+    build:
+      context: .
+    environment:
+      - NODE_ENV=
+      - CHOKIDAR_USEPOLLING=true
+    tty: true
+    stdin_open: true 
+    ports:
+      - "19000:19000"
+      - "19001:19001"
+      - "19002:19002"
+    volumes:
+      - .:/app
+      - notused:/app/node_modules
+
+volumes:
+  notused:
