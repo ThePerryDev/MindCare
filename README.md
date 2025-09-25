@@ -68,7 +68,7 @@
 | **16/09/2025**   | PLN-006 | Criação de backlog e primeira daily |
 | **18/09/2025**   | QT-013 | Modelar e selecionar imagens do docker, além de Github Actions, ESLINT, Prettier e primeiros testes com Jest |
 | **22/09/2025**   | QT-020 | Integrar docker e ci.yml github actions a partir da develop (não deu certo) |
-| **24/09/2025**   | QT-027 | Criar do zero o ambiente frontend localmente e depois integrar docker + GithubActions |
+| **24/09/2025**   | QT-027 | Criar do zero o ambiente frontend localmente. -> implementação de Docker, ainda não é possível hot reload, porém o expo abre dentro do container |
 | **26/09/2025**   | XX-034 | XXX |
 | **30/09/2025**   | XX-041 | XXX |
 | **02/10/2025**   | XX-048 | XXX |
