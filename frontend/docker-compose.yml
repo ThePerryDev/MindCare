@@ -5,6 +5,9 @@ services:
     environment:
       - NODE_ENV=
       - CHOKIDAR_USEPOLLING=true
+      - EXPO_TUNNEL_URL=exp://localhost:19000
+      - WEB_HOST=0.0.0.0
+      - EXPO_PACKAGER_HOSTNAME=0.0.0.0
     tty: true
     stdin_open: true 
     ports:
