@@ -66,9 +66,10 @@ jobs:
         run: npx tsc --noEmit
 
       # 5️⃣ Checar Expo prebuild
-      - name: Check Expo configuration
+      - name: Prebuild Expo configuration
         working-directory: frontend
-        run: npx expo prebuild --no-install --check
+        run: npx expo prebuild --no-install
+
 
       # 6️⃣ (Opcional) Export Web
       - name: Export Expo Web (optional)
