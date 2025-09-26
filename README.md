@@ -6,7 +6,7 @@
 | **NOME**   | **16/09/2025** | **18/09/2025** | **22/09/2025** | **24/09/2025** | **26/09/2025** | **30/09/2025** | **02/10/2025** |
 |-----------|---------------|---------------|---------------|---------------|---------------|---------------|---------------|
 | **Eduardo**   | PLN-001 | EPP-008 | LDM-015 | LDM-022 | LDM-029 | XX-036 | XX-043 |
-| **Franciele**    | PLN-002 | LDM-009 | LDM-016 | LDM-023 | XX-030 | XX-037 | XX-044 |
+| **Franciele**    | PLN-002 | LDM-009 | LDM-016 | LDM-023 | LDM-030 | XX-037 | XX-044 |
 | **Claudia**    | PLN-003 | EPP-010 | LDM-017 | LDM-024 | LDM-031 | XX-038 | XX-045 |
 | **Willian** | PLN-004 | EPP-011 | LDM-018 | LDM-025 | LDM-032 | XX-039 | XX-046 |
 | **Bianca**   | PLN-005 | LDM-012 | LDM-019 | LDM-026 | XX-033 | XX-040 | XX-047 |
@@ -29,7 +29,7 @@
 | **18/09/2025**   | LDM-009 | Finalizando preparação do ambiente de DEV para equipe |
 | **22/09/2025**   | LDM-016 | Criação de banco, conexão e rotas (Users) |
 | **24/09/2025**   | LDM-023 | Refinamento técnico (tasks-BE) |
-| **26/09/2025**   | XX-030 | XXX |
+| **26/09/2025**   | LDM-030 | Reorganizando plano de entrega para Sprint 1 e reunião de alinhamento com o time |
 | **30/09/2025**   | XX-037 | XXX |
 | **02/10/2025**   | XX-044 | XXX |
 
