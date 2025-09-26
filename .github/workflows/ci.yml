@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: ['develop','SP-001/daniel/docker-pipeline']
+    branches: ['develop', 'SP-001/daniel/docker-pipeline']
   pull_request:
     branches: ['develop', 'SP-001/daniel/docker-pipeline']
 
