@@ -8,7 +8,7 @@
 | **Eduardo**   | PLN-001 | EPP-008 | LDM-015 | LDM-022 | LDM-029 | XX-036 | XX-043 |
 | **Franciele**    | PLN-002 | LDM-009 | LDM-016 | LDM-023 | XX-030 | XX-037 | XX-044 |
 | **Claudia**    | PLN-003 | EPP-010 | LDM-017 | LDM-024 | LDM-031 | XX-038 | XX-045 |
-| **Willian** | PLN-004 | EPP-011 | LDM-018 | XX-025 | XX-032 | XX-039 | XX-046 |
+| **Willian** | PLN-004 | EPP-011 | LDM-018 | LDM-025 | LDM-032 | XX-039 | XX-046 |
 | **Bianca**   | PLN-005 | LDM-012 | LDM-019 | LDM-026 | XX-033 | XX-040 | XX-047 |
 | **Daniel**   | PLN-006 | QT-013 | QT-020 | QT-027 | QT-034 | XX-041 | XX-048 |
 | **Heclair**   | PLN-007 | PLN-014 | PLN-021 | PLN-028 | XX-035 | XX-042 | XX-049 |
@@ -49,7 +49,7 @@
 | **18/09/2025**   | EPP-011 | Wireframe do Projeto |
 | **22/09/2025**   | LDM-018 | Desenvolvido Opção de Design das Telas de Login, Cadastros, Splash, Carregando. |
 | **24/09/2025**   | LDM-025 | Desenvolvido Opção de Design das Telas de Home e Chatbot. |
-| **26/09/2025**   | XX-032 | XXX |
+| **26/09/2025**   | LDM-032 | Desenvolvido Opção de Design das Telas de Check de Sentimento, Trilhas e Configurações. |
 | **30/09/2025**   | XX-039 | XXX |
 | **02/10/2025**   | XX-046 | XXX |
 
