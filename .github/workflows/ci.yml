@@ -63,4 +63,4 @@ jobs:
       # 4️⃣ Build Web do Expo
       - name: Build Expo Web
         working-directory: frontend
-        run: npx expo build:web
+        run: npx expo export:web --non-interactive
