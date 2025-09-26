@@ -21,12 +21,15 @@ jobs:
           cache: npm
 
       - name: Install dependencies
+        working-directory: frontend
         run: npm install
 
       - name: Run ESLint
+        working-directory: frontend
         run: npm run lint
 
       - name: Run Prettier
+        working-directory: frontend
         run: npm run format:check
 
   expo-start:
@@ -44,9 +47,11 @@ jobs:
           cache: npm
 
       - name: Install dependencies
+        working-directory: frontend
         run: npm install
 
       - name: Start Expo in CI
+        working-directory: frontend
         run: |
           npx expo install
           npx expo start --web --non-interactive
