@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   },
   shadow: {
     borderRadius: 16,
-    padding: 16, // 👈 padding aqui para espaçamento interno
+    padding: 30, // 👈 padding aqui para espaçamento interno
 
     // sombra no Android
     elevation: 8,
