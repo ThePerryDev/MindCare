@@ -1,12 +1,10 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  gradient: {
-    borderRadius: 16,
-  },
   shadow: {
+    backgroundColor: '#FFFFFF',
     borderRadius: 16,
-    padding: 30, // 👈 padding aqui para espaçamento interno
+    padding: 30,
 
     // sombra no Android
     elevation: 8,
