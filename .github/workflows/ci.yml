@@ -64,5 +64,5 @@ jobs:
       - name: Check Expo Web Build
         working-directory: frontend
         env:
-        CI: true
-        run: npx expo start --web --non-interactive
+          CI: true
+          run: npx expo start --web --non-interactive
