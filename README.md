@@ -5,7 +5,7 @@
 
 | **NOME**   | **16/09/2025** | **18/09/2025** | **22/09/2025** | **24/09/2025** | **26/09/2025** | **30/09/2025** | **02/10/2025** |
 |-----------|---------------|---------------|---------------|---------------|---------------|---------------|---------------|
-| **Eduardo**   | PLN-001 | EPP-008 | LDM-015 | LDM-022 | XX-029 | XX-036 | XX-043 |
+| **Eduardo**   | PLN-001 | EPP-008 | LDM-015 | LDM-022 | LDM-029 | XX-036 | XX-043 |
 | **Franciele**    | PLN-002 | LDM-009 | LDM-016 | LDM-023 | XX-030 | XX-037 | XX-044 |
 | **Claudia**    | PLN-003 | EPP-010 | LDM-017 | LDM-024 | LDM-031 | XX-038 | XX-045 |
 | **Willian** | PLN-004 | EPP-011 | LDM-018 | XX-025 | XX-032 | XX-039 | XX-046 |
@@ -19,7 +19,7 @@
 | **18/09/2025**   | EPP-008 | Design de components no Figma |
 | **22/09/2025**   | LDM-015 | Correção na estruturação da pasta FrontEnd e no React Native |
 | **24/09/2025**   | LDM-022 | Criação de componentes reutilizáveis e correções no FrontEnd |
-| **26/09/2025**   | XX-029 | XXX |
+| **26/09/2025**   | XX-029 | Continuação na criação de componentes reutilizáveis |
 | **30/09/2025**   | XX-036 | XXX |
 | **02/10/2025**   | XX-043 | XXX |
 
