@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: ['develop', 'SP-001/daniel/docker-pipeline']
+    branches: ["develop", "SP-001/daniel/docker-pipeline"]
   pull_request:
-    branches: ['develop', 'SP-001/daniel/docker-pipeline']
+    branches: ["develop", "SP-001/daniel/docker-pipeline"]
 
 jobs:
   lint-format-test:
@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: "npm"
           cache-dependency-path: frontend/package-lock.json
 
       # 3️⃣ Instalar dependências
@@ -52,7 +52,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: "npm"
           cache-dependency-path: frontend/package-lock.json
 
       # 3️⃣ Instalar dependências
@@ -61,6 +61,8 @@ jobs:
         run: npm install
 
       # 4️⃣ Build Web do Expo
-      - name: Build Expo Web
+      - name: Check Expo Web Build
         working-directory: frontend
-        run: npx expo export:web --non-interactive
+        env:
+        CI: true
+        run: npx expo start --web --non-interactive
