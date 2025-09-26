@@ -35,11 +35,11 @@
 
 | **Claudia**   | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **16/09/2025**   | PLN-003 | XXX |
-| **18/09/2025**   | EPP-010 | XXX |
-| **22/09/2025**   | LDM-017 | XXX |
-| **24/09/2025**   | LDM-024 | XXX |
-| **26/09/2025**   | XX-031 | XXX |
+| **16/09/2025**   | PLN-003 | Desenvolvimento de telas protótipo Figma|
+| **18/09/2025**   | EPP-010 | Desenvolvimento de telas protótipo Figma |
+| **22/09/2025**   | LDM-017 | Desenvolvimento de telas protótipo Figma |
+| **24/09/2025**   | LDM-024 | Desenvolvimento de telas protótipo Figma |
+| **26/09/2025**   | LDM-031 | Desenvolvimento de telas protótipo Figma |
 | **30/09/2025**   | XX-038 | XXX |
 | **02/10/2025**   | XX-045 | XXX |
 
