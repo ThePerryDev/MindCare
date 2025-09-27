@@ -9,7 +9,7 @@
 | **Franciele**    | PLN-002 | LDM-009 | LDM-016 | LDM-023 | LDM-030 | XX-037 | XX-044 |
 | **Claudia**    | PLN-003 | EPP-010 | LDM-017 | LDM-024 | LDM-031 | XX-038 | XX-045 |
 | **Willian** | PLN-004 | EPP-011 | LDM-018 | LDM-025 | LDM-032 | XX-039 | XX-046 |
-| **Bianca**   | PLN-005 | LDM-012 | LDM-019 | LDM-026 | XX-033 | XX-040 | XX-047 |
+| **Bianca**   | PLN-005 | LDM-012 | LDM-019 | LDM-026 | LDM-033 | XX-040 | XX-047 |
 | **Daniel**   | PLN-006 | QT-013 | QT-020 | QT-027 | QT-034 | XX-041 | XX-048 |
 | **Heclair**   | PLN-007 | PLN-014 | PLN-021 | PLN-028 | XX-035 | XX-042 | XX-049 |
 
@@ -55,11 +55,11 @@
 
 | **Bianca**   | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **16/09/2025**   | PLN-005 | XXX |
-| **18/09/2025**   | LDM-012 | XXX |
-| **22/09/2025**   | LDM-019 | XXX |
-| **24/09/2025**   | LDM-026 | XXX |
-| **26/09/2025**   | XX-033 | XXX |
+| **16/09/2025**   | PLN-005 | Reunião de Briefing Inicial com o time para definição de tasks e escopo do projeto, criação do design inicial do readme.md. |
+| **18/09/2025**   | LDM-012 | Continuação do design e atualização da estrutura e da documentação do readme.md |
+| **22/09/2025**   | LDM-019 | Continuação do design e atualização da estrutura e da documentação do readme.md |
+| **24/09/2025**   | LDM-026 | Criação do conteúdo das trilhas |
+| **26/09/2025**   | LDM-033 | Alinhamento com a equipe sobre alguns detalhes e continuação da documentação do readme.md |
 | **30/09/2025**   | XX-040 | XXX |
 | **02/10/2025**   | XX-047 | XXX |
 
