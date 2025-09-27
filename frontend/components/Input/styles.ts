@@ -1,3 +1,4 @@
+import { theme } from '../../styles/theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -6,8 +7,8 @@ export const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontWeight: '500',
-    color: '#333',
+    fontFamily: theme.fonts.medium,
+    color: '#2D3748',
     marginBottom: 6,
   },
   input: {

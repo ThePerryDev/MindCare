@@ -1,3 +1,4 @@
+import { theme } from '../../styles/theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -16,5 +17,6 @@ export const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: "bold",
+    fontFamily: theme.fonts.semi,
   },
 });
