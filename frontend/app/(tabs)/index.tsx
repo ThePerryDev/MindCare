@@ -1,15 +1,29 @@
-/*import { View, Text } from 'react-native';
+import { Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet } from 'react-native';
 
 export default function HomeScreen() {
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <Text>Está funcionando</Text>
-    </View>
+    </SafeAreaView>
   );
-}*/
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+});
 
 //Testando componentes:
 
+/*import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '../../components/Button/Button';
 import Card from '../../components/Card/Card';
 import Input from '../../components/Input/Input';
@@ -21,21 +35,33 @@ export default function HomeScreen() {
   const [senha, setSenha] = useState('');
 
   return (
-    <Card>
-      <Input
-        label='E-mail'
-        placeholder='Digite seu e-mail'
-        value={email}
-        onChangeText={setEmail}
-      />
-      <Input
-        label='Senha'
-        placeholder='Digite sua senha'
-        value={senha}
-        onChangeText={setSenha}
-        secureTextEntry
-      />
-      <Button onPress={() => console.log('Login pressed')}>Login</Button>
-    </Card>
+    <SafeAreaView style={styles.container}>
+      <Card>
+        <Input
+          label='E-mail'
+          placeholder='Digite seu e-mail'
+          value={email}
+          onChangeText={setEmail}
+        />
+        <Input
+          label='Senha'
+          placeholder='Digite sua senha'
+          value={senha}
+          onChangeText={setSenha}
+          secureTextEntry
+        />
+        <Button onPress={() => console.log('Login pressed')}>Login</Button>
+      </Card>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignContent: "center",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+  },
+});*/
