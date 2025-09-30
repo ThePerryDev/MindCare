@@ -26,4 +26,3 @@ jest.mock('react-native-vector-icons/Ionicons', () => 'Icon');
 
 // Configurar timeout para testes
 jest.setTimeout(10000);
-
