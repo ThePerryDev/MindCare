@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler/jestSetup';
+require('react-native-gesture-handler/jestSetup');
 
 // Mock do AsyncStorage
 jest.mock('@react-native-async-storage/async-storage', () =>
@@ -26,4 +26,3 @@ jest.mock('react-native-vector-icons/Ionicons', () => 'Icon');
 
 // Configurar timeout para testes
 jest.setTimeout(10000);
-

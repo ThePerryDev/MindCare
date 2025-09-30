@@ -4,10 +4,12 @@ export const styles = StyleSheet.create({
   shadow: {
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
-    padding: 30,
 
     // sombra no Android
     elevation: 8,
+
+    padding: 30,
+
     shadowColor: '#6C63FF',
 
     // sombra no iOS
