@@ -5,18 +5,18 @@ import userRoutes from './user.routes';
 
 const router = Router();
 
-// Agrupar por domínio
-router.use('/auth', authRoutes);
-router.use('/user', userRoutes);
+// Prefixos de API e versão
+const api = Router();
+const v1 = Router();
 
-// Espaço para próximas sprints:
-// import checkinsRoutes from './checkins.routes';
-// router.use('/checkins', checkinsRoutes);
-// import activitiesRoutes from './activities.routes';
-// router.use('/activities', activitiesRoutes);
-// import plansRoutes from './plans.routes';
-// router.use('/plans', plansRoutes);
-// import completionsRoutes from './completions.routes';
-// router.use('/completions', completionsRoutes);
+// Monta recursos da v1
+v1.use('/auth', authRoutes); // /api/v1/auth/...
+v1.use('/users', userRoutes); // /api/v1/users/...
+
+// Encadeia versão dentro de /api
+api.use('/v1', v1);
+
+// Expõe tudo sob /api
+router.use('/api', api);
 
 export default router;
