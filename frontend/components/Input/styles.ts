@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   label: {
-    color: '#2D3748',
+    color: '#1E1E1E',
     fontFamily: theme.fonts.medium,
     fontSize: 14,
     marginBottom: 6,
