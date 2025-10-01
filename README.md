@@ -35,12 +35,12 @@
 
 | **Claudia**   | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **16/09/2025**   | PLN-003 | Desenvolvimento de telas protótipo Figma|
-| **18/09/2025**   | EPP-010 | Desenvolvimento de telas protótipo Figma |
-| **22/09/2025**   | LDM-017 | Desenvolvimento de telas protótipo Figma |
-| **24/09/2025**   | LDM-024 | Desenvolvimento de telas protótipo Figma |
-| **26/09/2025**   | LDM-031 | Desenvolvimento de telas protótipo Figma |
-| **30/09/2025**   | LDM-038 | Desenvolvimento de telas protótipo Figma, criação de imagens PNG de telas do projeto |
+| **16/09/2025**   | PLN-003 | Desenvolvimento de telas protótipo Figma, Telas: Onboarding, Login, Cadastros, Termos, Politica e LGPD|
+| **18/09/2025**   | EPP-010 | Desenvolvimento de telas protótipo Figma, Telas: Home, Atividade da trilha, ChatBot |
+| **22/09/2025**   | LDM-017 | Desenvolvimento de telas protótipo Figma, Telas: Trilhas |
+| **24/09/2025**   | LDM-024 | Desenvolvimento de telas protótipo Figma, Tela: Progresso |
+| **26/09/2025**   | LDM-031 | Desenvolvimento de telas protótipo Figma, Tela: Perfil |
+| **30/09/2025**   | LDM-038 | Desenvolvimento de telas protótipo Figma, Prototype e  criação de imagens PNG de telas do projeto |
 | **02/10/2025**   | LDM-045 | Criação de video MP4 e GIF do Prototype Figma |
 
 | **Willian**   | **Nome da tarefa** | **Descrição** |
