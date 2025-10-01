@@ -40,8 +40,8 @@
 | **22/09/2025**   | LDM-017 | Desenvolvimento de telas protótipo Figma |
 | **24/09/2025**   | LDM-024 | Desenvolvimento de telas protótipo Figma |
 | **26/09/2025**   | LDM-031 | Desenvolvimento de telas protótipo Figma |
-| **30/09/2025**   | LDM-038 | Desenvolvimento de telas protótipo Figma |
-| **02/10/2025**   | XX-045 | XXX |
+| **30/09/2025**   | LDM-038 | Desenvolvimento de telas protótipo Figma, criação de imagens PNG de telas do projeto |
+| **02/10/2025**   | LDM-045 | Criação de video MP4 e GIF do Prototype Figma |
 
 | **Willian**   | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
