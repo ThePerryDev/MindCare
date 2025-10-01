@@ -12,7 +12,7 @@ export default function Button({ children, onPress }: ButtonProps) {
   return (
     <Pressable onPress={onPress} style={styles.pressable}>
       <LinearGradient
-        colors={['#6C63FF', '#A393FF']}
+        colors={['#4776E6', '#8E54E9']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.gradient}
