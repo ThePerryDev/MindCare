@@ -7,7 +7,7 @@
 |-----------|---------------|---------------|---------------|---------------|---------------|---------------|---------------|
 | **Eduardo**   | PLN-001 | EPP-008 | LDM-015 | LDM-022 | LDM-029 | XX-036 | XX-043 |
 | **Franciele**    | PLN-002 | LDM-009 | LDM-016 | LDM-023 | LDM-030 | LDM-037 | XX-044 |
-| **Claudia**    | PLN-003 | EPP-010 | LDM-017 | LDM-024 | LDM-031 | XX-038 | XX-045 |
+| **Claudia**    | PLN-003 | EPP-010 | LDM-017 | LDM-024 | LDM-031 | LDM-038 | XX-045 |
 | **Willian** | PLN-004 | EPP-011 | LDM-018 | LDM-025 | LDM-032 | XX-039 | XX-046 |
 | **Bianca**   | PLN-005 | LDM-012 | LDM-019 | LDM-026 | LDM-033 | LDM-040 | XX-047 |
 | **Daniel**   | PLN-006 | QT-013 | QT-020 | QT-027 | QT-034 |QT-041 | XX-048 |
@@ -40,7 +40,7 @@
 | **22/09/2025**   | LDM-017 | Desenvolvimento de telas protótipo Figma |
 | **24/09/2025**   | LDM-024 | Desenvolvimento de telas protótipo Figma |
 | **26/09/2025**   | LDM-031 | Desenvolvimento de telas protótipo Figma |
-| **30/09/2025**   | XX-038 | XXX |
+| **30/09/2025**   | LDM-038 | Desenvolvimento de telas protótipo Figma |
 | **02/10/2025**   | XX-045 | XXX |
 
 | **Willian**   | **Nome da tarefa** | **Descrição** |
