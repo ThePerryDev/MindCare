@@ -11,7 +11,7 @@
 | **Willian** | PLN-004 | EPP-011 | LDM-018 | LDM-025 | LDM-032 | LDM-039 | XX-046 |
 | **Bianca**   | PLN-005 | LDM-012 | LDM-019 | LDM-026 | LDM-033 | LDM-040 | XX-047 |
 | **Daniel**   | PLN-006 | QT-013 | QT-020 | QT-027 | QT-034 |QT-041 | XX-048 |
-| **Heclair**   | PLN-007 | PLN-014 | PLN-021 | PLN-028 | XX-035 | XX-042 | XX-049 |
+| **Heclair**   | PLN-007 | PLN-014 | PLN-021 | PLN-028 | PLN-035 | XX-042 | LDN-049 |
 
 | **Eduardo**   | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
@@ -75,10 +75,10 @@
 
 | **Heclair**   | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **16/09/2025**   | PLN-007 | XXX |
-| **18/09/2025**   | PLN-014 | XXX |
-| **22/09/2025**   | PLN-021 | XXX |
-| **24/09/2025**   | PLN-028 | XXX |
-| **26/09/2025**   | XX-035 | XXX |
+| **16/09/2025**   | PLN-007 | Início do projeto e pesquisas para elaboração do treinamento |
+| **18/09/2025**   | PLN-014 | Primeiro modelo treinado e testes com backend em Python para consumo da aplicação |
+| **22/09/2025**   | PLN-021 | Início de um novo modelo utilizando outro dataset para treinamento e estrutura de fallback |
+| **24/09/2025**   | PLN-028 | Testes com o chat para compreender responsividade e resultados do treinamento |
+| **26/09/2025**   | PLN-035 | Estudo dos modelos llama para implementação nos treinamentos e bibliotecas para compreensão de sentimentos |
 | **30/09/2025**   | XX-042 | XXX |
-| **02/10/2025**   | XX-049 | XXX |
+| **02/10/2025**   | LDN-049 | Reunião para fechamento das entregas da sprint 1 e apresentação individual |
