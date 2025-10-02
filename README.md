@@ -37,8 +37,8 @@ Cada entrega do projeto será identificada por meio da criação de uma tag no r
 
 ## :dart: Backlog
 
-<p align="center"> <img src="assets/" /></p>
-<p align="center"> <img src="assets/" /></p>
+<p align="center"> <img src="assets/Backlog.png" /></p>
+<p align="center"> <img src="assets/Requisitos.png" /></p>
 
 → [Voltar ao topo](#topo)
 
@@ -85,6 +85,11 @@ Para o desenvolvimento deste projeto, foram empregadas diversas linguagens, ferr
 
 → [Voltar ao topo](#topo)
 
+
+
+
+<!--
+
 <span id="sprint1">
 
 <p align="center"><img src="assets/2.png" /></p>
@@ -111,4 +116,4 @@ Para o desenvolvimento deste projeto, foram empregadas diversas linguagens, ferr
 
 <p align="center"><img src="assets/4.png" /></p>
 
-→ [Voltar ao topo](#topo)
+→ [Voltar ao topo](#topo) -->
