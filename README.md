@@ -46,7 +46,7 @@ Cada entrega do projeto será identificada por meio da criação de uma tag no r
 
 ## :mag: User Stories
 
-<p align="center"> <img src="assets/" /></p>
+<p align="center"> <img src="assets/UserStories.png" /></p>
 
 → [Voltar ao topo](#topo)
 
