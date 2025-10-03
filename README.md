@@ -10,7 +10,7 @@
 | **Claudia**    | PLN-003 | EPP-010 | LDM-017 | LDM-024 | LDM-031 | LDM-038 | LDM-045 |
 | **Willian** | PLN-004 | EPP-011 | LDM-018 | LDM-025 | LDM-032 | LDM-039 | LDM-046 |
 | **Bianca**   | PLN-005 | LDM-012 | LDM-019 | LDM-026 | LDM-033 | LDM-040 | LDM-047 |
-| **Daniel**   | PLN-006 | QT-013 | QT-020 | QT-027 | QT-034 |QT-041 | XX-048 |
+| **Daniel**   | PLN-006 | QT-013 | QT-020 | QT-027 | QT-034 |QT-041 | QT-048 |
 | **Heclair**   | PLN-007 | PLN-014 | PLN-021 | PLN-028 | PLN-035 | XX-042 | LDN-049 |
 
 | **Eduardo**   | **Nome da tarefa** | **Descrição** |
@@ -71,7 +71,7 @@
 | **24/09/2025**   | QT-027 | Criar do zero o ambiente frontend localmente. -> implementação de Docker, ainda não é possível hot reload, porém o expo abre dentro do container |
 | **26/09/2025**   | QT-034 | Pipeline de integração contínua com ESLint, Prettier e expo |
 | **30/09/2025**   | QT-041 | Correção da branch develop para manutenção de testes e qualidade de software |
-| **02/10/2025**   | XX-048 | XXX |
+| **02/10/2025**   | QT-048 | Implementação de pipeline backend (incompleto) |
 
 | **Heclair**   | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
