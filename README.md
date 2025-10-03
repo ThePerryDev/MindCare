@@ -9,7 +9,7 @@
 | **Franciele**    | PLN-002 | LDM-009 | LDM-016 | LDM-023 | LDM-030 | LDM-037 | XX-044 |
 | **Claudia**    | PLN-003 | EPP-010 | LDM-017 | LDM-024 | LDM-031 | LDM-038 | XX-045 |
 | **Willian** | PLN-004 | EPP-011 | LDM-018 | LDM-025 | LDM-032 | LDM-039 | XX-046 |
-| **Bianca**   | PLN-005 | LDM-012 | LDM-019 | LDM-026 | LDM-033 | LDM-040 | XX-047 |
+| **Bianca**   | PLN-005 | LDM-012 | LDM-019 | LDM-026 | LDM-033 | LDM-040 | LDM-047 |
 | **Daniel**   | PLN-006 | QT-013 | QT-020 | QT-027 | QT-034 |QT-041 | XX-048 |
 | **Heclair**   | PLN-007 | PLN-014 | PLN-021 | PLN-028 | PLN-035 | XX-042 | LDN-049 |
 
@@ -61,7 +61,7 @@
 | **24/09/2025**   | LDM-026 | Criação do conteúdo das trilhas |
 | **26/09/2025**   | LDM-033 | Alinhamento com a equipe sobre alguns detalhes e continuação da documentação do readme.md |
 | **30/09/2025**   | LDM-040 | Alinhamento com a equipe sobre alguns detalhes, criação do User Storie e Requisitos funcionais e não funcionais e continuação da documentação do readme.md |
-| **02/10/2025**   | XX-047 | XXX |
+| **02/10/2025**   | LDM-047 | Alinhamento com a equipe sobre detalhes finais da sprint, finalização das imagens para colocar na documentação e finalização do readme.md |
 
 | **Daniel**   | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
