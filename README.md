@@ -7,7 +7,7 @@
 |-----------|---------------|---------------|---------------|---------------|---------------|---------------|---------------|
 | **Eduardo**   | PLN-001 | EPP-008 | LDM-015 | LDM-022 | LDM-029 | XX-036 | LDM-043 |
 | **Franciele**    | PLN-002 | LDM-009 | LDM-016 | LDM-023 | LDM-030 | LDM-037 | LDM-044 |
-| **Claudia**    | PLN-003 | EPP-010 | LDM-017 | LDM-024 | LDM-031 | LDM-038 | XX-045 |
+| **Claudia**    | PLN-003 | EPP-010 | LDM-017 | LDM-024 | LDM-031 | LDM-038 | LDM-045 |
 | **Willian** | PLN-004 | EPP-011 | LDM-018 | LDM-025 | LDM-032 | LDM-039 | LDM-046 |
 | **Bianca**   | PLN-005 | LDM-012 | LDM-019 | LDM-026 | LDM-033 | LDM-040 | LDM-047 |
 | **Daniel**   | PLN-006 | QT-013 | QT-020 | QT-027 | QT-034 |QT-041 | XX-048 |
@@ -41,7 +41,7 @@
 | **24/09/2025**   | LDM-024 | Desenvolvimento de telas protótipo Figma, Tela: Progresso |
 | **26/09/2025**   | LDM-031 | Desenvolvimento de telas protótipo Figma, Tela: Perfil |
 | **30/09/2025**   | LDM-038 | Desenvolvimento de telas protótipo Figma, Prototype e  criação de imagens PNG de telas do projeto |
-| **02/10/2025**   | LDM-045 | Criação de video MP4 e GIF do Prototype Figma |
+| **02/10/2025**   | LDM-045 | Criação de video MP4 e GIF do Prototype Figma, reunião de finalizaçãoda sprint, ajuste quadro kanban|
 
 | **Willian**   | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
