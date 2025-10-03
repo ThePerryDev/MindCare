@@ -30,7 +30,7 @@
 | **22/09/2025**   | LDM-016 | Criação de banco, conexão e rotas (Users) |
 | **24/09/2025**   | LDM-023 | Refinamento técnico (tasks-BE) |
 | **26/09/2025**   | LDM-030 | Reorganizando plano de entrega para Sprint 1 e reunião de alinhamento com o time |
-| **30/09/2025**   | LDM-037 | refatoração model, controller e rotas para usuário |
+| **30/09/2025**   | LDM-037 | Refatoração model, controller e rotas para usuário/autenticação |
 | **02/10/2025**   | LDM-044 | Reunião final com a equipe para fechar pacote de entregáveis para Sprint 1 |
 
 | **Claudia**   | **Nome da tarefa** | **Descrição** |
