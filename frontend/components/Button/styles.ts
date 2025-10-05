@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   },
   pressable: {
     borderRadius: 20,
-    marginVertical: 12,
+    marginVertical: 10,
     overflow: 'hidden',
   },
   text: {
