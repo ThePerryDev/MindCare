@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from './styles';
 
 interface ButtonProps {
-  children: string;
+  children: React.ReactNode;
   onPress: (event: GestureResponderEvent) => void;
 }
 
