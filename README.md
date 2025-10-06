@@ -27,11 +27,11 @@ Cada entrega do projeto será identificada por meio da criação de uma tag no r
 
 | Sprint |          Previsão          | Status          |              Histórico               |                                           Link da Apresentação                                            |
 | :----: | :------------------------: | :-------------- | :----------------------------------: | :-------------------------------------------------------------------------------------------------------: |
-|   01   | De 16/09/25 a 07/10/25 | 🟡 Em andamento | <a href="#sprint1">Ver relatório</a> | <!--[SPRINT 01](https://drive.google.com/file/d/1X_RZB2BagwwqgAaqVM5RqBzSTGLluFpU/view?usp=drive_link)--> |
-|   02   |   De 18/09/25 a 08/10/25   | 🔴 Finalizado   | <a href="#sprint2">Ver relatório</a> |                             <!--[SPRINT 02](https://youtu.be/mZhYl-Wf9Bk)-->                              |
-|   03   |   De 09/10/25 a 08/11/25   | 🔴 Finalizado   | <a href="#sprint3">Ver relatório</a> |                             <!--[SPRINT 03](https://youtu.be/mZhYl-Wf9Bk)-->                              |
+|   01   | De 16/09/25 a 02/10/25 | 🟢 Finalizado | <a href="#sprint1">Ver relatório</a> | <!--[SPRINT 01](https://drive.google.com/file/d/1X_RZB2BagwwqgAaqVM5RqBzSTGLluFpU/view?usp=drive_link)--> |
+|   02   |   De 13/10/25 a 31/10/25   | 🔴 Não iniciado   | <a href="#sprint2">Ver relatório</a> |                             <!--[SPRINT 02](https://youtu.be/mZhYl-Wf9Bk)-->                              |
+|   03   |   De 06/11/25 a 18/11/25   | 🔴 Não iniciado   | <a href="#sprint3">Ver relatório</a> |                             <!--[SPRINT 03](https://youtu.be/mZhYl-Wf9Bk)-->                              |
 
-<!--🟢-->
+<!--🟡-->
 
 <span id="backlogs">
 
@@ -84,36 +84,3 @@ Para o desenvolvimento deste projeto, foram empregadas diversas linguagens, ferr
 
 
 → [Voltar ao topo](#topo)
-
-
-
-
-<!--
-
-<span id="sprint1">
-
-<p align="center"><img src="assets/2.png" /></p>
-
-| **NOME**      | **16/09/2025** | **18/09/2025** | **22/09/2025** | **24/09/2025** | **26/09/2025** | **30/09/2025** | **02/10/2025** |
-| ------------- | -------------- | -------------- | -------------- | -------------- | -------------- | -------------- | -------------- |
-| **Eduardo**   | PLN-001        | XX-008         | XX-015         | XX-022         | XX-029         | XX-036         | XX-043         |
-| **Franciele** | PLN-002        | XX-009         | XX-016         | XX-023         | XX-030         | XX-037         | XX-044         |
-| **Claudia**   | PLN-003        | XX-010         | XX-017         | XX-024         | XX-031         | XX-038         | XX-045         |
-| **Willian**   | PLN-004        | XX-011         | XX-018         | XX-025         | XX-032         | XX-039         | XX-046         |
-| **Bianca**    | PLN-005        | XX-012         | XX-019         | XX-026         | XX-033         | XX-040         | XX-047         |
-| **Daniel**    | PLN-006        | XX-013         | XX-020         | XX-027         | XX-034         | XX-041         | XX-048         |
-| **Heclair**   | PLN-007        | XX-014         | XX-021         | XX-028         | XX-035         | XX-042         | XX-049         |
-
-→ [Voltar ao topo](#topo)
-
-<span id="sprint2">
-
-<p align="center"><img src="assets/3.png" /></p>
-
-→ [Voltar ao topo](#topo)
-
-<span id="sprint3">
-
-<p align="center"><img src="assets/4.png" /></p>
-
-→ [Voltar ao topo](#topo) -->
