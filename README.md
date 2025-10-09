@@ -1,84 +1,86 @@
-# MindCare 
+<br id="topo">
+
+<p align="center"> <img src="assets/1.png" /></p>
+
+<p align="center">
+    <a href="#sobre">Sobre</a>  |  
+    <a href="#backlogs">Backlog</a>  |  
+    <a href="#user-stories">User Stories</a>  |    
+    <a href="#tecnologias">Tecnologias</a>  |  
+    <a href="#equipe">Equipe</a>  | 
+    <a href="#comorodar">Como Rodar</a>
+</p>
+
+<span id="sobre">
+
+## :bookmark_tabs: Sobre o projeto
+
+A partir do desafio proposto pela FATEC, a equipe The Perry Dev apresentou como solução o desenvolvimento de um aplicativo móvel que possibilita ao usuário monitorar seu humor e, ao mesmo tempo, receber sugestões de hábitos voltados à melhoria do bem-estar.
+
+Projeto conduzido a partir da metodologia ágil, aplicando o framework Scrum, para incentivar a proatividade, autonomia, colaboração e a entrega de valor de todos os envolvidos.
+
+:pushpin: Status do Projeto: [**Em andamento**] <!--(https://github.com/ThePerryDev/NutriPerry/tree/sp1/develop) -->
+
+### Entregas de Sprints
+
+Cada entrega do projeto será identificada por meio da criação de uma tag no repositório [MindCare](https://github.com/ThePerryDev/MindCare). Além disso, serão criadas branches específicas para cada atividade (task) realizada, seguindo o seguinte padrão: sp0-000/nome/nomeDaTask, permitindo um controle mais detalhado das etapas de desenvolvimento e facilitando o acompanhamento da evolução do projeto. Observe a relação a seguir:
+
+| Sprint |          Previsão          | Status          |              Histórico               |                                           Link da Apresentação                                            |
+| :----: | :------------------------: | :-------------- | :----------------------------------: | :-------------------------------------------------------------------------------------------------------: |
+|   01   | De 16/09/25 a 02/10/25 | 🟢 Finalizado | <a href="#sprint1">Ver relatório</a> | <!--[SPRINT 01](https://drive.google.com/file/d/1X_RZB2BagwwqgAaqVM5RqBzSTGLluFpU/view?usp=drive_link)--> |
+|   02   |   De 13/10/25 a 31/10/25   | 🔴 Não iniciado   | <a href="#sprint2">Ver relatório</a> |                             <!--[SPRINT 02](https://youtu.be/mZhYl-Wf9Bk)-->                              |
+|   03   |   De 06/11/25 a 18/11/25   | 🔴 Não iniciado   | <a href="#sprint3">Ver relatório</a> |                             <!--[SPRINT 03](https://youtu.be/mZhYl-Wf9Bk)-->                              |
+
+<!--🟡-->
+
+<span id="backlogs">
+
+## :dart: Backlog
+
+<p align="center"> <img src="assets/Backlog.png" /></p>
+<p align="center"> <img src="assets/Requisitos.png" /></p>
+
+→ [Voltar ao topo](#topo)
+
+<span id="user-stories">
+
+## :mag: User Stories
+
+<p align="center"> <img src="assets/UserStories.png" /></p>
+
+→ [Voltar ao topo](#topo)
+
+<span id="tecnologias">
+
+## :pager: Tecnologias
+
+Para o desenvolvimento deste projeto, foram empregadas diversas linguagens, ferramentas, tecnologias e bibliotecas, selecionadas de forma criteriosa para assegurar uma implementação eficiente e em conformidade com os requisitos estabelecidos. A seguir, apresentamos os principais recursos utilizados.
+
+<img src="https://img.shields.io/badge/VS Code-20232A?style=for-the-badge&logo=VisualStudioCode&logoColor=007ACC" alt="VS Code" />
+<!-- Figma -->
+<img src="https://img.shields.io/badge/Figma-20232A?style=for-the-badge&logo=Figma&logoColor=F24E1E" alt="Figma" />
+<!-- Canva -->
+<img src="https://img.shields.io/badge/Canva-20232A?style=for-the-badge&logo=Canva&logoColor=00C4CC" alt="Canva" />
+<!-- Python -->
+<img src="https://img.shields.io/badge/Python-20232A?style=for-the-badge&logo=Python&logoColor=3776AB" alt="Python" />
+<!-- Docker -->
+<img src="https://img.shields.io/badge/Docker-20232A?style=for-the-badge&logo=Docker&logoColor=2496ED" alt="Docker" />
+<!-- TypeScript -->
+<img src="https://img.shields.io/badge/TypeScript-20232A?style=for-the-badge&logo=TypeScript&logoColor=3178C6" alt="TypeScript" />
+
+<span id="equipe">
+
+## :busts_in_silhouette: Equipe
+
+|    Função     | Nome                                  |                                                                                                                                                      LinkedIn & GitHub                                                                                                                                                      |
+| :-----------: | :------------------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|   Scrum Master    | Luis Eduardo                     |     [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://linkedin.com/in/eduardo-moraes-68001a272/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/Eduardo270704)      |
+|   Product Owner    | Franciele Chesere               | [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/franciele-chesere-605974274/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/ChesereF) |
+|   Dev Team    | Bianca Lucas                |   [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/bianca-lucas-da-silva-cacula) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/biancalsc)   |
+|   Dev Team    | Claudia Nunes                |   [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/claudia-nuness?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/Claudia-Nunes)   |
+|   Dev Team    | Daniel Dornelas          |          [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://linkedin.com/in/daniel-dornelas-758a25267/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/Dani-dornas)          |
+|   Dev Team    | Heclair Sousa               | [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/heclairsousa/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/heclair) |
+|   Dev Team   | Willian Garcia         |        [![Linkedin Badge](https://img.shields.io/badge/Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/willian-garcia-6b0892123/) [![GitHub Badge](https://img.shields.io/badge/GitHub-111217?style=flat-square&logo=github&logoColor=white)](https://github.com/Willian-Garcia)        |
 
 
-# Sprint 1
-
-| **NOME**   | **16/09/2025** | **18/09/2025** | **22/09/2025** | **24/09/2025** | **26/09/2025** | **30/09/2025** | **02/10/2025** |
-|-----------|---------------|---------------|---------------|---------------|---------------|---------------|---------------|
-| **Eduardo**   | PLN-001 | EPP-008 | LDM-015 | LDM-022 | LDM-029 | XX-036 | LDM-043 |
-| **Franciele**    | PLN-002 | LDM-009 | LDM-016 | LDM-023 | LDM-030 | LDM-037 | LDM-044 |
-| **Claudia**    | PLN-003 | EPP-010 | LDM-017 | LDM-024 | LDM-031 | LDM-038 | LDM-045 |
-| **Willian** | PLN-004 | EPP-011 | LDM-018 | LDM-025 | LDM-032 | LDM-039 | LDM-046 |
-| **Bianca**   | PLN-005 | LDM-012 | LDM-019 | LDM-026 | LDM-033 | LDM-040 | LDM-047 |
-| **Daniel**   | PLN-006 | QT-013 | QT-020 | QT-027 | QT-034 |QT-041 | QT-048 |
-| **Heclair**   | PLN-007 | PLN-014 | PLN-021 | PLN-028 | PLN-035 | XX-042 | LDN-049 |
-
-| **Eduardo**   | **Nome da tarefa** | **Descrição** |
-|-----------|---------------|---------------|
-| **16/09/2025**   | PLN-001 | Estruturação do projeto |
-| **18/09/2025**   | EPP-008 | Design de components no Figma |
-| **22/09/2025**   | LDM-015 | Correção na estruturação da pasta FrontEnd e no React Native |
-| **24/09/2025**   | LDM-022 | Criação de componentes reutilizáveis e correções no FrontEnd |
-| **26/09/2025**   | XX-029 | Continuação na criação de componentes reutilizáveis |
-| **30/09/2025**   | XX-036 | XXX |
-| **02/10/2025**   | LDM-043 | Reunião para fechamento das entregas da sprint 1 e apresentação individual |
-
-| **Franciele**   | **Nome da tarefa** | **Descrição** |
-|-----------|---------------|---------------|
-| **16/09/2025**   | PLN-002 | Estruturação do projeto |
-| **18/09/2025**   | LDM-009 | Finalizando preparação do ambiente de DEV para equipe |
-| **22/09/2025**   | LDM-016 | Criação de banco, conexão e rotas (Users) |
-| **24/09/2025**   | LDM-023 | Refinamento técnico (tasks-BE) |
-| **26/09/2025**   | LDM-030 | Reorganizando plano de entrega para Sprint 1 e reunião de alinhamento com o time |
-| **30/09/2025**   | LDM-037 | Refatoração model, controller e rotas para usuário/autenticação |
-| **02/10/2025**   | LDM-044 | Reunião final com a equipe para fechar pacote de entregáveis para Sprint 1 |
-
-| **Claudia**   | **Nome da tarefa** | **Descrição** |
-|-----------|---------------|---------------|
-| **16/09/2025**   | PLN-003 | Desenvolvimento de telas protótipo Figma, Telas: Onboarding, Login, Cadastros, Termos, Politica e LGPD|
-| **18/09/2025**   | EPP-010 | Desenvolvimento de telas protótipo Figma, Telas: Home, Atividade da trilha, ChatBot |
-| **22/09/2025**   | LDM-017 | Desenvolvimento de telas protótipo Figma, Telas: Trilhas |
-| **24/09/2025**   | LDM-024 | Desenvolvimento de telas protótipo Figma, Tela: Progresso |
-| **26/09/2025**   | LDM-031 | Desenvolvimento de telas protótipo Figma, Tela: Perfil |
-| **30/09/2025**   | LDM-038 | Desenvolvimento de telas protótipo Figma, Prototype e  criação de imagens PNG de telas do projeto |
-| **02/10/2025**   | LDM-045 | Criação de video MP4 e GIF do Prototype Figma, reunião de finalizaçãoda sprint, ajuste quadro kanban|
-
-| **Willian**   | **Nome da tarefa** | **Descrição** |
-|-----------|---------------|---------------|
-| **16/09/2025**   | PLN-004 | Briefing Inicial |
-| **18/09/2025**   | EPP-011 | Wireframe do Projeto |
-| **22/09/2025**   | LDM-018 | Desenvolvido Opção de Design das Telas de Login, Cadastros, Splash, Carregando. |
-| **24/09/2025**   | LDM-025 | Desenvolvido Opção de Design das Telas de Home e Chatbot. |
-| **26/09/2025**   | LDM-032 | Desenvolvido Opção de Design das Telas de Check de Sentimento, Trilhas e Configurações. |
-| **30/09/2025**   | LDM-039 | Desenvolvido Opção de Design da Tela de Perfil e criação do componente Return Button, correções visuais nos componentes button e input e correções do expo/metro. |
-| **02/10/2025**   | LDM-046 | Reunião para fechamento das entregas da sprint 1 e apresentação individual |
-
-| **Bianca**   | **Nome da tarefa** | **Descrição** |
-|-----------|---------------|---------------|
-| **16/09/2025**   | PLN-005 | Reunião de Briefing Inicial com o time para definição de tasks e escopo do projeto, criação do design inicial do readme.md. |
-| **18/09/2025**   | LDM-012 | Continuação do design e atualização da estrutura e da documentação do readme.md |
-| **22/09/2025**   | LDM-019 | Continuação do design e atualização da estrutura e da documentação do readme.md |
-| **24/09/2025**   | LDM-026 | Criação do conteúdo das trilhas |
-| **26/09/2025**   | LDM-033 | Alinhamento com a equipe sobre alguns detalhes e continuação da documentação do readme.md |
-| **30/09/2025**   | LDM-040 | Alinhamento com a equipe sobre alguns detalhes, criação do User Storie e Requisitos funcionais e não funcionais e continuação da documentação do readme.md |
-| **02/10/2025**   | LDM-047 | Alinhamento com a equipe sobre detalhes finais da sprint, finalização das imagens para colocar na documentação e finalização do readme.md |
-
-| **Daniel**   | **Nome da tarefa** | **Descrição** |
-|-----------|---------------|---------------|
-| **16/09/2025**   | PLN-006 | Criação de backlog e primeira daily |
-| **18/09/2025**   | QT-013 | Modelar e selecionar imagens do docker, além de Github Actions, ESLINT, Prettier e primeiros testes com Jest |
-| **22/09/2025**   | QT-020 | Integrar docker e ci.yml github actions a partir da develop (não deu certo) |
-| **24/09/2025**   | QT-027 | Criar do zero o ambiente frontend localmente. -> implementação de Docker, ainda não é possível hot reload, porém o expo abre dentro do container |
-| **26/09/2025**   | QT-034 | Pipeline de integração contínua com ESLint, Prettier e expo |
-| **30/09/2025**   | QT-041 | Correção da branch develop para manutenção de testes e qualidade de software |
-| **02/10/2025**   | QT-048 | Implementação de pipeline backend (incompleto) |
-
-| **Heclair**   | **Nome da tarefa** | **Descrição** |
-|-----------|---------------|---------------|
-| **16/09/2025**   | PLN-007 | Início do projeto e pesquisas para elaboração do treinamento |
-| **18/09/2025**   | PLN-014 | Primeiro modelo treinado e testes com backend em Python para consumo da aplicação |
-| **22/09/2025**   | PLN-021 | Início de um novo modelo utilizando outro dataset para treinamento e estrutura de fallback |
-| **24/09/2025**   | PLN-028 | Testes com o chat para compreender responsividade e resultados do treinamento |
-| **26/09/2025**   | PLN-035 | Estudo dos modelos llama para implementação nos treinamentos e bibliotecas para compreensão de sentimentos |
-| **30/09/2025**   | XX-042 | XXX |
-| **02/10/2025**   | LDN-049 | Reunião para fechamento das entregas da sprint 1 e apresentação individual |
+→ [Voltar ao topo](#topo)
