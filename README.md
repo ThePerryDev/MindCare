@@ -25,11 +25,12 @@ Projeto conduzido a partir da metodologia ágil, aplicando o framework Scrum, pa
 
 Cada entrega do projeto será identificada por meio da criação de uma tag no repositório [MindCare](https://github.com/ThePerryDev/MindCare). Além disso, serão criadas branches específicas para cada atividade (task) realizada, seguindo o seguinte padrão: sp0-000/nome/nomeDaTask, permitindo um controle mais detalhado das etapas de desenvolvimento e facilitando o acompanhamento da evolução do projeto. Observe a relação a seguir:
 
-| Sprint |          Previsão          | Status          |              Histórico               |                                           Link da Apresentação                                            |
+| Sprint | Previsão | Status | Histórico | Link da Apresentação |
 | :----: | :------------------------: | :-------------- | :----------------------------------: | :-------------------------------------------------------------------------------------------------------: |
-|   01   | De 16/09/25 a 02/10/25 | 🟢 Finalizado | <a href="#sprint1">Ver relatório</a> | <!--[SPRINT 01](https://drive.google.com/file/d/1X_RZB2BagwwqgAaqVM5RqBzSTGLluFpU/view?usp=drive_link)--> |
-|   02   |   De 13/10/25 a 31/10/25   | 🔴 Não iniciado   | <a href="#sprint2">Ver relatório</a> |                             <!--[SPRINT 02](https://youtu.be/mZhYl-Wf9Bk)-->                              |
-|   03   |   De 06/11/25 a 18/11/25   | 🔴 Não iniciado   | <a href="#sprint3">Ver relatório</a> |                             <!--[SPRINT 03](https://youtu.be/mZhYl-Wf9Bk)-->                              |
+| 01 | De 16/09/25 a 02/10/25 | 🟢 Finalizado | [Ver relatório](https://github.com/ThePerryDev/MindCare/releases/tag/sprint_1) | [Apresentação SPRINT 01](https://drive.google.com/file/d/1X_RZB2BagwwqgAaqVM5RqBzSTGLluFpU/view?usp=drive_link) |
+| 02 | De 13/10/25 a 31/10/25 | 🟡 Em andamento | [Ver relatório](#sprint2) | [Apresentação SPRINT 02](https://youtu.be/mZhYl-Wf9Bk) |
+| 03 | De 06/11/25 a 18/11/25 | 🔴 Não iniciado | [Ver relatório](#sprint3) | [Apresentação SPRINT 03](https://youtu.be/mZhYl-Wf9Bk) |
+
 
 <!--🟡-->
 
