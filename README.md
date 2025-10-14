@@ -27,9 +27,9 @@ Cada entrega do projeto será identificada por meio da criação de uma tag no r
 
 | Sprint | Previsão | Status | Histórico | Link da Apresentação |
 | :----: | :------------------------: | :-------------- | :----------------------------------: | :-------------------------------------------------------------------------------------------------------: |
-| 01 | De 16/09/25 a 02/10/25 | 🟢 Finalizado | [Ver relatório](https://github.com/ThePerryDev/MindCare/releases/tag/sprint_1) | [Apresentação SPRINT 01](https://drive.google.com/file/d/1X_RZB2BagwwqgAaqVM5RqBzSTGLluFpU/view?usp=drive_link) |
-| 02 | De 13/10/25 a 31/10/25 | 🟡 Em andamento | [Ver relatório](#sprint2) | [Apresentação SPRINT 02](https://youtu.be/mZhYl-Wf9Bk) |
-| 03 | De 06/11/25 a 18/11/25 | 🔴 Não iniciado | [Ver relatório](#sprint3) | [Apresentação SPRINT 03](https://youtu.be/mZhYl-Wf9Bk) |
+| 01 | De 16/09/25 a 02/10/25 | 🟢 Finalizado | [Ver relatório](https://github.com/ThePerryDev/MindCare/releases/tag/sprint_1) | [Apresentação SPRINT 01](https://youtu.be/lf4rOiNSk8A) |
+| 02 | De 13/10/25 a 31/10/25 | 🟡 Em andamento | [Ver relatório](#sprint2) | [Apresentação SPRINT 02](xxxx) |
+| 03 | De 06/11/25 a 18/11/25 | 🔴 Não iniciado | [Ver relatório](#sprint3) | [Apresentação SPRINT 03](xxxx) |
 
 
 <!--🟡-->
