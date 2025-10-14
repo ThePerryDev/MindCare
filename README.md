@@ -10,7 +10,7 @@
 | **Claudia**   | XXX-052 | XXX-059 | XXX-066 | XXX-073 | XXX-080 | XXX-087 |
 | **Willian**   | XXX-053 | XXX-060 | XXX-067 | XXX-074 | XXX-081 | XXX-088 |
 | **Bianca**    | XXX-054 | XXX-061 | XXX-068 | XXX-075 | XXX-082 | XXX-089 |
-| **Daniel**    | XXX-055 | XXX-062 | XXX-069 | XXX-076 | XXX-083 | XXX-090 |
+| **Daniel**    | LDM-055 | XXX-062 | XXX-069 | XXX-076 | XXX-083 | XXX-090 |
 | **Heclair**   | LDM-056 | XXX-063 | XXX-070 | XXX-077 | XXX-084 | XXX-091 |
 
 
@@ -66,12 +66,12 @@
 
 | **Daniel** | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **13/10/2025** | XXX-055 | XXX |
+| **13/10/2025** | LDM-055 | Refinamento de produto e reunião de alinhamento com o time |
 | **15/10/2025** | XXX-062 | XXX |
 | **17/10/2025** | XXX-069 | XXX |
 | **21/10/2025** | XXX-076 | XXX |
 | **23/10/2025** | XXX-083 | XXX |
-| **31/10/2025** | XXX-090 | XXX |
+| **31/10/2025** | LDM-090 | Reunião de alinhamento e distribuição de atividades da Sprint II |
 
 
 | **Heclair** | **Nome da tarefa** | **Descrição** |
