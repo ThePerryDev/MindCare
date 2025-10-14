@@ -11,7 +11,7 @@
 | **Willian**   | XXX-053 | XXX-060 | XXX-067 | XXX-074 | XXX-081 | XXX-088 |
 | **Bianca**    | XXX-054 | XXX-061 | XXX-068 | XXX-075 | XXX-082 | XXX-089 |
 | **Daniel**    | XXX-055 | XXX-062 | XXX-069 | XXX-076 | XXX-083 | XXX-090 |
-| **Heclair**   | XXX-056 | XXX-063 | XXX-070 | XXX-077 | XXX-084 | XXX-091 |
+| **Heclair**   | LDM-056 | XXX-063 | XXX-070 | XXX-077 | XXX-084 | XXX-091 |
 
 
 | **Eduardo**   | **Nome da tarefa** | **Descrição** |
@@ -31,7 +31,7 @@
 | **17/10/2025** | XXX-065 | XXX |
 | **21/10/2025** | XXX-072 | XXX |
 | **23/10/2025** | XXX-079 | XXX |
-| **31/10/2025** | XXX-086 | XXX |
+| **31/10/2025** | XXX-086 | Reunião de alinhamento e distribuição de atividades da Sprint II |
 
 
 | **Claudia** | **Nome da tarefa** | **Descrição** |
