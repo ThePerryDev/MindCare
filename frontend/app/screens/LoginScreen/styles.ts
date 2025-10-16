@@ -35,13 +35,15 @@ export const styles = StyleSheet.create({
     color: '#9B7EFF',
     fontFamily: theme.fonts.medium,
     fontSize: 14,
+    fontWeight: 'bold',
     marginTop: 10,
     textAlign: 'center',
   },
   linkRegister: {
     color: '#9B7EFF',
-    fontFamily: theme.fonts.semi,
+    fontFamily: theme.fonts.bold,
     fontSize: 14,
+    fontWeight: 'bold',
   },
   padLarge: {
     paddingBottom: 0,

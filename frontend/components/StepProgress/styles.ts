@@ -37,11 +37,11 @@ export const styles = StyleSheet.create({
   },
   dotActive: {},
   dotCheck: {
-    color: '#7D6BFF',
+    color: '#FFFFFF',
     fontWeight: '800',
   },
   dotCompleted: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#7D6BFF',
     borderColor: '#7D6BFF',
     borderWidth: 2,
   },
@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
     fontWeight: '700',
   },
   labelCompleted: {
-    color: '#6C63FF',
+    color: '#B9B9C8',
     fontWeight: '700',
   },
   labelSlot: {

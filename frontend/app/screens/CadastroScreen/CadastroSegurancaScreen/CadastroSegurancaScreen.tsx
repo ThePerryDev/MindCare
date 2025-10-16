@@ -9,21 +9,17 @@ import {
   Keyboard,
   Platform,
 } from 'react-native';
-import { styles } from './styles';
 import Input from '../../../../components/Input/Input';
 import Button from '../../../../components/Button/Button';
 import logoMindcare from '../../../../assets/images/logo_mindcare.png';
 import ReturnButton from '@/components/Return_Button/Return_Button';
 import StepProgress from '@/components/StepProgress/StepProgress';
 import { useRouter } from 'expo-router';
+import { styles } from './styles';
 
 export default function CadastroSegurancaScreen() {
-  const [fullname, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phonenumber, setPhoneNumber] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [userheight, setUserHeight] = useState('');
-  const [userweight, setUserWeight] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmPassword] = useState('');
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
@@ -82,46 +78,21 @@ export default function CadastroSegurancaScreen() {
             )}
             <StepProgress currentStep={step} />
             <Input
-              label='Nome Completo'
-              placeholder='Digite seu nome completo'
-              value={fullname}
-              onChangeText={setFullName}
+              label='Senha'
+              placeholder='Digite sua senha'
+              value={password}
+              onChangeText={setPassword}
             />
             <Input
-              label='E-mail'
-              placeholder='Digite seu e-mail'
-              value={email}
-              onChangeText={setEmail}
-            />
-
-            <Input
-              label='Telefone'
-              placeholder='(99)99999-9999'
-              value={phonenumber}
-              onChangeText={setPhoneNumber}
-            />
-            <Input
-              label='Data de Nascimento'
-              placeholder='01/01/2025'
-              value={birthday}
-              onChangeText={setBirthday}
-            />
-            <Input
-              label='Altura'
-              placeholder='Digite sua altura'
-              value={userheight}
-              onChangeText={setUserHeight}
-            />
-            <Input
-              label='Peso'
-              placeholder='Digite seu peso'
-              value={userweight}
-              onChangeText={setUserWeight}
+              label='Confirmar Senha'
+              placeholder='Digite novamente sua senha'
+              value={confirmpassword}
+              onChangeText={setConfirmPassword}
             />
             <ReturnButton
               onPress={() =>
                 router.push(
-                  '../screens/CadastroScreen/CadastroDadosPessoaisScreen/CadastroDadosPessoaisScreen'
+                  '/screens/CadastroScreen/CadastroDadosPessoaisScreen/CadastroDadosPessoaisScreen'
                 )
               }
             >
@@ -130,7 +101,7 @@ export default function CadastroSegurancaScreen() {
             <Button
               onPress={() =>
                 router.push(
-                  '../screens/CadastroScreen/CadastroConfirmacaoScreen/CadastroConfirmacaoScreen'
+                  '/screens/CadastroScreen/CadastroConfirmacaoScreen/CadastroConfirmacaoScreen'
                 )
               }
             >

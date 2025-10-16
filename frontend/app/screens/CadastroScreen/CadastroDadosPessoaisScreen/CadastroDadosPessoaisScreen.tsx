@@ -9,13 +9,13 @@ import {
   Keyboard,
   Platform,
 } from 'react-native';
-import { styles } from './styles';
 import Input from '../../../../components/Input/Input';
 import Button from '../../../../components/Button/Button';
 import logoMindcare from '../../../../assets/images/logo_mindcare.png';
 import ReturnButton from '@/components/Return_Button/Return_Button';
 import StepProgress from '@/components/StepProgress/StepProgress';
 import { useRouter } from 'expo-router';
+import { styles } from './styles';
 
 export default function CadastroDadosPessoaisScreen() {
   const [fullname, setFullName] = useState('');
@@ -124,7 +124,7 @@ export default function CadastroDadosPessoaisScreen() {
             <Button
               onPress={() =>
                 router.push(
-                  '../screens/CadastroScreen/CadastroSegurancaScreen/CadastroSegurancaScreen'
+                  '/screens/CadastroScreen/CadastroSegurancaScreen/CadastroSegurancaScreen'
                 )
               }
             >
