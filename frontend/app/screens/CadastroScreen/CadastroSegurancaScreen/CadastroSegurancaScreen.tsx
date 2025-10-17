@@ -1,31 +1,30 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  Alert,
   Text,
   Image,
-  Pressable,
-  View,
   KeyboardAvoidingView,
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
 } from 'react-native';
-import { styles } from './styles';
-import Input from '../../../components/Input/Input';
-import Button from '../../../components/Button/Button';
-import logoMindcare from '../../../assets/images/logo_mindcare.png';
+import Input from '../../../../components/Input/Input';
+import Button from '../../../../components/Button/Button';
+import logoMindcare from '../../../../assets/images/logo_mindcare.png';
+import ReturnButton from '@/components/Return_Button/Return_Button';
+import StepProgress from '@/components/StepProgress/StepProgress';
 import { useRouter } from 'expo-router';
+import { styles } from './styles';
 
-export default function LoginScreen() {
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+export default function CadastroSegurancaScreen() {
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmPassword] = useState('');
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
-
-  const router = useRouter();
   const scrollRef = useRef<ScrollView>(null);
+  const [step] = React.useState<1 | 2 | 3>(2);
+  const router = useRouter();
 
   useEffect(() => {
     const showSub = Keyboard.addListener('keyboardDidShow', () => {
@@ -77,44 +76,37 @@ export default function LoginScreen() {
                 style={[styles.image, keyboardVisible && styles.imageSmall]}
               />
             )}
-
-            <Input
-              label='E-mail'
-              placeholder='Digite seu e-mail'
-              value={email}
-              onChangeText={setEmail}
-            />
-
+            <StepProgress currentStep={step} />
             <Input
               label='Senha'
               placeholder='Digite sua senha'
-              value={senha}
-              onChangeText={setSenha}
-              secureTextEntry
-              onFocus={() => setIsPasswordFocused(true)}
-              onBlur={() => setIsPasswordFocused(false)}
+              value={password}
+              onChangeText={setPassword}
             />
-
-            <Button onPress={() => Alert.alert('Login', 'Botão pressionado!')}>
-              <Text>Login</Text>
+            <Input
+              label='Confirmar Senha'
+              placeholder='Digite novamente sua senha'
+              value={confirmpassword}
+              onChangeText={setConfirmPassword}
+            />
+            <ReturnButton
+              onPress={() =>
+                router.push(
+                  '/screens/CadastroScreen/CadastroDadosPessoaisScreen/CadastroDadosPessoaisScreen'
+                )
+              }
+            >
+              <Text>Voltar</Text>
+            </ReturnButton>
+            <Button
+              onPress={() =>
+                router.push(
+                  '/screens/CadastroScreen/CadastroConfirmacaoScreen/CadastroConfirmacaoScreen'
+                )
+              }
+            >
+              <Text>Próximo</Text>
             </Button>
-
-            <Pressable onPress={() => router.push('/')}>
-              <Text style={styles.linkForgot}>Esqueceu sua senha?</Text>
-            </Pressable>
-
-            <View style={styles.registerContainer}>
-              <Text style={styles.textRegister}>Não tem uma conta? </Text>
-              <Pressable
-                onPress={() =>
-                  router.push(
-                    '../screens/CadastroScreen/CadastroDadosPessoaisScreen/CadastroDadosPessoaisScreen'
-                  )
-                }
-              >
-                <Text style={styles.linkRegister}>Cadastre-se</Text>
-              </Pressable>
-            </View>
           </ScrollView>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
