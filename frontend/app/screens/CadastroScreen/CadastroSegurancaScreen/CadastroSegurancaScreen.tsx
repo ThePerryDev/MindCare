@@ -1,62 +1,64 @@
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Text,
-  Image,
   KeyboardAvoidingView,
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
+  InteractionManager, // +++
 } from 'react-native';
 import Input from '../../../../components/Input/Input';
 import Button from '../../../../components/Button/Button';
-import logoMindcare from '../../../../assets/images/logo_mindcare.png';
 import ReturnButton from '@/components/Return_Button/Return_Button';
 import StepProgress from '@/components/StepProgress/StepProgress';
 import { useRouter } from 'expo-router';
 import { styles } from './styles';
+import CreateAccountIntro from '@/components/CreateAccountIntro/CreateAccountIntro';
+import PasswordRequirements from '@/components/PasswordRequirements/PasswordRequirements';
 
 export default function CadastroSegurancaScreen() {
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
-  const [keyboardVisible, setKeyboardVisible] = useState(false);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
+  const [kbHeight, setKbHeight] = useState(0);
   const [step] = React.useState<1 | 2 | 3>(2);
+  const insets = useSafeAreaInsets(); // +++
   const router = useRouter();
 
   useEffect(() => {
-    const showSub = Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardVisible(true);
+    const onShow = Keyboard.addListener('keyboardDidShow', e => {
+      setKbHeight((e.endCoordinates?.height ?? 0) + 16);
     });
-    const hideSub = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardVisible(false);
-      setIsPasswordFocused(false);
+    const onHide = Keyboard.addListener('keyboardDidHide', () => {
+      setKbHeight(0);
     });
     return () => {
-      showSub.remove();
-      hideSub.remove();
+      onShow.remove();
+      onHide.remove();
     };
   }, []);
 
-  const kavBehavior =
-    Platform.OS === 'ios'
-      ? keyboardVisible
-        ? 'padding'
-        : undefined
-      : keyboardVisible
-        ? 'height'
-        : undefined;
+  const kavBehavior = Platform.OS === 'ios' ? 'padding' : 'height';
 
-  const showLogo = !(keyboardVisible && isPasswordFocused);
+  // sem parâmetros (não usamos o evento) e sem setTimeout
+  const handleConfirmFocus = () => {
+    // aguarda o teclado/animações e rola até o fim
+    InteractionManager.runAfterInteractions(() => {
+      scrollRef.current?.scrollToEnd({ animated: true });
+    });
+  };
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
       <KeyboardAvoidingView
         style={styles.kav}
         behavior={kavBehavior}
-        keyboardVerticalOffset={0}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? insets.top : 0}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView
@@ -64,31 +66,35 @@ export default function CadastroSegurancaScreen() {
             style={styles.scroll}
             contentContainerStyle={[
               styles.contentBase,
-              keyboardVisible ? styles.contentTop : styles.contentCenter,
-              keyboardVisible ? styles.padSmall : styles.padLarge,
+              { paddingBottom: kbHeight + 24 },
             ]}
             keyboardShouldPersistTaps='handled'
+            keyboardDismissMode='on-drag'
+            automaticallyAdjustKeyboardInsets={true}
             showsVerticalScrollIndicator={false}
           >
-            {showLogo && (
-              <Image
-                source={logoMindcare}
-                style={[styles.image, keyboardVisible && styles.imageSmall]}
-              />
-            )}
+            <CreateAccountIntro />
             <StepProgress currentStep={step} />
+
             <Input
               label='Senha'
               placeholder='Digite sua senha'
               value={password}
               onChangeText={setPassword}
+              returnKeyType='next'
             />
+
+            <PasswordRequirements password={password} />
+
             <Input
               label='Confirmar Senha'
               placeholder='Digite novamente sua senha'
               value={confirmpassword}
               onChangeText={setConfirmPassword}
+              onFocus={handleConfirmFocus}
+              returnKeyType='done'
             />
+
             <ReturnButton
               onPress={() =>
                 router.push(
@@ -98,6 +104,7 @@ export default function CadastroSegurancaScreen() {
             >
               <Text>Voltar</Text>
             </ReturnButton>
+
             <Button
               onPress={() =>
                 router.push(

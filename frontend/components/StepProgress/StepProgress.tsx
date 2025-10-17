@@ -55,9 +55,9 @@ function StepBar({ progress }: { progress: 0 | 0.5 | 1 }) {
       <View style={styles.barInactive} />
       {progress > 0 && (
         <LinearGradient
-          colors={['#6C63FF', '#A393FF']}
+          colors={['#4776E6', '#8E54E9']}
           start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
+          end={{ x: 1, y: 1 }}
           style={[styles.barActive, { width: `${progress * 100}%` }]}
         />
       )}
@@ -71,7 +71,7 @@ function Dot({ index, state }: { index: number; state: Step }) {
   if (state === 'active') {
     return (
       <LinearGradient
-        colors={['#6C63FF', '#A393FF']}
+        colors={['#4776E6', '#8E54E9']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={[styles.dot, styles.dotActive]}
