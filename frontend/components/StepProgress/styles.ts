@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
     fontSize: 12,
   },
   labelActive: {
-    color: '#6C63FF',
+    color: '#4C46B6',
     fontWeight: '700',
   },
   labelCompleted: {
@@ -74,7 +74,7 @@ export const styles = StyleSheet.create({
     width: STEP_SLOT,
   },
   labelUpcoming: {
-    color: '#B9B9C8',
+    color: '#656B6F',
     fontWeight: '600',
   },
 

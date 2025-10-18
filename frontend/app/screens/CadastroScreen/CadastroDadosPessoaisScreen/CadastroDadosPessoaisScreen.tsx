@@ -2,7 +2,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Text,
-  Image,
   KeyboardAvoidingView,
   ScrollView,
   TouchableWithoutFeedback,
@@ -11,11 +10,11 @@ import {
 } from 'react-native';
 import Input from '../../../../components/Input/Input';
 import Button from '../../../../components/Button/Button';
-import logoMindcare from '../../../../assets/images/logo_mindcare.png';
 import ReturnButton from '@/components/Return_Button/Return_Button';
 import StepProgress from '@/components/StepProgress/StepProgress';
 import { useRouter } from 'expo-router';
 import { styles } from './styles';
+import CreateAccountIntro from '@/components/CreateAccountIntro/CreateAccountIntro';
 
 export default function CadastroDadosPessoaisScreen() {
   const [fullname, setFullName] = useState('');
@@ -25,7 +24,6 @@ export default function CadastroDadosPessoaisScreen() {
   const [userheight, setUserHeight] = useState('');
   const [userweight, setUserWeight] = useState('');
   const [keyboardVisible, setKeyboardVisible] = useState(false);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
   const [step] = React.useState<1 | 2 | 3>(1);
   const router = useRouter();
@@ -36,7 +34,6 @@ export default function CadastroDadosPessoaisScreen() {
     });
     const hideSub = Keyboard.addListener('keyboardDidHide', () => {
       setKeyboardVisible(false);
-      setIsPasswordFocused(false);
     });
     return () => {
       showSub.remove();
@@ -52,8 +49,6 @@ export default function CadastroDadosPessoaisScreen() {
       : keyboardVisible
         ? 'height'
         : undefined;
-
-  const showLogo = !(keyboardVisible && isPasswordFocused);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
@@ -74,12 +69,7 @@ export default function CadastroDadosPessoaisScreen() {
             keyboardShouldPersistTaps='handled'
             showsVerticalScrollIndicator={false}
           >
-            {showLogo && (
-              <Image
-                source={logoMindcare}
-                style={[styles.image, keyboardVisible && styles.imageSmall]}
-              />
-            )}
+            <CreateAccountIntro />
             <StepProgress currentStep={step} />
             <Input
               label='Nome Completo'

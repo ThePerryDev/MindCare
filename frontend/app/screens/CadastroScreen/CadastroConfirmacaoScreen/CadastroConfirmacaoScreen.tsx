@@ -2,32 +2,32 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Text,
-  Image,
   KeyboardAvoidingView,
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
 } from 'react-native';
-import Input from '../../../../components/Input/Input';
 import Button from '../../../../components/Button/Button';
-import logoMindcare from '../../../../assets/images/logo_mindcare.png';
 import ReturnButton from '@/components/Return_Button/Return_Button';
 import StepProgress from '@/components/StepProgress/StepProgress';
 import { useRouter } from 'expo-router';
 import { styles } from './styles';
+import CreateAccountIntro from '@/components/CreateAccountIntro/CreateAccountIntro';
+import ConsentCard from '@/components/ConsentCard/ConsentCard';
+import TermsOfUse from '@/components/TermsOfUse/TermsOfUse';
+import PrivacyPolicy from '@/components/PrivacyPolicy/PrivacyPolicy';
+import PersonalDataLGPD from '@/components/PersonalDataLGPD/PersonalDataLGPD';
 
 export default function CadastroConfirmacaoScreen() {
-  const [fullname, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phonenumber, setPhoneNumber] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [userheight, setUserHeight] = useState('');
-  const [userweight, setUserWeight] = useState('');
+  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [agreeLgpd, setAgreeLgpd] = useState(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
   const [step] = React.useState<1 | 2 | 3>(3);
+  const [showTerms, setShowTerms] = useState(false);
+  const [showPolicy, setShowPolicy] = useState(false);
+  const [showLGPD, setShowLGPD] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -36,7 +36,6 @@ export default function CadastroConfirmacaoScreen() {
     });
     const hideSub = Keyboard.addListener('keyboardDidHide', () => {
       setKeyboardVisible(false);
-      setIsPasswordFocused(false);
     });
     return () => {
       showSub.remove();
@@ -52,8 +51,6 @@ export default function CadastroConfirmacaoScreen() {
       : keyboardVisible
         ? 'height'
         : undefined;
-
-  const showLogo = !(keyboardVisible && isPasswordFocused);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
@@ -74,49 +71,38 @@ export default function CadastroConfirmacaoScreen() {
             keyboardShouldPersistTaps='handled'
             showsVerticalScrollIndicator={false}
           >
-            {showLogo && (
-              <Image
-                source={logoMindcare}
-                style={[styles.image, keyboardVisible && styles.imageSmall]}
-              />
-            )}
+            <CreateAccountIntro />
             <StepProgress currentStep={step} />
-            <Input
-              label='Nome Completo'
-              placeholder='Digite seu nome completo'
-              value={fullname}
-              onChangeText={setFullName}
+            <ConsentCard
+              checked={agreeTerms}
+              onToggle={() => setAgreeTerms(v => !v)}
+              prefix='Concordo com os '
+              link1Label='Termos de Uso'
+              onPressLink1={() => setShowTerms(true)}
+              middle=' e '
+              link2Label='Política de Privacidade'
+              onPressLink2={() => setShowPolicy(true)}
+              suffix=' do MindCare.'
             />
-            <Input
-              label='E-mail'
-              placeholder='Digite seu e-mail'
-              value={email}
-              onChangeText={setEmail}
+            <TermsOfUse
+              visible={showTerms}
+              onClose={() => setShowTerms(false)}
             />
-
-            <Input
-              label='Telefone'
-              placeholder='(99)99999-9999'
-              value={phonenumber}
-              onChangeText={setPhoneNumber}
+            <PrivacyPolicy
+              visible={showPolicy}
+              onClose={() => setShowPolicy(false)}
             />
-            <Input
-              label='Data de Nascimento'
-              placeholder='01/01/2025'
-              value={birthday}
-              onChangeText={setBirthday}
+            <ConsentCard
+              checked={agreeLgpd}
+              onToggle={() => setAgreeLgpd(v => !v)}
+              prefix='Autorizo o '
+              link1Label='tratamento dos meus dados pessoais '
+              onPressLink1={() => setShowLGPD(true)}
+              suffix='conforme a LGPD.'
             />
-            <Input
-              label='Altura'
-              placeholder='Digite sua altura'
-              value={userheight}
-              onChangeText={setUserHeight}
-            />
-            <Input
-              label='Peso'
-              placeholder='Digite seu peso'
-              value={userweight}
-              onChangeText={setUserWeight}
+            <PersonalDataLGPD
+              visible={showLGPD}
+              onClose={() => setShowLGPD(false)}
             />
             <ReturnButton
               onPress={() =>
@@ -128,13 +114,9 @@ export default function CadastroConfirmacaoScreen() {
               <Text>Voltar</Text>
             </ReturnButton>
             <Button
-              onPress={() =>
-                router.push(
-                  '/screens/CadastroScreen/CadastroSegurancaScreen/CadastroSegurancaScreen'
-                )
-              }
+              onPress={() => router.push('/screens/LoginScreen/LoginScreen')}
             >
-              <Text>Próximo</Text>
+              <Text>Finalizar Cadastro</Text>
             </Button>
           </ScrollView>
         </TouchableWithoutFeedback>
