@@ -1,14 +1,14 @@
-import React from "react";
-import { View, Text } from "react-native";
-import Card from "@/components/Card/Card";
-import { styles } from "./styles";
+import React from 'react';
+import { View, Text } from 'react-native';
+import Card from '@/components/Card/Card';
+import { styles } from './styles';
 
 export default function WeeklyResults() {
   const results = [
-    { label: "Dias Ativos", value: "0/7" },
-    { label: "Humor Médio", value: "0.0" },
-    { label: "Atividades Feitas", value: "0/7" },
-    { label: "Trilhas Feitas", value: "0/10" },
+    { label: 'Dias Ativos', value: '0/7' },
+    { label: 'Humor Médio', value: '0.0' },
+    { label: 'Atividades Feitas', value: '0/7' },
+    { label: 'Trilhas Feitas', value: '0/10' },
   ];
 
   return (

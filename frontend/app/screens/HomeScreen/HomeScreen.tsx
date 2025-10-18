@@ -10,7 +10,7 @@ import Navbar from '@/components/Navbar/Navbar';
 
 export default function HomeScreen() {
   const handleMoodPress = () => {
-    // eslint-disable-next-line no-console
+    // eslint-disable-next-line no-undef
     console.log('Botão de humor pressionado');
   };
 
@@ -27,7 +27,9 @@ export default function HomeScreen() {
 
         {/* Botão principal */}
         <View style={styles.buttonWrapper}>
-          <Button onPress={handleMoodPress}>Como está se sentindo hoje?</Button>
+          <Button onPress={handleMoodPress}>
+            <Text>Como está se sentindo hoje?</Text>
+          </Button>
         </View>
 
         {/* Componentes principais */}

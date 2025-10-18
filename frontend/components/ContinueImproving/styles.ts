@@ -2,29 +2,11 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   card: {
-    width: '100%',
-    borderRadius: 16,
     backgroundColor: '#fff',
-    padding: 20,
+    borderRadius: 16,
     marginBottom: 20,
-  },
-  title: {
-    color: '#4C46B6',
-    fontSize: 16,
-    fontWeight: '700',
-    textAlign: 'center',
-    marginBottom: 12,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  textContainer: {},
-  trackLabel: {
-    color: '#333',
-    fontWeight: '600',
-    fontSize: 14,
+    padding: 20,
+    width: '100%',
   },
   exerciseLabel: {
     color: '#777',
@@ -32,14 +14,32 @@ export const styles = StyleSheet.create({
     marginTop: 2,
   },
   playButton: {
-    width: 50,
-    height: 50,
     borderRadius: 25,
+    height: 50,
     overflow: 'hidden',
+    width: 50,
   },
   playGradient: {
-    flex: 1,
     alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
+  },
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textContainer: {},
+  title: {
+    color: '#4C46B6',
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  trackLabel: {
+    color: '#333',
+    fontSize: 14,
+    fontWeight: '600',
   },
 });
