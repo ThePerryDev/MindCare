@@ -117,3 +117,7 @@ export const logout = async (_req: Request, res: Response) => {
   res.clearCookie('refreshToken', { path: '/api/v1/auth/refresh' });
   return res.status(200).json({ message: 'logout efetuado' });
 };
+
+
+
+//heclair
