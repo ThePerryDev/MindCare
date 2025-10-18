@@ -12,7 +12,6 @@ import {
   Platform,
   InteractionManager, // +++
 } from 'react-native';
-import Input from '../../../../components/Input/Input';
 import Button from '../../../../components/Button/Button';
 import ReturnButton from '@/components/Return_Button/Return_Button';
 import StepProgress from '@/components/StepProgress/StepProgress';
@@ -20,6 +19,7 @@ import { useRouter } from 'expo-router';
 import { styles } from './styles';
 import CreateAccountIntro from '@/components/CreateAccountIntro/CreateAccountIntro';
 import PasswordRequirements from '@/components/PasswordRequirements/PasswordRequirements';
+import PasswordInput from '@/components/PasswordInput/PasswordInput';
 
 export default function CadastroSegurancaScreen() {
   const [password, setPassword] = useState('');
@@ -76,7 +76,7 @@ export default function CadastroSegurancaScreen() {
             <CreateAccountIntro />
             <StepProgress currentStep={step} />
 
-            <Input
+            <PasswordInput
               label='Senha'
               placeholder='Digite sua senha'
               value={password}
@@ -86,7 +86,7 @@ export default function CadastroSegurancaScreen() {
 
             <PasswordRequirements password={password} />
 
-            <Input
+            <PasswordInput
               label='Confirmar Senha'
               placeholder='Digite novamente sua senha'
               value={confirmpassword}

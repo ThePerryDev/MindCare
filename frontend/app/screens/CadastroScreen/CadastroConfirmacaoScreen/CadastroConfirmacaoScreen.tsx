@@ -15,6 +15,9 @@ import { useRouter } from 'expo-router';
 import { styles } from './styles';
 import CreateAccountIntro from '@/components/CreateAccountIntro/CreateAccountIntro';
 import ConsentCard from '@/components/ConsentCard/ConsentCard';
+import TermsOfUse from '@/components/TermsOfUse/TermsOfUse';
+import PrivacyPolicy from '@/components/PrivacyPolicy/PrivacyPolicy';
+import PersonalDataLGPD from '@/components/PersonalDataLGPD/PersonalDataLGPD';
 
 export default function CadastroConfirmacaoScreen() {
   const [agreeTerms, setAgreeTerms] = useState(false);
@@ -22,6 +25,9 @@ export default function CadastroConfirmacaoScreen() {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
   const [step] = React.useState<1 | 2 | 3>(3);
+  const [showTerms, setShowTerms] = useState(false);
+  const [showPolicy, setShowPolicy] = useState(false);
+  const [showLGPD, setShowLGPD] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -72,25 +78,31 @@ export default function CadastroConfirmacaoScreen() {
               onToggle={() => setAgreeTerms(v => !v)}
               prefix='Concordo com os '
               link1Label='Termos de Uso'
-              onPressLink1={() => {
-                /* abrir tela/Linking.openURL(...) */
-              }}
+              onPressLink1={() => setShowTerms(true)}
               middle=' e '
               link2Label='Política de Privacidade'
-              onPressLink2={() => {
-                /* abrir tela/Linking.openURL(...) */
-              }}
+              onPressLink2={() => setShowPolicy(true)}
               suffix=' do MindCare.'
+            />
+            <TermsOfUse
+              visible={showTerms}
+              onClose={() => setShowTerms(false)}
+            />
+            <PrivacyPolicy
+              visible={showPolicy}
+              onClose={() => setShowPolicy(false)}
             />
             <ConsentCard
               checked={agreeLgpd}
               onToggle={() => setAgreeLgpd(v => !v)}
-              prefix='Autorizo o tratamento dos meus dados pessoais conforme a '
-              link1Label='LGPD'
-              onPressLink1={() => {
-                /* abrir tela/Linking.openURL(...) */
-              }}
-              suffix='.'
+              prefix='Autorizo o '
+              link1Label='tratamento dos meus dados pessoais '
+              onPressLink1={() => setShowLGPD(true)}
+              suffix='conforme a LGPD.'
+            />
+            <PersonalDataLGPD
+              visible={showLGPD}
+              onClose={() => setShowLGPD(false)}
             />
             <ReturnButton
               onPress={() =>
@@ -102,13 +114,9 @@ export default function CadastroConfirmacaoScreen() {
               <Text>Voltar</Text>
             </ReturnButton>
             <Button
-              onPress={() =>
-                router.push(
-                  '/screens/CadastroScreen/CadastroSegurancaScreen/CadastroSegurancaScreen'
-                )
-              }
+              onPress={() => router.push('/screens/LoginScreen/LoginScreen')}
             >
-              <Text>Próximo</Text>
+              <Text>Finalizar Cadastro</Text>
             </Button>
           </ScrollView>
         </TouchableWithoutFeedback>
