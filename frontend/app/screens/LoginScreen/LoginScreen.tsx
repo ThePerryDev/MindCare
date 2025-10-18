@@ -95,7 +95,7 @@ export default function LoginScreen() {
               onBlur={() => setIsPasswordFocused(false)}
             />
 
-            <Button onPress={() => Alert.alert('Login', 'Botão pressionado!')}>
+            <Button onPress={() => router.push('../screens/HomeScreen/HomeScreen')}>
               <Text>Login</Text>
             </Button>
 
