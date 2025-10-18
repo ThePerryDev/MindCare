@@ -2,17 +2,24 @@ import { StyleSheet } from 'react-native';
 import { theme } from '../../styles/theme';
 
 export const styles = StyleSheet.create({
-  gradient: {
+  cardcontainer: {
+    alignContent: 'center',
+    backgroundColor: 'rgba(108, 99, 255, 0.05)',
+    borderColor: 'rgba(108, 99, 255, 0.10)',
     borderRadius: 16,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    borderWidth: 1,
+    height: 70,
+    justifyContent: 'center',
+    marginBottom: 5,
+    marginTop: 5,
+    padding: 12,
   },
   link: {
-    color: '#EAE6FF', // tom mais claro para “links”
+    color: '#8E54E9',
     fontFamily: theme.fonts.semi,
     fontSize: 14,
+    fontWeight: 'bold',
     lineHeight: 18,
-    textDecorationLine: 'underline',
   },
   pressable: {
     borderRadius: 16,
@@ -28,7 +35,7 @@ export const styles = StyleSheet.create({
     gap: 12,
   },
   text: {
-    color: 'rgba(255,255,255,0.95)',
+    color: '#656B6F',
     flexShrink: 1,
     fontFamily: theme.fonts.regular,
     fontSize: 14,

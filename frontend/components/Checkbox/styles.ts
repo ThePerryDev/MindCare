@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   },
   circleUnchecked: {
     backgroundColor: 'transparent',
-    borderColor: '#C3B7FF',
+    borderColor: '#6C63FF',
   },
   pressable: {
     alignItems: 'center',

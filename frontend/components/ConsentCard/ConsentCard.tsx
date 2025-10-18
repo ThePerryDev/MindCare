@@ -1,6 +1,5 @@
 import React from 'react';
 import { Pressable, Text, View, GestureResponderEvent } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import Checkbox from '../Checkbox/Checkbox';
 import { styles } from './styles';
 
@@ -30,7 +29,6 @@ export default function ConsentCard({
   link2Label,
   onPressLink2,
   suffix = '',
-  gradientColors = ['#6C63FF', '#A393FF'],
   disabled = false,
 }: ConsentCardProps) {
   return (
@@ -40,12 +38,7 @@ export default function ConsentCard({
       style={({ pressed }) => [styles.pressable, pressed && styles.pressed]}
       hitSlop={4}
     >
-      <LinearGradient
-        colors={gradientColors}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.gradient}
-      >
+      <View style={styles.cardcontainer}>
         <View style={styles.row}>
           <Checkbox checked={checked} onToggle={onToggle} />
 
@@ -69,7 +62,7 @@ export default function ConsentCard({
             {suffix ? <Text style={styles.text}>{suffix}</Text> : null}
           </Text>
         </View>
-      </LinearGradient>
+      </View>
     </Pressable>
   );
 }

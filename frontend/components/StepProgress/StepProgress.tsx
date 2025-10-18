@@ -83,9 +83,14 @@ function Dot({ index, state }: { index: number; state: Step }) {
 
   if (state === 'completed') {
     return (
-      <View style={[styles.dot, styles.dotCompleted]}>
+      <LinearGradient
+        colors={['#4776E6', '#8E54E9']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={[styles.dot, styles.dotCompleted]}
+      >
         <Text style={styles.dotCheck}>✓</Text>
-      </View>
+      </LinearGradient>
     );
   }
 

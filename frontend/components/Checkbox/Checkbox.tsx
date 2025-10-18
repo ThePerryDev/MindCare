@@ -6,7 +6,7 @@ import { styles } from './styles';
 export interface CheckboxProps {
   checked: boolean;
   onToggle: () => void;
-  size?: number; // diâmetro (px)
+  size?: number;
   disabled?: boolean;
   accessibilityLabel?: string;
 }
