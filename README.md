@@ -11,7 +11,7 @@
 | **Willian**   | LDM-053 | LDM-060 | XXX-067 | XXX-074 | XXX-081 | XXX-088 |
 | **Bianca**    | XXX-054 | XXX-061 | XXX-068 | XXX-075 | XXX-082 | XXX-089 |
 | **Daniel**    | LDM-055 | XXX-062 | XXX-069 | XXX-076 | XXX-083 | XXX-090 |
-| **Heclair**   | LDM-056 | XXX-063 | XXX-070 | XXX-077 | XXX-084 | XXX-091 |
+| **Heclair**   | LDM-056 | XXX-063 | LDM-070 | XXX-077 | XXX-084 | XXX-091 |
 
 
 | **Eduardo**   | **Nome da tarefa** | **Descrição** |
@@ -76,9 +76,9 @@
 
 | **Heclair** | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **13/10/2025** | XXX-056 | XXX |
-| **15/10/2025** | XXX-063 | XXX |
-| **17/10/2025** | XXX-070 | XXX |
+| **13/10/2025** | LDM-056 |  Reunião de alinhamento e distribuição de atividades da Sprint II |
+| **15/10/2025** | XXX-063 | Feriado - dia dos professores |
+| **17/10/2025** | LDM-070 | Setup inicial do projeto para criação das coleções de registro e trilhas |
 | **21/10/2025** | XXX-077 | XXX |
 | **23/10/2025** | XXX-084 | XXX |
 | **31/10/2025** | XXX-091 | XXX |
