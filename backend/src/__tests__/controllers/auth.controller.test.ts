@@ -126,6 +126,20 @@ describe('Auth Controller', () => {
       expect(response.status).toBe(500);
       expect(response.body).toHaveProperty('error');
     });
+
+    it('deve usar mensagem de erro padrão quando err.message é undefined no register', async () => {
+      mockUserModel.findOne.mockResolvedValue(null);
+      // Simulate error without message property to test branch coverage line 68
+      const errorWithoutMessage = { code: 'UNKNOWN_ERROR' };
+      mockUserModel.create.mockRejectedValue(errorWithoutMessage);
+
+      const response = await request(app)
+        .post('/register')
+        .send(validRegistrationData);
+
+      expect(response.status).toBe(500);
+      expect(response.body.error).toBe('erro ao registrar');
+    });
   });
 
   describe('POST /login', () => {
@@ -197,6 +211,17 @@ describe('Auth Controller', () => {
       expect(response.status).toBe(500);
       expect(response.body).toHaveProperty('error');
     });
+
+    it('deve usar mensagem de erro padrão quando err.message é undefined no login', async () => {
+      mockUserModel.findOne.mockReturnValue({
+        select: jest.fn().mockRejectedValue({ code: 'UNKNOWN_ERROR' }), // Error without message
+      } as any);
+
+      const response = await request(app).post('/login').send(validLoginData);
+
+      expect(response.status).toBe(500);
+      expect(response.body.error).toBe('erro ao fazer login');
+    });
   });
 
   describe('POST /refresh', () => {
@@ -213,6 +238,55 @@ describe('Auth Controller', () => {
 
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('accessToken');
+    });
+
+    it('deve usar TTL padrão quando variáveis de ambiente não estão definidas', async () => {
+      // Test branch coverage for default TTL values
+      const originalAccessTTL = process.env.ACCESS_TOKEN_TTL;
+      const originalRefreshTTL = process.env.REFRESH_TOKEN_TTL;
+
+      delete process.env.ACCESS_TOKEN_TTL;
+      delete process.env.REFRESH_TOKEN_TTL;
+
+      const validToken = jwt.sign(
+        { sub: mockUser.id },
+        process.env.JWT_REFRESH_SECRET!
+      );
+      mockUserModel.findById.mockResolvedValue(mockUser as any);
+
+      const response = await request(app)
+        .post('/refresh')
+        .set('Cookie', [`refreshToken=${validToken}`]);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('accessToken');
+
+      // Restore environment
+      process.env.ACCESS_TOKEN_TTL = originalAccessTTL;
+      process.env.REFRESH_TOKEN_TTL = originalRefreshTTL;
+    });
+
+    it('deve configurar cookie com domínio quando variável de ambiente está definida', async () => {
+      // Test branch coverage for domain cookie configuration
+      const originalDomain = process.env.REFRESH_COOKIE_DOMAIN;
+      process.env.REFRESH_COOKIE_DOMAIN = 'example.com';
+
+      const validToken = jwt.sign(
+        { sub: mockUser.id },
+        process.env.JWT_REFRESH_SECRET!
+      );
+      mockUserModel.findById.mockResolvedValue(mockUser as any);
+
+      const response = await request(app)
+        .post('/refresh')
+        .set('Cookie', [`refreshToken=${validToken}`]);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('accessToken');
+      expect(response.headers['set-cookie']).toBeTruthy();
+
+      // Restore environment
+      process.env.REFRESH_COOKIE_DOMAIN = originalDomain;
     });
 
     it('deve retornar erro quando refresh token está ausente', async () => {

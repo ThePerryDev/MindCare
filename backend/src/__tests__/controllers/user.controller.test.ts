@@ -137,6 +137,19 @@ describe('Users Controller', () => {
       expect(response.status).toBe(500);
       expect(response.body.message).toBe('Erro interno');
     });
+
+    it('deve usar mensagem padrão quando erro não tem message no create', async () => {
+      // Test branch coverage for line 43 - fallback message when e.message is undefined
+      const savedUser = { ...mockUser };
+      savedUser.save.mockRejectedValue({ code: 'UNKNOWN_ERROR' }); // Error without message
+
+      (UserModel as any).mockImplementation(() => savedUser);
+
+      const response = await request(app).post('/users').send(validUserData);
+
+      expect(response.status).toBe(500);
+      expect(response.body.message).toBe('Erro interno do servidor');
+    });
   });
 
   describe('GET /users/:id', () => {
@@ -156,12 +169,10 @@ describe('Users Controller', () => {
 
     it('deve retornar campos específicos quando especificados na query', async () => {
       mockUserModel.findById.mockReturnValue({
-        select: jest
-          .fn()
-          .mockResolvedValue({
-            fullName: 'Maria Silva',
-            email: 'maria@teste.com',
-          }),
+        select: jest.fn().mockResolvedValue({
+          fullName: 'Maria Silva',
+          email: 'maria@teste.com',
+        }),
       } as any);
 
       const response = await request(app).get(
@@ -210,6 +221,28 @@ describe('Users Controller', () => {
 
       expect(response.status).toBe(500);
       expect(response.body.message).toBe('Erro ao buscar dados do usuário.');
+    });
+
+    it('deve retornar erro 400 quando ID está vazio', async () => {
+      // Testando com parâmetro ID vazio (não undefined, mas string vazia)
+      // Como não conseguimos testar ID vazio via URL, vamos testar diretamente
+
+      // Como o Express não consegue routear um ID vazio diretamente,
+      // vamos testar com undefined via mock direto
+      const req = { params: { id: undefined }, query: {} };
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockReturnThis(),
+      };
+
+      const result = await UsersController.getUserDataById(
+        req as any,
+        res as any
+      );
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        message: 'O ID do usuário é necessário.',
+      });
     });
   });
 
@@ -374,6 +407,60 @@ describe('Users Controller', () => {
       expect(response.body.message).toBe(
         'O e-mail outro@teste.com já está em uso.'
       );
+    });
+
+    it('deve retornar erro de validação mongoose', async () => {
+      const validationError = {
+        errors: {
+          email: { message: 'Email é obrigatório' },
+          fullName: { message: 'Nome completo é obrigatório' },
+        },
+      };
+
+      mockUserModel.findByIdAndUpdate.mockReturnValue({
+        select: jest.fn().mockRejectedValue(validationError),
+      } as any);
+
+      const response = await request(app)
+        .put('/users/507f1f77bcf86cd799439011')
+        .send({ email: '' });
+
+      expect(response.status).toBe(400);
+      expect(response.body.message).toEqual([
+        'Email é obrigatório',
+        'Nome completo é obrigatório',
+      ]);
+    });
+
+    it('deve retornar erro genérico 500 para erros não tratados', async () => {
+      const genericError = new Error('Erro de conexão com o banco');
+
+      mockUserModel.findByIdAndUpdate.mockReturnValue({
+        select: jest.fn().mockRejectedValue(genericError),
+      } as any);
+
+      const response = await request(app)
+        .put('/users/507f1f77bcf86cd799439011')
+        .send({ fullName: 'Nome Teste' });
+
+      expect(response.status).toBe(500);
+      expect(response.body.message).toBe('Erro de conexão com o banco');
+    });
+
+    it('deve usar mensagem padrão quando erro não tem message no update', async () => {
+      // Test branch coverage for line 127 - fallback message when e.message is undefined
+      const errorWithoutMessage = { code: 'UNKNOWN_ERROR' };
+
+      mockUserModel.findByIdAndUpdate.mockReturnValue({
+        select: jest.fn().mockRejectedValue(errorWithoutMessage),
+      } as any);
+
+      const response = await request(app)
+        .put('/users/507f1f77bcf86cd799439011')
+        .send({ fullName: 'Nome Teste' });
+
+      expect(response.status).toBe(500);
+      expect(response.body.message).toBe('Erro ao atualizar usuário.');
     });
   });
 
