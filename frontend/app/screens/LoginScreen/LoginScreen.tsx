@@ -1,7 +1,6 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  Alert,
   Text,
   Image,
   Pressable,
@@ -95,7 +94,9 @@ export default function LoginScreen() {
               onBlur={() => setIsPasswordFocused(false)}
             />
 
-            <Button onPress={() => Alert.alert('Login', 'Botão pressionado!')}>
+            <Button
+              onPress={() => router.push('../screens/HomeScreen/HomeScreen')}
+            >
               <Text>Login</Text>
             </Button>
 
