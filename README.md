@@ -6,7 +6,7 @@
 | **NOME**   | **13/10/2025** | **15/10/2025** | **17/10/2025** | **21/10/2025** | **23/10/2025** | **31/10/2025** |
 |-----------|---------------|---------------|---------------|---------------|---------------|---------------|
 | **Eduardo**   | LDM-050 | LDM-057 | XXX-064 | XXX-071 | XXX-078 | XXX-085 |
-| **Franciele** | LDM-051 | XXX-058 | QA-065 | XXX-072 | XXX-079 | XXX-086 |
+| **Franciele** | LDM-051 | XXX-058 | QA-065 | QA-072 | XXX-079 | XXX-086 |
 | **Claudia**   | XXX-052 | XXX-059 | XXX-066 | XXX-073 | XXX-080 | XXX-087 |
 | **Willian**   | LDM-053 | LDM-060 | LDM-067 | XXX-074 | XXX-081 | XXX-088 |
 | **Bianca**    | XXX-054 | XXX-061 | XXX-068 | XXX-075 | XXX-082 | XXX-089 |
@@ -27,9 +27,9 @@
 | **Franciele** | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
 | **13/10/2025** | LDM-051 | Refinamento de produto e reunião de alinhamento com o time |
-| **15/10/2025** | XXX-058 | XXX |
+| **15/10/2025** | XXX-058 | Feriado - dia dos professores |
 | **17/10/2025** | QA-065 | Elaborando cenários de teste |
-| **21/10/2025** | XXX-072 | XXX |
+| **21/10/2025** | QA-072 | Finalizando cobertura de testes (BE) |
 | **23/10/2025** | XXX-079 | XXX |
 | **31/10/2025** | XXX-086 | XXX |
 
