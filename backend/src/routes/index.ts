@@ -2,6 +2,7 @@
 import { Router } from 'express';
 import authRoutes from './auth.routes';
 import userRoutes from './user.routes';
+import feelingRoutes from './feeling.routes';
 
 const router = Router();
 
@@ -12,6 +13,7 @@ const v1 = Router();
 // Monta recursos da v1
 v1.use('/auth', authRoutes); // /api/v1/auth/...
 v1.use('/users', userRoutes); // /api/v1/users/...
+v1.use('/feelings', feelingRoutes);
 
 // Encadeia versão dentro de /api
 api.use('/v1', v1);
