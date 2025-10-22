@@ -95,7 +95,7 @@ export default function LoginScreen() {
             />
 
             <Button
-              onPress={() => router.push('../screens/HomeScreen/HomeScreen')}
+              onPress={() => router.push('/screens/HomeScreen/HomeScreen')}
             >
               <Text>Login</Text>
             </Button>
@@ -109,7 +109,7 @@ export default function LoginScreen() {
               <Pressable
                 onPress={() =>
                   router.push(
-                    '../screens/CadastroScreen/CadastroDadosPessoaisScreen/CadastroDadosPessoaisScreen'
+                    '/screens/CadastroScreen/CadastroDadosPessoaisScreen/CadastroDadosPessoaisScreen'
                   )
                 }
               >

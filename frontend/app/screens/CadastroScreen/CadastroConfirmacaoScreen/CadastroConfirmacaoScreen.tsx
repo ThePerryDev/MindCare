@@ -114,7 +114,11 @@ export default function CadastroConfirmacaoScreen() {
               <Text>Voltar</Text>
             </ReturnButton>
             <Button
-              onPress={() => router.push('/screens/LoginScreen/LoginScreen')}
+              onPress={() =>
+                router.push(
+                  '/screens/CadastroScreen/CadastroFinalizadoScreen/CadastroFinalizadoScreen'
+                )
+              }
             >
               <Text>Finalizar Cadastro</Text>
             </Button>
