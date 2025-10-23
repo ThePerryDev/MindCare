@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
     height: 32,
     justifyContent: 'center',
     marginRight: 8,
+    overflow: 'hidden',
     width: 32,
   },
 
@@ -103,7 +104,7 @@ export const styles = StyleSheet.create({
 
   inputArea: {
     backgroundColor: '#F4EFFF',
-    paddingBottom: 60, // Espaço para a navbar
+    paddingBottom: 60,
     paddingTop: 8,
   },
 

@@ -4,23 +4,22 @@ export const NAVBAR_HEIGHT = 40;
 
 export const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    left: 20,
-    right: 20,
-    bottom: 50,
-    height: NAVBAR_HEIGHT,
+    alignItems: 'center',
     backgroundColor: '#FFFFFF',
     borderRadius: 40,
+    bottom: 50,
+    elevation: 8,
     flexDirection: 'row',
-    alignItems: 'center',
+    height: NAVBAR_HEIGHT,
     justifyContent: 'space-around',
+    left: 20,
     paddingHorizontal: 25,
-    // sombra suave e flutuante
+    position: 'absolute',
+    right: 20,
     shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 10,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 8,
     zIndex: 50,
   },
 });

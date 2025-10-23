@@ -10,6 +10,7 @@ import {
   Keyboard,
   Platform,
   KeyboardAvoidingView,
+  StyleSheet,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -22,6 +23,12 @@ interface Message {
   sender: 'bot' | 'user';
   timestamp: Date;
 }
+
+// Estilos locais para evitar inline styles
+const localStyles = StyleSheet.create({
+  messagesPaddingDefault: { paddingBottom: 80 },
+  messagesPaddingKeyboard: { paddingBottom: 20 },
+});
 
 export default function ChatBotScreen() {
   const [messages, setMessages] = useState<Message[]>([
@@ -72,10 +79,9 @@ export default function ChatBotScreen() {
       setKeyboardVisible(true);
       setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
     });
-    const hideListener = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardVisible(false);
-    });
-
+    const hideListener = Keyboard.addListener('keyboardDidHide', () =>
+      setKeyboardVisible(false)
+    );
     return () => {
       showListener.remove();
       hideListener.remove();
@@ -96,7 +102,6 @@ export default function ChatBotScreen() {
       timestamp: new Date(),
     });
     setInputText('');
-
     setTimeout(() => {
       append({
         id: (Date.now() + 1).toString(),
@@ -115,6 +120,10 @@ export default function ChatBotScreen() {
       timestamp: new Date(),
     });
   };
+
+  const messagesPaddingStyle = isKeyboardVisible
+    ? localStyles.messagesPaddingKeyboard
+    : localStyles.messagesPaddingDefault;
 
   return (
     <SafeAreaView style={styles.background} edges={['top']}>
@@ -141,8 +150,8 @@ export default function ChatBotScreen() {
       {/* CONTEÚDO */}
       <KeyboardAvoidingView
         style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? -50 : -50}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={0}
       >
         <View style={styles.chatContainer}>
           {/* MENSAGENS */}
@@ -151,7 +160,7 @@ export default function ChatBotScreen() {
             style={styles.messagesContainer}
             contentContainerStyle={[
               styles.messagesContent,
-              { paddingBottom: isKeyboardVisible ? 20 : 80 },
+              messagesPaddingStyle,
             ]}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps='handled'
@@ -171,15 +180,11 @@ export default function ChatBotScreen() {
                 >
                   {!isUser && (
                     <View style={styles.botAvatarSmall}>
-                      <Text style={styles.botAvatarSmallIcon}>
-                        <View style={styles.headerRight}>
-                          <Image
-                            source={robsonImg}
-                            style={styles.headerAvatar}
-                            resizeMode='cover'
-                          />
-                        </View>
-                      </Text>
+                      <Image
+                        source={robsonImg}
+                        style={styles.headerAvatar}
+                        resizeMode='cover'
+                      />
                     </View>
                   )}
                   <View
@@ -236,6 +241,7 @@ export default function ChatBotScreen() {
                   onChangeText={setInputText}
                   multiline
                   maxLength={500}
+                  onBlur={() => setKeyboardVisible(false)}
                 />
               </View>
 
@@ -249,8 +255,6 @@ export default function ChatBotScreen() {
             </View>
           </View>
         </View>
-
-        {!isKeyboardVisible}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
