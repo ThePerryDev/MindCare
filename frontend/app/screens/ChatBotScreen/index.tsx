@@ -1,5 +1,5 @@
 /* global setTimeout */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -31,47 +31,29 @@ export default function ChatBotScreen() {
       sender: 'bot',
       timestamp: new Date(),
     },
-    {
-      id: '2',
-      text: 'Oi! Estou me sentindo um pouco ansioso hoje..',
-      sender: 'user',
-      timestamp: new Date(),
-    },
-    {
-      id: '3',
-      text: 'Entendo que você está se sentindo ansioso. A ansiedade pode ser desafiadora, mas você não está sozinha. Vamos trabalhar juntos para encontrar estratégias que te ajudem.',
-      sender: 'bot',
-      timestamp: new Date(),
-    },
-    {
-      id: '4',
-      text: 'Baseado no que você compartilhou, tenho algumas trilhas que podem te ajudar. Gostaria de ver as recomendações? ✨',
-      sender: 'bot',
-      timestamp: new Date(),
-    },
-    {
-      id: '5',
-      text: 'Sim, por favor! Preciso de ajuda para lidar com isso.',
-      sender: 'user',
-      timestamp: new Date(),
-    },
   ]);
 
   const [inputText, setInputText] = useState('');
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-  const quickReplies = [
+  const scrollRef = useRef<ScrollView | null>(null);
+
+  const quickReplies = useRef<string[]>([
     'Ver trilhas',
     'Como funciona?',
     'Preciso de Ajuda',
     'Obrigado',
-  ];
-  const scrollRef = useRef<ScrollView>(null);
+  ]).current;
+
+  const scrollToEnd = useCallback(() => {
+    scrollRef.current?.scrollToEnd({ animated: true });
+  }, []);
 
   useEffect(() => {
     const showListener = Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardVisible(true);
-      setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
+      setTimeout(scrollToEnd, 100);
     });
+
     const hideListener = Keyboard.addListener('keyboardDidHide', () => {
       setKeyboardVisible(false);
     });
@@ -80,21 +62,27 @@ export default function ChatBotScreen() {
       showListener.remove();
       hideListener.remove();
     };
-  }, []);
+  }, [scrollToEnd]);
 
-  const append = (m: Message) => {
-    setMessages(prev => [...prev, m]);
-    setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
-  };
+  const append = useCallback(
+    (message: Message): void => {
+      setMessages(prev => [...prev, message]);
+      setTimeout(scrollToEnd, 100);
+    },
+    [scrollToEnd]
+  );
 
-  const handleSend = () => {
+  const handleSend = useCallback((): void => {
     if (!inputText.trim()) return;
-    append({
+
+    const userMsg: Message = {
       id: Date.now().toString(),
       text: inputText.trim(),
       sender: 'user',
       timestamp: new Date(),
-    });
+    };
+
+    append(userMsg);
     setInputText('');
 
     setTimeout(() => {
@@ -105,16 +93,25 @@ export default function ChatBotScreen() {
         timestamp: new Date(),
       });
     }, 600);
-  };
+  }, [inputText, append]);
 
-  const handleQuickReply = (reply: string) => {
-    append({
-      id: Date.now().toString(),
-      text: reply,
-      sender: 'user',
-      timestamp: new Date(),
-    });
-  };
+  const handleQuickReply = useCallback(
+    (reply: string): void => {
+      append({
+        id: Date.now().toString(),
+        text: reply,
+        sender: 'user',
+        timestamp: new Date(),
+      });
+    },
+    [append]
+  );
+
+  // ✅ remove inline style warning
+  const contentContainerStyle = [
+    styles.messagesContent,
+    { paddingBottom: isKeyboardVisible ? 20 : 80 },
+  ];
 
   return (
     <SafeAreaView style={styles.background} edges={['top']}>
@@ -142,22 +139,16 @@ export default function ChatBotScreen() {
       <KeyboardAvoidingView
         style={styles.flex}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? -50 : -50}
+        keyboardVerticalOffset={-50}
       >
         <View style={styles.chatContainer}>
-          {/* MENSAGENS */}
           <ScrollView
             ref={scrollRef}
             style={styles.messagesContainer}
-            contentContainerStyle={[
-              styles.messagesContent,
-              { paddingBottom: isKeyboardVisible ? 20 : 80 },
-            ]}
+            contentContainerStyle={contentContainerStyle}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps='handled'
-            onContentSizeChange={() =>
-              scrollRef.current?.scrollToEnd({ animated: true })
-            }
+            onContentSizeChange={scrollToEnd}
           >
             {messages.map(message => {
               const isUser = message.sender === 'user';
@@ -171,15 +162,11 @@ export default function ChatBotScreen() {
                 >
                   {!isUser && (
                     <View style={styles.botAvatarSmall}>
-                      <Text style={styles.botAvatarSmallIcon}>
-                        <View style={styles.headerRight}>
-                          <Image
-                            source={robsonImg}
-                            style={styles.headerAvatar}
-                            resizeMode='cover'
-                          />
-                        </View>
-                      </Text>
+                      <Image
+                        source={robsonImg}
+                        style={styles.headerAvatar}
+                        resizeMode='cover'
+                      />
                     </View>
                   )}
                   <View
@@ -202,9 +189,8 @@ export default function ChatBotScreen() {
             })}
           </ScrollView>
 
-          {/* ÁREA DE INPUT FIXA */}
+          {/* INPUT AREA */}
           <View style={styles.inputArea}>
-            {/* QUICK REPLIES */}
             <View style={styles.quickRepliesContainer}>
               <ScrollView
                 horizontal
@@ -225,7 +211,6 @@ export default function ChatBotScreen() {
               </ScrollView>
             </View>
 
-            {/* INPUT */}
             <View style={styles.inputRow}>
               <View style={styles.inputWrapper}>
                 <TextInput
@@ -249,8 +234,6 @@ export default function ChatBotScreen() {
             </View>
           </View>
         </View>
-
-        {!isKeyboardVisible}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
