@@ -2,6 +2,7 @@ import request from 'supertest';
 import express from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser'; // ✅ import correto
 import {
   register,
   login,
@@ -17,7 +18,7 @@ const mockUserModel = UserModel as jest.Mocked<typeof UserModel>;
 // Setup do app express para testes
 const app = express();
 app.use(express.json());
-app.use(require('cookie-parser')());
+app.use(cookieParser()); // ✅ sem require()
 
 // Rotas para teste
 app.post('/register', register);

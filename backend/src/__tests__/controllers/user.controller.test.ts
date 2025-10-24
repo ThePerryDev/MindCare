@@ -1,6 +1,5 @@
 import request from 'supertest';
 import express from 'express';
-import bcrypt from 'bcrypt';
 import UsersController from '../../controllers/user.controller';
 import UserModel from '../../models/user.model';
 

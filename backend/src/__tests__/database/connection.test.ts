@@ -1,82 +1,57 @@
-import mongoose from 'mongoose';
 import { connect } from '../../database/connection';
 
-// Mock do mongoose
-jest.mock('mongoose');
-const mockMongoose = mongoose as jest.Mocked<typeof mongoose>;
+// Mock seguro do mongoose antes do import real
+jest.mock('mongoose', () => ({
+  connect: jest.fn(),
+  connection: {
+    on: jest.fn(),
+    close: jest.fn(),
+  },
+}));
 
-// Mock do console
-const mockConsole = {
-  log: jest.fn(),
-  error: jest.fn(),
-};
-
-// Mock do process
-const mockProcess = {
-  on: jest.fn(),
-  exit: jest.fn(),
-};
+import mongoose from 'mongoose';
 
 describe('Database Connection', () => {
-  let mockConnection: any;
-  let originalConsole: any;
-  let originalProcess: any;
-
   beforeEach(() => {
     jest.clearAllMocks();
 
-    // Salva originais
-    originalConsole = { ...console };
-    originalProcess = process;
+    // Espiona logs em vez de substituir console
+    jest.spyOn(console, 'log').mockImplementation(() => {});
+    jest.spyOn(console, 'error').mockImplementation(() => {});
 
-    // Mock da conexão
-    mockConnection = {
-      on: jest.fn(),
-      close: jest.fn().mockResolvedValue(undefined),
-    };
+    // Espiona process.on e process.exit
+    jest.spyOn(process, 'on').mockImplementation(() => process);
+    jest.spyOn(process, 'exit').mockImplementation(() => undefined as never);
 
-    (mockMongoose as any).connection = mockConnection;
-    mockMongoose.connect = jest.fn().mockResolvedValue(undefined);
-
-    // Aplica mocks
-    console.log = mockConsole.log;
-    console.error = mockConsole.error;
-    (global as any).process = { ...process, ...mockProcess };
+    // Mocka comportamentos do mongoose
+    (mongoose.connect as jest.Mock).mockResolvedValue(undefined);
+    (mongoose.connection.on as jest.Mock).mockImplementation(
+      () => mongoose.connection
+    );
+    (mongoose.connection.close as jest.Mock).mockResolvedValue(undefined);
   });
 
   afterEach(() => {
-    // Restaura originais
-    console.log = originalConsole.log;
-    console.error = originalConsole.error;
-    (global as any).process = originalProcess;
+    jest.restoreAllMocks();
   });
 
+  // ================================================================
   describe('Função connect', () => {
     it('deve conectar ao MongoDB com sucesso', async () => {
-      // Arrange
       const uri = 'mongodb://localhost:27017/test';
-
-      // Act
       await connect(uri);
 
-      // Assert
-      expect(mockMongoose.connect).toHaveBeenCalledWith(uri, {
+      expect(mongoose.connect).toHaveBeenCalledWith(uri, {
         serverSelectionTimeoutMS: 5000,
         maxPoolSize: 10,
       });
-      expect(mockConsole.log).toHaveBeenCalledWith(
-        '[mongo] Conectado ao MongoDB'
-      );
+      expect(console.log).toHaveBeenCalledWith('[mongo] Conectado ao MongoDB');
     });
 
     it('deve configurar todos os event handlers da conexão', async () => {
-      // Arrange
       const uri = 'mongodb://localhost:27017/test';
-
-      // Act
       await connect(uri);
 
-      // Assert - Verifica se todos os eventos foram registrados
       const expectedEvents = [
         'connected',
         'open',
@@ -87,65 +62,50 @@ describe('Database Connection', () => {
         'error',
       ];
 
-      expectedEvents.forEach(event => {
-        expect(mockConnection.on).toHaveBeenCalledWith(
+      for (const event of expectedEvents) {
+        expect(mongoose.connection.on).toHaveBeenCalledWith(
           event,
           expect.any(Function)
         );
-      });
+      }
     });
 
     it('deve configurar handler para SIGINT', async () => {
-      // Arrange
       const uri = 'mongodb://localhost:27017/test';
-
-      // Act
       await connect(uri);
 
-      // Assert
-      expect(mockProcess.on).toHaveBeenCalledWith(
-        'SIGINT',
-        expect.any(Function)
-      );
+      expect(process.on).toHaveBeenCalledWith('SIGINT', expect.any(Function));
     });
 
     it('deve propagar erro de conexão', async () => {
-      // Arrange
       const uri = 'mongodb://invalid-uri';
       const error = new Error('Connection failed');
-      mockMongoose.connect.mockRejectedValue(error);
+      (mongoose.connect as jest.Mock).mockRejectedValue(error);
 
-      // Act & Assert
       await expect(connect(uri)).rejects.toThrow('Connection failed');
     });
 
     it('deve aceitar diferentes URIs', async () => {
-      // Arrange
       const uris = [
         'mongodb://localhost:27017/db1',
         'mongodb://user:pass@remote:27017/db2',
         'mongodb+srv://cluster.mongodb.net/db3',
       ];
 
-      // Act & Assert
       for (const uri of uris) {
         await connect(uri);
-        expect(mockMongoose.connect).toHaveBeenCalledWith(
-          uri,
-          expect.any(Object)
-        );
+        expect(mongoose.connect).toHaveBeenCalledWith(uri, expect.any(Object));
       }
     });
   });
 
+  // ================================================================
   describe('Event Handlers', () => {
-    let eventHandlers: { [key: string]: Function };
+    const eventHandlers: Record<string, (...args: unknown[]) => void> = {};
 
     beforeEach(async () => {
-      // Captura os event handlers
-      eventHandlers = {};
-      mockConnection.on.mockImplementation(
-        (event: string, handler: Function) => {
+      (mongoose.connection.on as jest.Mock).mockImplementation(
+        (event: string, handler: (...args: unknown[]) => void) => {
           eventHandlers[event] = handler;
         }
       );
@@ -154,147 +114,111 @@ describe('Database Connection', () => {
     });
 
     it('deve logar quando conectado', () => {
-      // Act
       eventHandlers.connected();
-
-      // Assert
-      expect(mockConsole.log).toHaveBeenCalledWith('[mongo] connected');
+      expect(console.log).toHaveBeenCalledWith('[mongo] connected');
     });
 
     it('deve logar quando aberto', () => {
-      // Act
       eventHandlers.open();
-
-      // Assert
-      expect(mockConsole.log).toHaveBeenCalledWith('[mongo] open');
+      expect(console.log).toHaveBeenCalledWith('[mongo] open');
     });
 
     it('deve logar quando desconectado', () => {
-      // Act
       eventHandlers.disconnected();
-
-      // Assert
-      expect(mockConsole.log).toHaveBeenCalledWith('[mongo] disconnected');
+      expect(console.log).toHaveBeenCalledWith('[mongo] disconnected');
     });
 
     it('deve logar quando reconectado', () => {
-      // Act
       eventHandlers.reconnected();
-
-      // Assert
-      expect(mockConsole.log).toHaveBeenCalledWith('[mongo] reconnected');
+      expect(console.log).toHaveBeenCalledWith('[mongo] reconnected');
     });
 
     it('deve logar quando desconectando', () => {
-      // Act
       eventHandlers.disconnecting();
-
-      // Assert
-      expect(mockConsole.log).toHaveBeenCalledWith('[mongo] disconnecting');
+      expect(console.log).toHaveBeenCalledWith('[mongo] disconnecting');
     });
 
     it('deve logar quando fechado', () => {
-      // Act
       eventHandlers.close();
-
-      // Assert
-      expect(mockConsole.log).toHaveBeenCalledWith('[mongo] close');
+      expect(console.log).toHaveBeenCalledWith('[mongo] close');
     });
 
     it('deve logar erro de conexão', () => {
-      // Arrange
       const error = new Error('Connection error');
-
-      // Act
       eventHandlers.error(error);
-
-      // Assert
-      expect(mockConsole.error).toHaveBeenCalledWith('[mongo] error', error);
+      expect(console.error).toHaveBeenCalledWith('[mongo] error', error);
     });
   });
 
+  // ================================================================
   describe('SIGINT Handler', () => {
-    let sigintHandler: Function;
+    let sigintHandler: (...args: unknown[]) => Promise<void>;
 
     beforeEach(async () => {
-      // Captura o handler do SIGINT
-      mockProcess.on.mockImplementation((signal: string, handler: Function) => {
-        if (signal === 'SIGINT') {
-          sigintHandler = handler;
+      (process.on as jest.Mock).mockImplementation(
+        (signal: string, handler: (...args: unknown[]) => void) => {
+          if (signal === 'SIGINT') sigintHandler = handler as any;
+          return process;
         }
-      });
+      );
 
       await connect('mongodb://localhost:27017/test');
     });
 
     it('deve fechar conexão graciosamente no SIGINT', async () => {
-      // Act
       await sigintHandler();
-
-      // Assert
-      expect(mockConnection.close).toHaveBeenCalled();
-      expect(mockConsole.log).toHaveBeenCalledWith(
+      expect(mongoose.connection.close).toHaveBeenCalled();
+      expect(console.log).toHaveBeenCalledWith(
         '[mongo] conexão fechada (SIGINT)'
       );
-      expect(mockProcess.exit).toHaveBeenCalledWith(0);
+      expect(process.exit).toHaveBeenCalledWith(0);
     });
 
     it('deve lidar com erro ao fechar conexão no SIGINT', async () => {
-      // Arrange
       const error = new Error('Close error');
-      mockConnection.close.mockRejectedValue(error);
+      (mongoose.connection.close as jest.Mock).mockRejectedValue(error);
 
-      // Act
       await sigintHandler();
 
-      // Assert
-      expect(mockConsole.error).toHaveBeenCalledWith(
+      expect(console.error).toHaveBeenCalledWith(
         '[mongo] erro ao fechar conexão',
         error
       );
-      expect(mockProcess.exit).toHaveBeenCalledWith(1);
+      expect(process.exit).toHaveBeenCalledWith(1);
     });
 
     it('deve tentar fechar conexão mesmo se já estiver fechada', async () => {
-      // Arrange
-      mockConnection.close.mockResolvedValue(undefined);
+      (mongoose.connection.close as jest.Mock).mockResolvedValue(undefined);
 
-      // Act
       await sigintHandler();
 
-      // Assert
-      expect(mockConnection.close).toHaveBeenCalled();
-      expect(mockProcess.exit).toHaveBeenCalledWith(0);
+      expect(mongoose.connection.close).toHaveBeenCalled();
+      expect(process.exit).toHaveBeenCalledWith(0);
     });
   });
 
+  // ================================================================
   describe('Configurações de Conexão', () => {
     it('deve usar configurações corretas por padrão', async () => {
-      // Arrange
       const uri = 'mongodb://localhost:27017/test';
-
-      // Act
       await connect(uri);
 
-      // Assert
-      expect(mockMongoose.connect).toHaveBeenCalledWith(uri, {
+      expect(mongoose.connect).toHaveBeenCalledWith(uri, {
         serverSelectionTimeoutMS: 5000,
         maxPoolSize: 10,
       });
     });
 
     it('deve conectar com diferentes configurações de URI', async () => {
-      // Arrange
       const testCases = [
         'mongodb://localhost:27017/local',
         'mongodb://user:pass@localhost:27017/auth',
         'mongodb+srv://cluster.mongodb.net/cloud',
       ];
 
-      // Act & Assert
       for (const uri of testCases) {
         await connect(uri);
-        expect(mockMongoose.connect).toHaveBeenCalledWith(uri, {
+        expect(mongoose.connect).toHaveBeenCalledWith(uri, {
           serverSelectionTimeoutMS: 5000,
           maxPoolSize: 10,
         });
@@ -302,28 +226,19 @@ describe('Database Connection', () => {
     });
   });
 
+  // ================================================================
   describe('Logs e Monitoramento', () => {
     it('deve registrar mensagem de sucesso na conexão', async () => {
-      // Arrange
       const uri = 'mongodb://localhost:27017/test';
-
-      // Act
       await connect(uri);
 
-      // Assert
-      expect(mockConsole.log).toHaveBeenCalledWith(
-        '[mongo] Conectado ao MongoDB'
-      );
+      expect(console.log).toHaveBeenCalledWith('[mongo] Conectado ao MongoDB');
     });
 
     it('deve configurar observabilidade completa', async () => {
-      // Arrange
       const uri = 'mongodb://localhost:27017/test';
-
-      // Act
       await connect(uri);
 
-      // Assert - Verifica se todos os eventos de observabilidade foram configurados
       const observabilityEvents = [
         'connected',
         'open',
@@ -334,41 +249,35 @@ describe('Database Connection', () => {
         'error',
       ];
 
-      observabilityEvents.forEach(event => {
-        expect(mockConnection.on).toHaveBeenCalledWith(
+      for (const event of observabilityEvents) {
+        expect(mongoose.connection.on).toHaveBeenCalledWith(
           event,
           expect.any(Function)
         );
-      });
+      }
     });
   });
 
+  // ================================================================
   describe('Encerramento Gracioso', () => {
     it('deve configurar encerramento gracioso apenas uma vez', async () => {
-      // Arrange
       const uri = 'mongodb://localhost:27017/test';
-
-      // Act - Conecta múltiplas vezes
       await connect(uri);
       await connect(uri);
       await connect(uri);
 
-      // Assert - SIGINT handler deve ser configurado em cada conexão
-      expect(mockProcess.on).toHaveBeenCalledTimes(3);
+      expect(process.on).toHaveBeenCalledWith('SIGINT', expect.any(Function));
     });
 
     it('deve preservar funcionalidade mesmo com múltiplas conexões', async () => {
-      // Arrange
       const uri1 = 'mongodb://localhost:27017/db1';
       const uri2 = 'mongodb://localhost:27017/db2';
 
-      // Act
       await connect(uri1);
       await connect(uri2);
 
-      // Assert
-      expect(mockMongoose.connect).toHaveBeenCalledTimes(2);
-      expect(mockConsole.log).toHaveBeenCalledTimes(2);
+      expect(mongoose.connect).toHaveBeenCalledTimes(2);
+      expect(console.log).toHaveBeenCalledTimes(2);
     });
   });
 });

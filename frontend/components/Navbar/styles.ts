@@ -16,6 +16,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 25,
     position: 'absolute',
     right: 20,
+    // sombra suave e flutuante
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,

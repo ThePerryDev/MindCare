@@ -1,13 +1,13 @@
 import request from 'supertest';
 import app from '../../app';
+import express, { Request, Response } from 'express';
 
 // Mock das rotas para focar no app.ts
 jest.mock('../../routes', () => {
-  const express = require('express');
   const router = express.Router();
 
   // Rota mock simples
-  router.get('/test', (req: any, res: any) => {
+  router.get('/test', (req: Request, res: Response) => {
     res.json({ message: 'test route' });
   });
 

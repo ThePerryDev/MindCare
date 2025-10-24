@@ -65,7 +65,7 @@ export const createMockUser = (overrides = {}) => ({
   createdAt: new Date(),
   updatedAt: new Date(),
   save: jest.fn(),
-  toJSON: function() {
+  toJSON: function () {
     const { password, _id, ...user } = this;
     return { ...user, id: this._id };
   },
@@ -73,13 +73,16 @@ export const createMockUser = (overrides = {}) => ({
 });
 
 // Função para criar tokens JWT válidos para testes
-export const createValidTokens = (userId = '507f1f77bcf86cd799439011', email = 'usuario@teste.com') => {
+export const createValidTokens = (
+  userId = '507f1f77bcf86cd799439011',
+  email = 'usuario@teste.com'
+) => {
   const accessToken = jwt.sign(
     { sub: userId, email },
     process.env.JWT_SECRET!,
     { expiresIn: '15m' }
   );
-  
+
   const refreshToken = jwt.sign(
     { sub: userId },
     process.env.JWT_REFRESH_SECRET!,

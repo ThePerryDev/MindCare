@@ -17,7 +17,8 @@ beforeAll(async () => {
         process.env.MONGODB_URI || 'mongodb://localhost:27017/mindcare-test'
       );
     } catch (error) {
-      console.warn('MongoDB não disponível, alguns testes podem falhar');
+      // agora usamos a variável 'error' para evitar o warning e ajudar no debug
+      console.warn('MongoDB não disponível, alguns testes podem falhar', error);
     }
   }
 });

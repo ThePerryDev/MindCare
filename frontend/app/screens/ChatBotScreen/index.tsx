@@ -1,5 +1,5 @@
 /* global setTimeout */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -38,69 +38,51 @@ export default function ChatBotScreen() {
       sender: 'bot',
       timestamp: new Date(),
     },
-    {
-      id: '2',
-      text: 'Oi! Estou me sentindo um pouco ansioso hoje..',
-      sender: 'user',
-      timestamp: new Date(),
-    },
-    {
-      id: '3',
-      text: 'Entendo que você está se sentindo ansioso. A ansiedade pode ser desafiadora, mas você não está sozinha. Vamos trabalhar juntos para encontrar estratégias que te ajudem.',
-      sender: 'bot',
-      timestamp: new Date(),
-    },
-    {
-      id: '4',
-      text: 'Baseado no que você compartilhou, tenho algumas trilhas que podem te ajudar. Gostaria de ver as recomendações? ✨',
-      sender: 'bot',
-      timestamp: new Date(),
-    },
-    {
-      id: '5',
-      text: 'Sim, por favor! Preciso de ajuda para lidar com isso.',
-      sender: 'user',
-      timestamp: new Date(),
-    },
   ]);
 
   const [inputText, setInputText] = useState('');
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-  const quickReplies = [
-    'Ver trilhas',
-    'Como funciona?',
-    'Preciso de Ajuda',
-    'Obrigado',
-  ];
-  const scrollRef = useRef<ScrollView>(null);
+  const scrollRef = useRef<ScrollView | null>(null);
+
+  const scrollToEnd = useCallback(() => {
+    scrollRef.current?.scrollToEnd({ animated: true });
+  }, []);
 
   useEffect(() => {
     const showListener = Keyboard.addListener('keyboardDidShow', () => {
       setKeyboardVisible(true);
-      setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
+      setTimeout(scrollToEnd, 100);
     });
-    const hideListener = Keyboard.addListener('keyboardDidHide', () =>
-      setKeyboardVisible(false)
-    );
+
+    const hideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
     return () => {
       showListener.remove();
       hideListener.remove();
     };
-  }, []);
+  }, [scrollToEnd]);
 
-  const append = (m: Message) => {
-    setMessages(prev => [...prev, m]);
-    setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
-  };
+  const append = useCallback(
+    (message: Message): void => {
+      setMessages(prev => [...prev, message]);
+      setTimeout(scrollToEnd, 100);
+    },
+    [scrollToEnd]
+  );
 
-  const handleSend = () => {
+  const handleSend = useCallback((): void => {
     if (!inputText.trim()) return;
-    append({
+
+    const userMsg: Message = {
       id: Date.now().toString(),
       text: inputText.trim(),
       sender: 'user',
       timestamp: new Date(),
-    });
+    };
+
+    append(userMsg);
     setInputText('');
     setTimeout(() => {
       append({
@@ -110,16 +92,13 @@ export default function ChatBotScreen() {
         timestamp: new Date(),
       });
     }, 600);
-  };
+  }, [inputText, append]);
 
-  const handleQuickReply = (reply: string) => {
-    append({
-      id: Date.now().toString(),
-      text: reply,
-      sender: 'user',
-      timestamp: new Date(),
-    });
-  };
+  // ✅ remove inline style warning
+  const contentContainerStyle = [
+    styles.messagesContent,
+    { paddingBottom: isKeyboardVisible ? 20 : 80 },
+  ];
 
   const messagesPaddingStyle = isKeyboardVisible
     ? localStyles.messagesPaddingKeyboard
@@ -150,23 +129,17 @@ export default function ChatBotScreen() {
       {/* CONTEÚDO */}
       <KeyboardAvoidingView
         style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={0}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={-50}
       >
         <View style={styles.chatContainer}>
-          {/* MENSAGENS */}
           <ScrollView
             ref={scrollRef}
             style={styles.messagesContainer}
-            contentContainerStyle={[
-              styles.messagesContent,
-              messagesPaddingStyle,
-            ]}
+            contentContainerStyle={contentContainerStyle}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps='handled'
-            onContentSizeChange={() =>
-              scrollRef.current?.scrollToEnd({ animated: true })
-            }
+            onContentSizeChange={scrollToEnd}
           >
             {messages.map(message => {
               const isUser = message.sender === 'user';
@@ -207,30 +180,62 @@ export default function ChatBotScreen() {
             })}
           </ScrollView>
 
-          {/* ÁREA DE INPUT FIXA */}
+          {/* INPUT AREA */}
           <View style={styles.inputArea}>
-            {/* QUICK REPLIES */}
             <View style={styles.quickRepliesContainer}>
               <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.quickRepliesContent}
+                ref={scrollRef}
+                style={styles.messagesContainer}
+                contentContainerStyle={[
+                  styles.messagesContent,
+                  messagesPaddingStyle,
+                ]}
+                showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps='handled'
+                onContentSizeChange={scrollToEnd}
               >
-                {quickReplies.map(label => (
-                  <TouchableOpacity
-                    key={label}
-                    style={styles.quickReply}
-                    onPress={() => handleQuickReply(label)}
-                    activeOpacity={0.8}
-                  >
-                    <Text style={styles.quickReplyText}>{label}</Text>
-                  </TouchableOpacity>
-                ))}
+                {messages.map(message => {
+                  const isUser = message.sender === 'user';
+                  return (
+                    <View
+                      key={message.id}
+                      style={[
+                        styles.row,
+                        isUser ? styles.rowRight : styles.rowLeft,
+                      ]}
+                    >
+                      {!isUser && (
+                        <View style={styles.botAvatarSmall}>
+                          <Image
+                            source={robsonImg}
+                            style={styles.headerAvatar}
+                            resizeMode='cover'
+                          />
+                        </View>
+                      )}
+
+                      <View
+                        style={[
+                          styles.bubble,
+                          isUser ? styles.userBubble : styles.botBubble,
+                        ]}
+                      >
+                        <Text style={isUser ? styles.userText : styles.botText}>
+                          {message.text}
+                        </Text>
+                      </View>
+
+                      {isUser && (
+                        <View style={styles.userAvatarSmall}>
+                          <Text style={styles.userAvatarSmallIcon}>R</Text>
+                        </View>
+                      )}
+                    </View>
+                  );
+                })}
               </ScrollView>
             </View>
 
-            {/* INPUT */}
             <View style={styles.inputRow}>
               <View style={styles.inputWrapper}>
                 <TextInput

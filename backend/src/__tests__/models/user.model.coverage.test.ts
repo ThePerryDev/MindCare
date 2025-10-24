@@ -4,68 +4,66 @@ describe('User Model Real Coverage', () => {
   beforeAll(() => {
     // Usar um mock mínimo que permite execução do código
     if (!mongoose.connection.readyState) {
-      jest.spyOn(mongoose, 'connect').mockResolvedValue(mongoose as any);
+      jest
+        .spyOn(mongoose, 'connect')
+        .mockResolvedValue(mongoose as unknown as mongoose.Mongoose);
     }
   });
 
   it('deve executar as regex definidas no modelo', () => {
-    // Executa exatamente as regex que estão no user.model.ts
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneBRRegex = /^\(?\d{2}\)?\d{4,5}-?\d{4}$/;
 
-    // Testa regex de email (linha 16)
     expect(emailRegex.test('user@domain.com')).toBe(true);
     expect(emailRegex.test('invalid')).toBe(false);
 
-    // Testa regex de telefone (linha 17)
     expect(phoneBRRegex.test('(11)99999-9999')).toBe(true);
     expect(phoneBRRegex.test('invalid')).toBe(false);
   });
 
   it('deve executar os validadores de senha definidos no modelo', () => {
-    // Executa exatamente os validadores que estão no user.model.ts (linhas 18-31)
-    const passwordValidators = [
+    const passwordValidators: {
+      validator: (v: string) => boolean;
+      message: string;
+    }[] = [
       {
-        validator: (v: string) => /[A-Z]/.test(v),
+        validator: v => /[A-Z]/.test(v),
         message: 'A senha precisa de ao menos uma letra maiúscula.',
       },
       {
-        validator: (v: string) => /[a-z]/.test(v),
+        validator: v => /[a-z]/.test(v),
         message: 'A senha precisa de ao menos uma letra minúscula.',
       },
       {
-        validator: (v: string) => /\d/.test(v),
+        validator: v => /\d/.test(v),
         message: 'A senha precisa de ao menos um número.',
       },
       {
-        validator: (v: string) => v.length >= 8,
+        validator: v => v.length >= 8,
         message: 'A senha deve ter pelo menos 8 caracteres.',
       },
     ];
 
-    // Testa cada validador individualmente
-    expect(passwordValidators[0].validator('ValidPass123')).toBe(true); // maiúscula
+    expect(passwordValidators[0].validator('ValidPass123')).toBe(true);
     expect(passwordValidators[0].validator('lowercase123')).toBe(false);
 
-    expect(passwordValidators[1].validator('ValidPass123')).toBe(true); // minúscula
+    expect(passwordValidators[1].validator('ValidPass123')).toBe(true);
     expect(passwordValidators[1].validator('UPPERCASE123')).toBe(false);
 
-    expect(passwordValidators[2].validator('ValidPass123')).toBe(true); // número
+    expect(passwordValidators[2].validator('ValidPass123')).toBe(true);
     expect(passwordValidators[2].validator('ValidPass')).toBe(false);
 
-    expect(passwordValidators[3].validator('ValidPass123')).toBe(true); // tamanho
+    expect(passwordValidators[3].validator('ValidPass123')).toBe(true);
     expect(passwordValidators[3].validator('Short1')).toBe(false);
 
-    // Testa mensagens
-    passwordValidators.forEach(({ message }) => {
+    for (const { message } of passwordValidators) {
       expect(message).toBeDefined();
-    });
+    }
   });
 
   it('deve criar e executar um schema similar ao UserSchema', () => {
     const { Schema } = mongoose;
 
-    // Recria as validações do modelo (linhas 33-97)
     const TestUserSchema = new Schema(
       {
         fullName: {
@@ -93,7 +91,7 @@ describe('User Model Real Coverage', () => {
           trim: true,
           validate: {
             validator: (v: string) =>
-              /^\(?\d{2}\)?\d{4,5}-?\d{4}$/.test(v.replace(/\s/g, '')),
+              /^\(?\d{2}\)?\d{4,5}-?\d{4}$/.test(v.replaceAll(' ', '')),
             message: 'O telefone deve estar no formato (99)99999-9999',
           },
         },
@@ -126,7 +124,7 @@ describe('User Model Real Coverage', () => {
       {
         timestamps: true,
         toJSON: {
-          transform: (_doc: any, ret: any) => {
+          transform: (_doc: unknown, ret: Record<string, unknown>) => {
             ret.id = ret._id;
             delete ret._id;
             delete ret.__v;
@@ -136,27 +134,30 @@ describe('User Model Real Coverage', () => {
       }
     );
 
-    // Verifica que o schema foi criado
-    expect(TestUserSchema).toBeDefined();
-    expect(TestUserSchema.paths.fullName).toBeDefined();
-    expect(TestUserSchema.paths.email).toBeDefined();
-    expect(TestUserSchema.paths.phone).toBeDefined();
-    expect(TestUserSchema.paths.birthdate).toBeDefined();
-    expect(TestUserSchema.paths.height).toBeDefined();
-    expect(TestUserSchema.paths.weight).toBeDefined();
-    expect(TestUserSchema.paths.password).toBeDefined();
+    const paths = [
+      'fullName',
+      'email',
+      'phone',
+      'birthdate',
+      'height',
+      'weight',
+      'password',
+    ];
+
+    for (const path of paths) {
+      expect(TestUserSchema.paths[path]).toBeDefined();
+    }
   });
 
   it('deve executar a função transform do schema', () => {
-    // Executa exatamente a função transform que está no modelo (linhas 99-106)
-    const transform = (_doc: any, ret: any) => {
+    const transform = (_doc: unknown, ret: Record<string, unknown>) => {
       ret.id = ret._id;
       delete ret._id;
       delete ret.__v;
       delete ret.password;
     };
 
-    const mockDoc: any = {
+    const mockDoc: Record<string, unknown> = {
       _id: '507f1f77bcf86cd799439011',
       fullName: 'Test User',
       email: 'test@example.com',
@@ -173,32 +174,29 @@ describe('User Model Real Coverage', () => {
   });
 
   it('deve testar validações de range definidas no modelo', () => {
-    // Testa as validações min/max definidas no modelo
+    const heights = [30, 175, 300];
+    for (const h of heights) {
+      expect(h).toBeGreaterThanOrEqual(30);
+      expect(h).toBeLessThanOrEqual(300);
+    }
 
-    // Altura: min 30, max 300 (linhas 75-77)
-    expect(30).toBeGreaterThanOrEqual(30);
-    expect(300).toBeLessThanOrEqual(300);
-    expect(175).toBeGreaterThanOrEqual(30);
-    expect(175).toBeLessThanOrEqual(300);
-
-    // Peso: min 1, max 700 (linhas 82-84)
-    expect(1).toBeGreaterThanOrEqual(1);
-    expect(700).toBeLessThanOrEqual(700);
-    expect(70).toBeGreaterThanOrEqual(1);
-    expect(70).toBeLessThanOrEqual(700);
+    const weights = [1, 70, 700];
+    for (const w of weights) {
+      expect(w).toBeGreaterThanOrEqual(1);
+      expect(w).toBeLessThanOrEqual(700);
+    }
   });
 
   it('deve testar validações de string length do modelo', () => {
-    // fullName: minlength 3, maxlength 120 (linhas 37-39)
-    expect('Ana'.length).toBeGreaterThanOrEqual(3);
-    expect('João Silva Santos'.length).toBeLessThanOrEqual(120);
+    const names = ['Ana', 'João Silva Santos'];
+    expect(names[0].length).toBeGreaterThanOrEqual(3);
+    expect(names[1].length).toBeLessThanOrEqual(120);
 
-    // email: maxlength 80 (linha 47)
-    expect('user@domain.com'.length).toBeLessThanOrEqual(80);
+    const email = 'user@domain.com';
+    expect(email.length).toBeLessThanOrEqual(80);
   });
 
   it('deve executar o import e model do mongoose', async () => {
-    // Testa a linha final: mongoose.model (linha 108)
     const { model } = mongoose;
     expect(model).toBeDefined();
     expect(typeof model).toBe('function');
