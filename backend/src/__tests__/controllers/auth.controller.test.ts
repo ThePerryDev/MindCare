@@ -125,7 +125,8 @@ describe('Auth Controller', () => {
         .send(validRegistrationData);
 
       expect(response.status).toBe(500);
-      expect(response.body).toHaveProperty('error');
+      expect(response.body).toHaveProperty('message');
+      expect(response.body.success).toBe(false);
     });
 
     it('deve usar mensagem de erro padrão quando err.message é undefined no register', async () => {
@@ -139,7 +140,8 @@ describe('Auth Controller', () => {
         .send(validRegistrationData);
 
       expect(response.status).toBe(500);
-      expect(response.body.error).toBe('erro ao registrar');
+      expect(response.body.message).toBe('Erro interno do servidor');
+      expect(response.body.success).toBe(false);
     });
   });
 

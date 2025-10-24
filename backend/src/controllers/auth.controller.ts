@@ -64,8 +64,11 @@ export const register = async (req: Request, res: Response) => {
     setRefreshCookie(res, refreshToken);
     const safeUser = user.toJSON();
     return res.status(201).json({ user: safeUser, accessToken });
-  } catch (err: any) {
-    return res.status(500).json({ error: err.message || 'erro ao registrar' });
+  } catch {
+    return res.status(500).json({
+      success: false,
+      message: 'Erro interno do servidor',
+    });
   }
 };
 
