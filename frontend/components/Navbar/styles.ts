@@ -1,18 +1,25 @@
 import { StyleSheet } from 'react-native';
 
+export const NAVBAR_HEIGHT = 40;
+
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
-    borderRadius: 30,
-    bottom: 25,
-    elevation: 5,
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 40,
+    bottom: 50,
+    elevation: 8,
     flexDirection: 'row',
+    height: NAVBAR_HEIGHT,
     justifyContent: 'space-around',
-    paddingVertical: 10,
+    left: 20,
+    paddingHorizontal: 25,
     position: 'absolute',
+    right: 20,
     shadowColor: '#000',
-    shadowOpacity: 0.08,
-    shadowRadius: 5,
-    width: '90%',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    zIndex: 50,
   },
 });

@@ -6,11 +6,11 @@
 | **NOME**   | **13/10/2025** | **15/10/2025** | **17/10/2025** | **21/10/2025** | **23/10/2025** | **31/10/2025** |
 |-----------|---------------|---------------|---------------|---------------|---------------|---------------|
 | **Eduardo**   | LDM-050 | LDM-057 | XXX-064 | XXX-071 | XXX-078 | XXX-085 |
-| **Franciele** | LDM-051 | XXX-058 | QA-065 | XXX-072 | XXX-079 | XXX-086 |
+| **Franciele** | LDM-051 | XXX-058 | QA-065 | QA-072 | LDM-079 | XXX-086 |
 | **Claudia**   | XXX-052 | XXX-059 | XXX-066 | XXX-073 | XXX-080 | XXX-087 |
 | **Willian**   | LDM-053 | LDM-060 | LDM-067 | XXX-074 | XXX-081 | XXX-088 |
 | **Bianca**    | XXX-054 | XXX-061 | XXX-068 | XXX-075 | XXX-082 | XXX-089 |
-| **Daniel**    | LDM-055 | QA-062 | QA-069 | QA-076 | XXX-083 | XXX-090 |
+| **Daniel**    | LDM-055 | QA-062 | QA-069 | QA-076 | QA-083 | XXX-090 |
 | **Heclair**   | LDM-056 | XXX-063 | LDM-070 | XXX-077 | XXX-084 | XXX-091 |
 
 
@@ -27,10 +27,10 @@
 | **Franciele** | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
 | **13/10/2025** | LDM-051 | Refinamento de produto e reunião de alinhamento com o time |
-| **15/10/2025** | XXX-058 | XXX |
+| **15/10/2025** | XXX-058 | Feriado - dia dos professores |
 | **17/10/2025** | QA-065 | Elaborando cenários de teste |
-| **21/10/2025** | XXX-072 | XXX |
-| **23/10/2025** | XXX-079 | XXX |
+| **21/10/2025** | QA-072 | Finalizando cobertura de testes (BE) |
+| **23/10/2025** | LDM-079 | Suporte técnico consultivo e orientação à equipe, focando na aplicação de boas práticas e na sincronização do workflow das tarefas |
 | **31/10/2025** | XXX-086 | XXX |
 
 
@@ -70,7 +70,7 @@
 | **15/10/2025** | QA-062 | Implementação de pipeline de integração contínua backend |
 | **17/10/2025** | QA-069 | Implementação de container Docker para o CRUD (incompleto) |
 | **21/10/2025** | QA-076 | Continuação de container Docker para o CRUD (incompleto) |
-| **23/10/2025** | XXX-083 | XXX |
+| **23/10/2025** | QA-083 | Correção de erros da develop de eSLint e e outros |
 | **31/10/2025** | XXX-090 | XXX |
 
 
