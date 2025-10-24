@@ -44,13 +44,6 @@ export default function ChatBotScreen() {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const scrollRef = useRef<ScrollView | null>(null);
 
-  const quickReplies = useRef<string[]>([
-    'Ver trilhas',
-    'Como funciona?',
-    'Preciso de Ajuda',
-    'Obrigado',
-  ]).current;
-
   const scrollToEnd = useCallback(() => {
     scrollRef.current?.scrollToEnd({ animated: true });
   }, []);
@@ -100,18 +93,6 @@ export default function ChatBotScreen() {
       });
     }, 600);
   }, [inputText, append]);
-
-  const handleQuickReply = useCallback(
-    (reply: string): void => {
-      append({
-        id: Date.now().toString(),
-        text: reply,
-        sender: 'user',
-        timestamp: new Date(),
-      });
-    },
-    [append]
-  );
 
   // ✅ remove inline style warning
   const contentContainerStyle = [
@@ -203,47 +184,56 @@ export default function ChatBotScreen() {
           <View style={styles.inputArea}>
             <View style={styles.quickRepliesContainer}>
               <ScrollView
-  ref={scrollRef}
-  style={styles.messagesContainer}
-  contentContainerStyle={[styles.messagesContent, messagesPaddingStyle]}
-  showsVerticalScrollIndicator={false}
-  keyboardShouldPersistTaps='handled'
-  onContentSizeChange={scrollToEnd}
->
-  {messages.map(message => {
-    const isUser = message.sender === 'user';
-    return (
-      <View
-        key={message.id}
-        style={[styles.row, isUser ? styles.rowRight : styles.rowLeft]}
-      >
-        {!isUser && (
-          <View style={styles.botAvatarSmall}>
-            <Image
-              source={robsonImg}
-              style={styles.headerAvatar}
-              resizeMode='cover'
-            />
-          </View>
-        )}
+                ref={scrollRef}
+                style={styles.messagesContainer}
+                contentContainerStyle={[
+                  styles.messagesContent,
+                  messagesPaddingStyle,
+                ]}
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps='handled'
+                onContentSizeChange={scrollToEnd}
+              >
+                {messages.map(message => {
+                  const isUser = message.sender === 'user';
+                  return (
+                    <View
+                      key={message.id}
+                      style={[
+                        styles.row,
+                        isUser ? styles.rowRight : styles.rowLeft,
+                      ]}
+                    >
+                      {!isUser && (
+                        <View style={styles.botAvatarSmall}>
+                          <Image
+                            source={robsonImg}
+                            style={styles.headerAvatar}
+                            resizeMode='cover'
+                          />
+                        </View>
+                      )}
 
-        <View
-          style={[styles.bubble, isUser ? styles.userBubble : styles.botBubble]}
-        >
-          <Text style={isUser ? styles.userText : styles.botText}>
-            {message.text}
-          </Text>
-        </View>
+                      <View
+                        style={[
+                          styles.bubble,
+                          isUser ? styles.userBubble : styles.botBubble,
+                        ]}
+                      >
+                        <Text style={isUser ? styles.userText : styles.botText}>
+                          {message.text}
+                        </Text>
+                      </View>
 
-        {isUser && (
-          <View style={styles.userAvatarSmall}>
-            <Text style={styles.userAvatarSmallIcon}>R</Text>
-          </View>
-        )}
-      </View>
-    );
-  })}
-</ScrollView>
+                      {isUser && (
+                        <View style={styles.userAvatarSmall}>
+                          <Text style={styles.userAvatarSmallIcon}>R</Text>
+                        </View>
+                      )}
+                    </View>
+                  );
+                })}
+              </ScrollView>
             </View>
 
             <View style={styles.inputRow}>
