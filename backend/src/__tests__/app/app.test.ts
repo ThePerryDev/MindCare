@@ -1,10 +1,11 @@
 import request from 'supertest';
-import app from '../../app';
-import express, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 
 // Mock das rotas para focar no app.ts
 jest.mock('../../routes', () => {
-  const router = express.Router();
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const mockExpress = require('express');
+  const router = mockExpress.Router();
 
   // Rota mock simples
   router.get('/test', (req: Request, res: Response) => {
@@ -13,6 +14,9 @@ jest.mock('../../routes', () => {
 
   return router;
 });
+
+// Importar app após os mocks
+import app from '../../app';
 
 describe('App Configuration', () => {
   describe('Basic Setup', () => {

@@ -64,8 +64,11 @@ export const register = async (req: Request, res: Response) => {
     setRefreshCookie(res, refreshToken);
     const safeUser = user.toJSON();
     return res.status(201).json({ user: safeUser, accessToken });
-  } catch (err: any) {
-    return res.status(500).json({ error: err.message || 'erro ao registrar' });
+  } catch {
+    return res.status(500).json({
+      success: false,
+      message: 'Erro interno do servidor',
+    });
   }
 };
 
@@ -106,7 +109,7 @@ export const refresh = async (req: Request, res: Response) => {
     const newRefresh = signRefresh({ sub: user.id });
     setRefreshCookie(res, newRefresh);
     return res.status(200).json({ accessToken });
-  } catch (_e) {
+  } catch {
     return res
       .status(401)
       .json({ error: 'refresh token inválido ou expirado' });
