@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export const INPUT_HEIGHT = 56;
 export const CHIPS_HEIGHT = 44;
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   backButton: {
     alignItems: 'center',
     height: 36,
@@ -216,3 +216,5 @@ export const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
+
+export default styles;

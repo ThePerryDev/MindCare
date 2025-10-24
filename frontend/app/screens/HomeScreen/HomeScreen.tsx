@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '@/components/Button/Button';
-import { styles } from './styles';
+import styles from './styles';
 import WeeklyResults from '@/components/WeeklyResults/WeeklyResults';
 import ContinueImproving from '@/components/ContinueImproving/ContinueImproving';
 import Navbar from '@/components/Navbar/Navbar';

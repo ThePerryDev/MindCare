@@ -13,7 +13,7 @@ import Button from '../../../../components/Button/Button';
 import ReturnButton from '@/components/Return_Button/Return_Button';
 import StepProgress from '@/components/StepProgress/StepProgress';
 import { useRouter } from 'expo-router';
-import { styles } from './styles';
+import styles from './styles';
 import CreateAccountIntro from '@/components/CreateAccountIntro/CreateAccountIntro';
 
 export default function CadastroDadosPessoaisScreen() {

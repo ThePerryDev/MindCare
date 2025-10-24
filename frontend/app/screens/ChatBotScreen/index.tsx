@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { styles } from './styles';
+import styles from './styles';
 import robsonImg from '../../../assets/images/robson.png';
 
 interface Message {

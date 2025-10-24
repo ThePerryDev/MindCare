@@ -1,7 +1,7 @@
 import { theme } from '../../../styles/theme';
 import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   contentBase: {
     paddingHorizontal: 35,
   },
@@ -69,3 +69,5 @@ export const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
+
+export default styles;

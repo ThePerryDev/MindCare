@@ -11,7 +11,7 @@ import {
   Keyboard,
   Platform,
 } from 'react-native';
-import { styles } from './styles';
+import styles from './styles';
 import Input from '../../../components/Input/Input';
 import Button from '../../../components/Button/Button';
 import logoMindcare from '../../../assets/images/logo_mindcare.png';

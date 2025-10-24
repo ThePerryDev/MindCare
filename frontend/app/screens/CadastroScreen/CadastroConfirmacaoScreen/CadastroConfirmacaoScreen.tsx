@@ -12,12 +12,12 @@ import Button from '../../../../components/Button/Button';
 import ReturnButton from '@/components/Return_Button/Return_Button';
 import StepProgress from '@/components/StepProgress/StepProgress';
 import { useRouter } from 'expo-router';
-import { styles } from './styles';
 import CreateAccountIntro from '@/components/CreateAccountIntro/CreateAccountIntro';
 import ConsentCard from '@/components/ConsentCard/ConsentCard';
 import TermsOfUse from '@/components/TermsOfUse/TermsOfUse';
 import PrivacyPolicy from '@/components/PrivacyPolicy/PrivacyPolicy';
 import PersonalDataLGPD from '@/components/PersonalDataLGPD/PersonalDataLGPD';
+import styles from './styles';
 
 export default function CadastroConfirmacaoScreen() {
   const [agreeTerms, setAgreeTerms] = useState(false);
