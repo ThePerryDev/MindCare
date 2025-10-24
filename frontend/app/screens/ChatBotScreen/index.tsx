@@ -203,22 +203,47 @@ export default function ChatBotScreen() {
           <View style={styles.inputArea}>
             <View style={styles.quickRepliesContainer}>
               <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.quickRepliesContent}
-                keyboardShouldPersistTaps='handled'
-              >
-                {quickReplies.map(label => (
-                  <TouchableOpacity
-                    key={label}
-                    style={styles.quickReply}
-                    onPress={() => handleQuickReply(label)}
-                    activeOpacity={0.8}
-                  >
-                    <Text style={styles.quickReplyText}>{label}</Text>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
+  ref={scrollRef}
+  style={styles.messagesContainer}
+  contentContainerStyle={[styles.messagesContent, messagesPaddingStyle]}
+  showsVerticalScrollIndicator={false}
+  keyboardShouldPersistTaps='handled'
+  onContentSizeChange={scrollToEnd}
+>
+  {messages.map(message => {
+    const isUser = message.sender === 'user';
+    return (
+      <View
+        key={message.id}
+        style={[styles.row, isUser ? styles.rowRight : styles.rowLeft]}
+      >
+        {!isUser && (
+          <View style={styles.botAvatarSmall}>
+            <Image
+              source={robsonImg}
+              style={styles.headerAvatar}
+              resizeMode='cover'
+            />
+          </View>
+        )}
+
+        <View
+          style={[styles.bubble, isUser ? styles.userBubble : styles.botBubble]}
+        >
+          <Text style={isUser ? styles.userText : styles.botText}>
+            {message.text}
+          </Text>
+        </View>
+
+        {isUser && (
+          <View style={styles.userAvatarSmall}>
+            <Text style={styles.userAvatarSmallIcon}>R</Text>
+          </View>
+        )}
+      </View>
+    );
+  })}
+</ScrollView>
             </View>
 
             <View style={styles.inputRow}>
