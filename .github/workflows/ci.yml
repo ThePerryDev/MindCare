@@ -32,7 +32,7 @@ jobs:
       # 4️⃣ Rodar ESLint no frontend
       - name: Run ESLint (frontend)
         working-directory: frontend
-        run: npm run  -- --max-warnings=100
+        run: npm run lint -- --max-warnings=10
 
       # 5️⃣ Rodar Prettier check no frontend
       - name: Run Prettier (frontend)
