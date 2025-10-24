@@ -5,7 +5,7 @@
 
 | **NOME**   | **13/10/2025** | **15/10/2025** | **17/10/2025** | **21/10/2025** | **23/10/2025** | **31/10/2025** |
 |-----------|---------------|---------------|---------------|---------------|---------------|---------------|
-| **Eduardo**   | LDM-050 | LDM-057 | XXX-064 | XXX-071 | XXX-078 | XXX-085 |
+| **Eduardo**   | LDM-050 | XXX-057 | LDM-064 | XXX-071 | XXX-078 | XXX-085 |
 | **Franciele** | LDM-051 | XXX-058 | QA-065 | QA-072 | LDM-079 | XXX-086 |
 | **Claudia**   | XXX-052 | XXX-059 | XXX-066 | XXX-073 | XXX-080 | XXX-087 |
 | **Willian**   | LDM-053 | LDM-060 | LDM-067 | XXX-074 | XXX-081 | XXX-088 |
@@ -17,8 +17,8 @@
 | **Eduardo**   | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
 | **13/10/2025** | LDM-050 | Refinamento de produto e reunião de alinhamento com o time |
-| **15/10/2025** | LDM-057 | Desenvolvimento de componentes e da tela home do aplicativo |
-| **17/10/2025** | XXX-064 | XXX |
+| **15/10/2025** | XXX-057 | Feriado - dia dos professores |
+| **17/10/2025** | LDM-064 | Desenvolvimento de componentes e da tela home do aplicativo |
 | **21/10/2025** | XXX-071 | XXX |
 | **23/10/2025** | XXX-078 | XXX |
 | **31/10/2025** | XXX-085 | XXX |
