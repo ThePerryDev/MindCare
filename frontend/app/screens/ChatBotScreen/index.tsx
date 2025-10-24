@@ -10,6 +10,7 @@ import {
   Keyboard,
   Platform,
   KeyboardAvoidingView,
+  StyleSheet,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -22,6 +23,12 @@ interface Message {
   sender: 'bot' | 'user';
   timestamp: Date;
 }
+
+// Estilos locais para evitar inline styles
+const localStyles = StyleSheet.create({
+  messagesPaddingDefault: { paddingBottom: 80 },
+  messagesPaddingKeyboard: { paddingBottom: 20 },
+});
 
 export default function ChatBotScreen() {
   const [messages, setMessages] = useState<Message[]>([
@@ -84,7 +91,6 @@ export default function ChatBotScreen() {
 
     append(userMsg);
     setInputText('');
-
     setTimeout(() => {
       append({
         id: (Date.now() + 1).toString(),
@@ -112,6 +118,10 @@ export default function ChatBotScreen() {
     styles.messagesContent,
     { paddingBottom: isKeyboardVisible ? 20 : 80 },
   ];
+
+  const messagesPaddingStyle = isKeyboardVisible
+    ? localStyles.messagesPaddingKeyboard
+    : localStyles.messagesPaddingDefault;
 
   return (
     <SafeAreaView style={styles.background} edges={['top']}>
@@ -221,6 +231,7 @@ export default function ChatBotScreen() {
                   onChangeText={setInputText}
                   multiline
                   maxLength={500}
+                  onBlur={() => setKeyboardVisible(false)}
                 />
               </View>
 
