@@ -173,6 +173,7 @@ async function updateEntrada(req: AuthRequest, res: Response) {
  * Params: day='YYYY-MM-DD'
  * Body: { sentimento_de_saida: FeelingValue }
  * Atualiza apenas o campo de saída do dia
+ * Teste
  */
 async function updateSaida(req: AuthRequest, res: Response) {
   try {
