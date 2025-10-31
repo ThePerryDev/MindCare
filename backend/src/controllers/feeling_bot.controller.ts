@@ -3,9 +3,6 @@ import FeelingBotModel from '../models/feeling_bot.model';
 import { AuthRequest } from '../security/auth.middleware';
 import moment from 'moment';
 
-
-
-
 /**
  * GET /api/v1/feeling-bot
  * Lista todos os registros (days) do usuário logado
@@ -46,7 +43,9 @@ async function deleteByDay(req: AuthRequest, res: Response) {
 
     const doc = await FeelingBotModel.findOne({ user_id: userId });
     if (!doc) {
-      return res.status(404).json({ error: 'registro do usuário não encontrado' });
+      return res
+        .status(404)
+        .json({ error: 'registro do usuário não encontrado' });
     }
 
     if (!doc.days.has(day)) {
@@ -81,7 +80,9 @@ async function deleteAll(req: AuthRequest, res: Response) {
 
     const doc = await FeelingBotModel.findOneAndDelete({ user_id: userId });
     if (!doc) {
-      return res.status(404).json({ error: 'registro do usuário não encontrado' });
+      return res
+        .status(404)
+        .json({ error: 'registro do usuário não encontrado' });
     }
 
     return res.status(200).json({

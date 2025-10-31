@@ -17,10 +17,10 @@ export type FeelingValue = (typeof FEELINGS)[number];
  * Recomendado gerar no backend a partir do TZ do usuário (America/Sao_Paulo).
  */
 export interface IFeelingDay extends Document {
-  user_id: Types.ObjectId;               // ref User
-  day: string;                           // 'YYYY-MM-DD' (ex.: '2025-10-21')
-  sentimento_de_entrada: FeelingValue;   // dropdown
-  sentimento_de_saida: FeelingValue;     // dropdown
+  user_id: Types.ObjectId; // ref User
+  day: string; // 'YYYY-MM-DD' (ex.: '2025-10-21')
+  sentimento_de_entrada: FeelingValue; // dropdown
+  sentimento_de_saida: FeelingValue; // dropdown
   createdAt: Date;
   updatedAt: Date;
 }
