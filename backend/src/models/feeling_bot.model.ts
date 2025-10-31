@@ -7,15 +7,15 @@ import mongoose, { Schema, Document, Types } from 'mongoose';
  *  - exemplo de label: '21/10/2025' ou '23 de outubro'
  */
 export interface IFeelingBotDay {
-  sentimento: string;   // vindo de API externa (não é enum)
-  label?: string;       // formato amigável para exibição (opcional)
+  sentimento: string; // vindo de API externa (não é enum)
+  label?: string; // formato amigável para exibição (opcional)
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 export interface IFeelingBot extends Document {
-  user_id: Types.ObjectId;                     // um doc por usuário
-  days: Map<string, IFeelingBotDay>;           // chave: 'YYYY-MM-DD'
+  user_id: Types.ObjectId; // um doc por usuário
+  days: Map<string, IFeelingBotDay>; // chave: 'YYYY-MM-DD'
   createdAt: Date;
   updatedAt: Date;
 }
@@ -54,13 +54,15 @@ const FeelingBotSchema = new Schema<IFeelingBot>(
 
         // Converte Map em array ordenada por dia (desc) para facilitar consumo no frontend
         if (ret.days && ret.days instanceof Map) {
-          const entries = Array.from(ret.days.entries()).map(([day, v]: any) => ({
-            day,
-            sentimento: v.sentimento,
-            label: v.label,
-            createdAt: v.createdAt,
-            updatedAt: v.updatedAt,
-          }));
+          const entries = Array.from(ret.days.entries()).map(
+            ([day, v]: any) => ({
+              day,
+              sentimento: v.sentimento,
+              label: v.label,
+              createdAt: v.createdAt,
+              updatedAt: v.updatedAt,
+            })
+          );
           entries.sort((a, b) => (a.day < b.day ? 1 : a.day > b.day ? -1 : 0));
           ret.days = entries;
         }

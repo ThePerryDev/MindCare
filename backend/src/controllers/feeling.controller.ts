@@ -26,7 +26,9 @@ async function createEntrada(req: AuthRequest, res: Response) {
     const { day, sentimento_de_entrada } = req.body || {};
 
     if (!validateDay(day)) {
-      return res.status(400).json({ error: 'day deve estar no formato YYYY-MM-DD' });
+      return res
+        .status(400)
+        .json({ error: 'day deve estar no formato YYYY-MM-DD' });
     }
     if (badFeeling(sentimento_de_entrada)) {
       return res.status(400).json({
@@ -51,7 +53,9 @@ async function createEntrada(req: AuthRequest, res: Response) {
 
     return res.status(201).json({ feeling: doc.toJSON() });
   } catch (err: any) {
-    return res.status(500).json({ error: err.message || 'erro ao criar entrada' });
+    return res
+      .status(500)
+      .json({ error: err.message || 'erro ao criar entrada' });
   }
 }
 
@@ -69,7 +73,9 @@ async function createSaida(req: AuthRequest, res: Response) {
     const { day, sentimento_de_saida } = req.body || {};
 
     if (!validateDay(day)) {
-      return res.status(400).json({ error: 'day deve estar no formato YYYY-MM-DD' });
+      return res
+        .status(400)
+        .json({ error: 'day deve estar no formato YYYY-MM-DD' });
     }
     if (badFeeling(sentimento_de_saida)) {
       return res.status(400).json({
@@ -94,7 +100,9 @@ async function createSaida(req: AuthRequest, res: Response) {
 
     return res.status(201).json({ feeling: doc.toJSON() });
   } catch (err: any) {
-    return res.status(500).json({ error: err.message || 'erro ao criar saída' });
+    return res
+      .status(500)
+      .json({ error: err.message || 'erro ao criar saída' });
   }
 }
 
@@ -126,7 +134,9 @@ async function list(req: AuthRequest, res: Response) {
     const docs = await FeelingModel.find(filter).sort({ day: -1 });
     return res.status(200).json({ feelings: docs.map(d => d.toJSON()) });
   } catch (err: any) {
-    return res.status(500).json({ error: err.message || 'erro ao listar feelings' });
+    return res
+      .status(500)
+      .json({ error: err.message || 'erro ao listar feelings' });
   }
 }
 
@@ -145,7 +155,9 @@ async function updateEntrada(req: AuthRequest, res: Response) {
     const { sentimento_de_entrada } = req.body || {};
 
     if (!validateDay(day)) {
-      return res.status(400).json({ error: 'day deve estar no formato YYYY-MM-DD' });
+      return res
+        .status(400)
+        .json({ error: 'day deve estar no formato YYYY-MM-DD' });
     }
     if (badFeeling(sentimento_de_entrada)) {
       return res.status(400).json({
@@ -160,11 +172,14 @@ async function updateEntrada(req: AuthRequest, res: Response) {
       { new: true, runValidators: true }
     );
 
-    if (!updated) return res.status(404).json({ error: 'registro do dia não encontrado' });
+    if (!updated)
+      return res.status(404).json({ error: 'registro do dia não encontrado' });
 
     return res.status(200).json({ feeling: updated.toJSON() });
   } catch (err: any) {
-    return res.status(500).json({ error: err.message || 'erro ao atualizar entrada' });
+    return res
+      .status(500)
+      .json({ error: err.message || 'erro ao atualizar entrada' });
   }
 }
 
@@ -184,7 +199,9 @@ async function updateSaida(req: AuthRequest, res: Response) {
     const { sentimento_de_saida } = req.body || {};
 
     if (!validateDay(day)) {
-      return res.status(400).json({ error: 'day deve estar no formato YYYY-MM-DD' });
+      return res
+        .status(400)
+        .json({ error: 'day deve estar no formato YYYY-MM-DD' });
     }
     if (badFeeling(sentimento_de_saida)) {
       return res.status(400).json({
@@ -199,11 +216,14 @@ async function updateSaida(req: AuthRequest, res: Response) {
       { new: true, runValidators: true }
     );
 
-    if (!updated) return res.status(404).json({ error: 'registro do dia não encontrado' });
+    if (!updated)
+      return res.status(404).json({ error: 'registro do dia não encontrado' });
 
     return res.status(200).json({ feeling: updated.toJSON() });
   } catch (err: any) {
-    return res.status(500).json({ error: err.message || 'erro ao atualizar saída' });
+    return res
+      .status(500)
+      .json({ error: err.message || 'erro ao atualizar saída' });
   }
 }
 
