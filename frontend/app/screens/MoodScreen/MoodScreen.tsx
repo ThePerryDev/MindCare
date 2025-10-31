@@ -28,7 +28,14 @@ const STORAGE_KEYS = {
   LAST_LOG_DATE: '@mood/lastLogDate',
 };
 
-export default function MoodScreen({ navigation }: any) {
+// ✅ Tipagem mínima de navegação para evitar "any"
+type Navigation = { goBack?: () => void };
+
+export default function MoodScreen({
+  navigation,
+}: {
+  navigation?: Navigation;
+}) {
   const [selected, setSelected] = useState<Mood | null>(null);
   const today = useMemo(() => dayjs().format('YYYY-MM-DD'), []);
 
@@ -37,7 +44,12 @@ export default function MoodScreen({ navigation }: any) {
       try {
         const moodJSON = await AsyncStorage.getItem(STORAGE_KEYS.SELECTED_MOOD);
         if (moodJSON) setSelected(JSON.parse(moodJSON));
-      } catch {}
+      } catch (error) {
+        // registra em dev; evita bloco vazio (no-empty)
+        if (__DEV__) {
+          console.warn('Falha ao carregar o humor salvo', error);
+        }
+      }
     })();
   }, []);
 
@@ -45,9 +57,16 @@ export default function MoodScreen({ navigation }: any) {
     setSelected(mood);
     Haptics.selectionAsync();
     try {
-      await AsyncStorage.setItem(STORAGE_KEYS.SELECTED_MOOD, JSON.stringify(mood));
+      await AsyncStorage.setItem(
+        STORAGE_KEYS.SELECTED_MOOD,
+        JSON.stringify(mood)
+      );
       await AsyncStorage.setItem(STORAGE_KEYS.LAST_LOG_DATE, today);
-    } catch {}
+    } catch (error) {
+      if (__DEV__) {
+        console.warn('Falha ao salvar o humor', error);
+      }
+    }
   };
 
   const feelingText = selected
@@ -55,9 +74,9 @@ export default function MoodScreen({ navigation }: any) {
     : '';
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={localStyles.root}>
       <LinearGradient
-        pointerEvents="none"
+        pointerEvents='none'
         colors={[theme.colors.gradientStart, theme.colors.gradientEnd]}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
@@ -70,11 +89,11 @@ export default function MoodScreen({ navigation }: any) {
             <Text style={styles.backArrow}>‹</Text>
           </TouchableOpacity>
           <Text style={styles.pageTitle}>Como está se sentindo hoje?</Text>
-          <View style={{ width: 24 }} />
+          <View style={localStyles.headerSpacer} />
         </View>
 
         <View style={styles.list}>
-          {MOODS.map((mood) => {
+          {MOODS.map(mood => {
             const isSelected = selected?.label === mood.label;
 
             if (isSelected) {
@@ -95,16 +114,18 @@ export default function MoodScreen({ navigation }: any) {
             }
 
             return (
-              <Card key={mood.label} style={styles.cardBase}>
-                <TouchableOpacity
-                  onPress={() => handleSelect(mood)}
-                  activeOpacity={0.85}
-                  style={styles.moodInner}
-                >
-                  <Text style={styles.emoji}>{mood.emoji}</Text>
-                  <Text style={styles.label}>{mood.label}</Text>
-                </TouchableOpacity>
-              </Card>
+              <View key={mood.label}>
+                <Card style={styles.cardBase}>
+                  <TouchableOpacity
+                    onPress={() => handleSelect(mood)}
+                    activeOpacity={0.85}
+                    style={styles.moodInner}
+                  >
+                    <Text style={styles.emoji}>{mood.emoji}</Text>
+                    <Text style={styles.label}>{mood.label}</Text>
+                  </TouchableOpacity>
+                </Card>
+              </View>
             );
           })}
         </View>
@@ -114,3 +135,9 @@ export default function MoodScreen({ navigation }: any) {
     </View>
   );
 }
+
+// ✅ estilos locais para remover inline styles
+const localStyles = StyleSheet.create({
+  headerSpacer: { width: 24 },
+  root: { flex: 1 },
+});

@@ -6,17 +6,24 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactNative from 'eslint-plugin-react-native';
 import prettier from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+import globals from 'globals';
 
 export default [
   js.configs.recommended,
 
-  // Config principal (TS / React / RN)
+  // Principal (TS / React / RN)
   {
     files: ['**/*.{ts,tsx,js,jsx}'],
     languageOptions: {
       parser: tsparser,
       ecmaVersion: 'latest',
       sourceType: 'module',
+      globals: {
+        ...globals.browser, // window, console, etc.
+        ...globals.es2021,
+        // ...globals.node,   // ative se usar globais Node na pasta src
+        __DEV__: 'readonly', // global do React Native
+      },
     },
     plugins: {
       '@typescript-eslint': tseslint,
@@ -33,19 +40,24 @@ export default [
       'prettier/prettier': 'error',
       'react/react-in-jsx-scope': 'off',
       'react-native/no-color-literals': 'off',
+      // Se quiser bloquear console em prod, troque por ["warn", { allow: ["warn", "error"] }]
+      'no-console': 'off',
+      // ✅ permite redeclarar nomes iguais a globais nativas (ex.: setTimeout)
+      'no-redeclare': ['error', { builtinGlobals: false }],
     },
     settings: {
       react: { version: 'detect' },
     },
   },
 
-  // Arquivos de configuração Node.js — reconhecer module/require
+  // Arquivos de config Node.js — reconhecer module/require
   {
     files: ['babel.config.js', 'jest.config.js', 'react-native.config.js'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'script',
       globals: {
+        ...globals.node,
         module: 'readonly',
         require: 'readonly',
       },
@@ -57,14 +69,15 @@ export default [
     },
   },
 
-  // Jest setup (reconhecer jest/requires)
+  // Jest setup
   {
     files: ['jest.setup.js'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'script',
       globals: {
-        jest: 'readonly',
+        ...globals.node,
+        ...globals.jest,
         require: 'readonly',
         module: 'readonly',
       },
