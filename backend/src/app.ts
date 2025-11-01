@@ -48,11 +48,14 @@ app.use(routes);
 
 // 👇 logger de erro (se der ruim no controller, aparece aqui)
 app.use(
-  (err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-    console.error(
-      '[ERR MIDDLEWARE]', err
-    );
-  res.status(500).json({ error: 'erro interno' });
+  (
+    err: any,
+    _req: express.Request,
+    res: express.Response,
+    _next: express.NextFunction
+  ) => {
+    console.error('[ERR MIDDLEWARE]', err);
+    res.status(500).json({ error: 'erro interno' });
   }
 );
 
