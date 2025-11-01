@@ -31,7 +31,9 @@ function signAccess(payload: object) {
 function signRefresh(payload: object) {
   if (!JWT_REFRESH_SECRET) {
     // em vez de quebrar, só avisa
-    console.warn('[AUTH] JWT_REFRESH_SECRET não configurado, não vou gerar refresh token');
+    console.warn(
+      '[AUTH] JWT_REFRESH_SECRET não configurado, não vou gerar refresh token'
+    );
     return null;
   }
   return jwt.sign(payload, JWT_REFRESH_SECRET, {
@@ -145,7 +147,9 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const refresh = async (req: Request, res: Response) => {
-  console.log('[AUTH] POST /api/v1/auth/refresh cookies:', req.cookies);
+  console.log(
+    '[AUTH] POST /api/v1/auth/refresh cookies:'
+    , req.cookies);
   try {
     if (!JWT_REFRESH_SECRET) {
       console.warn('[AUTH] refresh -> sem JWT_REFRESH_SECRET, não dá pra renovar');
