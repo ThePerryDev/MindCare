@@ -34,7 +34,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }
 
   // deixa implementado pra não quebrar o Provider
-  async function register(_data: IRegisterData) {
+  async function register(data: IRegisterData): Promise<void> {
+    void data;
     throw new Error('register não implementado');
   }
 
