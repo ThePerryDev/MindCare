@@ -42,9 +42,7 @@ function signRefresh(payload: object) {
 }
 
 export const register = async (req: Request, res: Response) => {
-  console.log(
-    '[AUTH] POST /api/v1/auth/register body:', req.body
-  );
+  console.log('[AUTH] POST /api/v1/auth/register body:', req.body);
   try {
     const {
       fullName,
@@ -95,9 +93,7 @@ export const register = async (req: Request, res: Response) => {
 
     return res.status(201).json({ user: safeUser, accessToken });
   } catch (err: any) {
-    console.error(
-      '[AUTH] erro no register:', err
-    );
+    console.error('[AUTH] erro no register:', err);
     return res.status(500).json({
       success: false,
       message: 'Erro interno do servidor',
@@ -107,9 +103,7 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  console.log(
-    '[AUTH] POST /api/v1/auth/login body:', req.body
-  );
+  console.log('[AUTH] POST /api/v1/auth/login body:', req.body);
   try {
     const { email, password } = req.body as { email: string; password: string };
     if (!email || !password) {
@@ -120,9 +114,7 @@ export const login = async (req: Request, res: Response) => {
 
     const user = await UserModel.findOne({ email }).select('+password');
     if (!user) {
-      console.log(
-        '[AUTH] login -> usuário não encontrado:', email
-      );
+      console.log('[AUTH] login -> usuário não encontrado:', email);
       return res.status(404).json({ error: 'usuário não encontrado' });
     }
 
@@ -131,15 +123,11 @@ export const login = async (req: Request, res: Response) => {
       user.password as unknown as string
     );
     if (!ok) {
-      console.log(
-        '[AUTH] login -> senha inválida para:', email
-      );
+      console.log('[AUTH] login -> senha inválida para:', email);
       return res.status(401).json({ error: 'credenciais inválidas' });
     }
 
-    console.log(
-      '[AUTH] login -> login bem-sucedido para:', email
-    );
+    console.log('[AUTH] login -> login bem-sucedido para:', email);
 
     const accessToken = signAccess({ sub: user.id, email: user.email });
     const refreshToken = signRefresh({ sub: user.id });
@@ -151,9 +139,7 @@ export const login = async (req: Request, res: Response) => {
     const safe = user.toJSON();
     return res.status(200).json({ user: safe, accessToken });
   } catch (err: any) {
-    console.error(
-      '[AUTH] erro no login:', err
-    );
+    console.error('[AUTH] erro no login:', err);
     return res
       .status(500)
       .json({ error: err.message || 'erro ao fazer login' });
@@ -161,9 +147,7 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const refresh = async (req: Request, res: Response) => {
-  console.log(
-    '[AUTH] POST /api/v1/auth/refresh cookies:', req.cookies
-  );
+  console.log('[AUTH] POST /api/v1/auth/refresh cookies:', req.cookies);
   try {
     if (!JWT_REFRESH_SECRET) {
       console.warn(
@@ -187,9 +171,7 @@ export const refresh = async (req: Request, res: Response) => {
 
     return res.status(200).json({ accessToken });
   } catch (err: any) {
-    console.error(
-      '[AUTH] erro no refresh:', err
-    );
+    console.error('[AUTH] erro no refresh:', err);
     return res
       .status(401)
       .json({ error: 'refresh token inválido ou expirado' });
@@ -197,9 +179,7 @@ export const refresh = async (req: Request, res: Response) => {
 };
 
 export const logout = async (_req: Request, res: Response) => {
-  console.log(
-    '[AUTH] POST /api/v1/auth/logout'
-  );
+  console.log('[AUTH] POST /api/v1/auth/logout');
   res.clearCookie('refreshToken', { path: '/api/v1/auth/refresh' });
   return res.status(200).json({ message: 'logout efetuado' });
 };
