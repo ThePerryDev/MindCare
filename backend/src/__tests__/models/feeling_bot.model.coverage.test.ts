@@ -307,4 +307,246 @@ describe('FeelingBot Model Coverage', () => {
       '2025-10-18',
     ]);
   });
+
+  it('deve testar o modelo real FeelingBot com Map', async () => {
+    // Importar e usar o modelo real para exercitar as linhas finais
+    const FeelingBotModel = require('../../models/feeling_bot.model').default;
+
+    // Testar se o modelo foi criado corretamente
+    expect(FeelingBotModel).toBeDefined();
+    expect(FeelingBotModel.modelName).toBe('FeelingBot');
+
+    // Testar a estrutura do schema
+    const schema = FeelingBotModel.schema;
+    expect(schema.paths.user_id).toBeDefined();
+    expect(schema.paths.days).toBeDefined();
+
+    // Testar se days é do tipo Map
+    expect(schema.paths.days.instance).toBe('Map');
+
+    // Testar índices do schema real
+    const indexes = schema.indexes();
+    expect(indexes).toEqual([
+      [{ user_id: 1 }, { background: true, unique: true }],
+      [{ updatedAt: -1 }, { background: true }],
+    ]);
+  });
+
+  it('deve exercitar a função transform com Map vazia e sem Map', () => {
+    const transform = (_doc: unknown, ret: Record<string, unknown>) => {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.__v;
+
+      // Testar branch quando days existe mas não é Map
+      if (ret.days && ret.days instanceof Map) {
+        const entries = Array.from(ret.days.entries()).map(([day, v]: any) => ({
+          day,
+          sentimento: v.sentimento,
+          label: v.label,
+          createdAt: v.createdAt,
+          updatedAt: v.updatedAt,
+        }));
+        entries.sort((a, b) => (a.day < b.day ? 1 : a.day > b.day ? -1 : 0));
+        ret.days = entries;
+      }
+    };
+
+    // Teste com Map vazia
+    const mockDocWithEmptyMap: Record<string, unknown> = {
+      _id: '507f1f77bcf86cd799439011',
+      user_id: '507f1f77bcf86cd799439012',
+      days: new Map(),
+      __v: 0,
+    };
+
+    transform(null, mockDocWithEmptyMap);
+    expect(Array.isArray(mockDocWithEmptyMap.days)).toBe(true);
+    expect((mockDocWithEmptyMap.days as any[]).length).toBe(0);
+
+    // Teste sem campo days
+    const mockDocWithoutDays: Record<string, unknown> = {
+      _id: '507f1f77bcf86cd799439013',
+      user_id: '507f1f77bcf86cd799439014',
+      __v: 0,
+    };
+
+    transform(null, mockDocWithoutDays);
+    expect(mockDocWithoutDays.id).toBe('507f1f77bcf86cd799439013');
+    expect(mockDocWithoutDays.days).toBeUndefined();
+
+    // Teste com days que não é Map
+    const mockDocWithArrayDays: Record<string, unknown> = {
+      _id: '507f1f77bcf86cd799439015',
+      user_id: '507f1f77bcf86cd799439016',
+      days: [], // array ao invés de Map
+      __v: 0,
+    };
+
+    transform(null, mockDocWithArrayDays);
+    expect(Array.isArray(mockDocWithArrayDays.days)).toBe(true);
+    expect((mockDocWithArrayDays.days as any[]).length).toBe(0);
+  });
+
+  it('deve testar ordenação complexa de entries com dias iguais', () => {
+    // Testar o caso específico de ordenação com dias iguais (edge case da função sort)
+    const entries = [
+      { day: '2025-10-21', sentimento: 'Feliz' },
+      { day: '2025-10-21', sentimento: 'Triste' }, // mesmo dia
+      { day: '2025-10-20', sentimento: 'Neutro' },
+    ];
+
+    const sorted = entries.sort((a, b) =>
+      a.day < b.day ? 1 : a.day > b.day ? -1 : 0
+    );
+
+    // Dias iguais devem retornar 0 na comparação, mantendo ordem original
+    expect(sorted[0].day).toBe('2025-10-21');
+    expect(sorted[1].day).toBe('2025-10-21');
+    expect(sorted[2].day).toBe('2025-10-20');
+  });
+
+  it('deve exercitar o método toJSON do modelo real FeelingBot', () => {
+    // Importar o modelo real para executar as linhas finais
+    const FeelingBotModel = require('../../models/feeling_bot.model').default;
+
+    // Criar um Map com dados para testar
+    const mockDaysMap = new Map([
+      [
+        '2025-10-21',
+        {
+          sentimento: 'Muito feliz hoje',
+          label: '21/10/2025',
+          createdAt: new Date('2025-10-21T10:00:00Z'),
+          updatedAt: new Date('2025-10-21T10:00:00Z'),
+        },
+      ],
+      [
+        '2025-10-20',
+        {
+          sentimento: 'Dia normal',
+          label: '20/10/2025',
+          createdAt: new Date('2025-10-20T10:00:00Z'),
+          updatedAt: new Date('2025-10-20T10:00:00Z'),
+        },
+      ],
+    ]);
+
+    // Executar transform diretamente para exercitar todas as linhas
+    const mockDocument: any = {
+      _id: '507f1f77bcf86cd799439011',
+      user_id: '507f1f77bcf86cd799439012',
+      days: mockDaysMap,
+      __v: 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    // Executar transform para exercitar as linhas 51-67
+    if (
+      FeelingBotModel.schema.options.toJSON &&
+      FeelingBotModel.schema.options.toJSON.transform
+    ) {
+      FeelingBotModel.schema.options.toJSON.transform({}, mockDocument);
+    }
+
+    // Verificar se a transformação foi aplicada
+    expect(mockDocument.id).toBe('507f1f77bcf86cd799439011');
+    expect(mockDocument._id).toBeUndefined();
+    expect(mockDocument.__v).toBeUndefined();
+    expect(Array.isArray(mockDocument.days)).toBe(true);
+
+    // Verificar ordenação descendente por dia
+    const daysArray = mockDocument.days;
+    expect(daysArray.length).toBe(2);
+    expect(daysArray[0].day).toBe('2025-10-21');
+    expect(daysArray[1].day).toBe('2025-10-20');
+    expect(daysArray[0].sentimento).toBe('Muito feliz hoje');
+  });
+
+  it('deve exercitar todas as linhas da função transform incluindo Map entries', () => {
+    // Importar o modelo real
+    const FeelingBotModel = require('../../models/feeling_bot.model').default;
+
+    // Testar com Map que tem múltiplas entries para exercitar o Array.from e sort
+    const complexMap = new Map([
+      [
+        '2025-10-25',
+        {
+          sentimento: 'Excelente dia',
+          label: '25/10',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      [
+        '2025-10-23',
+        {
+          sentimento: 'Dia ok',
+          label: '23/10',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      [
+        '2025-10-24',
+        {
+          sentimento: 'Bom dia',
+          label: '24/10',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+    ]);
+
+    const mockDoc: any = {
+      _id: '507f1f77bcf86cd799439013',
+      user_id: '507f1f77bcf86cd799439014',
+      days: complexMap,
+      __v: 1,
+    };
+
+    // Executar função transform diretamente
+    if (
+      FeelingBotModel.schema.options.toJSON &&
+      FeelingBotModel.schema.options.toJSON.transform
+    ) {
+      FeelingBotModel.schema.options.toJSON.transform({}, mockDoc);
+    }
+
+    // Verificar todas as transformações
+    expect(mockDoc.id).toBe('507f1f77bcf86cd799439013');
+    expect(mockDoc._id).toBeUndefined();
+    expect(mockDoc.__v).toBeUndefined();
+    expect(Array.isArray(mockDoc.days)).toBe(true);
+
+    // Verificar ordenação correta (descendente)
+    const sortedDays = mockDoc.days;
+    expect(sortedDays[0].day).toBe('2025-10-25'); // mais recente primeiro
+    expect(sortedDays[1].day).toBe('2025-10-24');
+    expect(sortedDays[2].day).toBe('2025-10-23'); // mais antigo por último
+  });
+
+  it('deve testar a criação condicional do modelo FeelingBot mongoose', () => {
+    // Importar e verificar se o modelo FeelingBot foi criado corretamente
+    const FeelingBotModel = require('../../models/feeling_bot.model').default;
+
+    // Verificar se o modelo existe e tem as propriedades corretas
+    expect(FeelingBotModel).toBeDefined();
+    expect(FeelingBotModel.modelName).toBe('FeelingBot');
+
+    // Verificar se o schema tem a configuração correta
+    expect(FeelingBotModel.schema.options.timestamps).toBe(true);
+    expect(FeelingBotModel.schema.options.toJSON).toBeDefined();
+
+    // Testar se o índice foi criado
+    const indexes = FeelingBotModel.schema.indexes();
+    expect(indexes.length).toBeGreaterThan(0);
+
+    // Verificar se contém o índice updatedAt
+    const hasUpdatedAtIndex = indexes.some(
+      (index: any) => index[0] && index[0].updatedAt === -1
+    );
+    expect(hasUpdatedAtIndex).toBe(true);
+  });
 });

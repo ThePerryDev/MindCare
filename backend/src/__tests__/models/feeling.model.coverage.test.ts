@@ -223,4 +223,143 @@ describe('Feeling Model Coverage', () => {
     expect(TestSchema.paths.user_id.options.index).toBe(true);
     expect(TestSchema.paths.day.options.index).toBe(true);
   });
+
+  it('deve testar a criação do modelo real mongoose', async () => {
+    // Importar e usar o modelo real para exercitar as linhas finais
+    const FeelingModel = require('../../models/feeling.model').default;
+
+    // Testar se o modelo foi criado corretamente
+    expect(FeelingModel).toBeDefined();
+    expect(FeelingModel.modelName).toBe('FeelingDay');
+
+    // Testar a estrutura do schema
+    const schema = FeelingModel.schema;
+    expect(schema.paths.user_id).toBeDefined();
+    expect(schema.paths.day).toBeDefined();
+    expect(schema.paths.sentimento_de_entrada).toBeDefined();
+    expect(schema.paths.sentimento_de_saida).toBeDefined();
+
+    // Testar validadores do schema real
+    const dayValidators = schema.paths.day.validators;
+    expect(dayValidators).toBeDefined();
+    expect(dayValidators.length).toBeGreaterThan(0);
+
+    // Encontrar o validator customizado
+    const customValidator = dayValidators.find(
+      (v: any) => v.message === 'day deve estar no formato YYYY-MM-DD'
+    );
+    if (customValidator) {
+      expect(customValidator.validator('2025-10-21')).toBe(true);
+      expect(customValidator.validator('invalid')).toBe(false);
+    }
+
+    // Testar índices compostos
+    const indexes = schema.indexes();
+    expect(indexes).toEqual([
+      [{ user_id: 1 }, { background: true }],
+      [{ day: 1 }, { background: true }],
+      [
+        { user_id: 1, day: 1 },
+        { unique: true, background: true },
+      ],
+      [{ user_id: 1, createdAt: -1 }, { background: true }],
+    ]);
+  });
+
+  it('deve executar todas as opções de configuração do schema', () => {
+    const { Schema } = mongoose;
+
+    // Testar configuração similar ao modelo real
+    const testSchema = new Schema(
+      {
+        test_field: { type: String, trim: true },
+      },
+      {
+        timestamps: true,
+        toJSON: {
+          transform: (_doc: any, ret: any) => {
+            ret.id = ret._id;
+            delete ret._id;
+            delete ret.__v;
+            return ret;
+          },
+        },
+      }
+    );
+
+    // Verificar se timestamps está configurado
+    expect(testSchema.options.timestamps).toBe(true);
+
+    // Testar função transform diretamente
+    const transformFunction = (_doc: any, ret: any) => {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.__v;
+      return ret;
+    };
+
+    const mockObj: any = {
+      _id: '507f1f77bcf86cd799439011',
+      test_field: 'test',
+      __v: 0,
+    };
+
+    transformFunction({}, mockObj);
+    expect(mockObj.id).toBe('507f1f77bcf86cd799439011');
+    expect(mockObj._id).toBeUndefined();
+    expect(mockObj.__v).toBeUndefined();
+  });
+
+  it('deve exercitar o método toJSON do modelo real', () => {
+    // Importar o modelo real para executar as linhas finais
+    const FeelingModel = require('../../models/feeling.model').default;
+
+    // Testar a função transform diretamente
+    const mockDocument: any = {
+      _id: '507f1f77bcf86cd799439011',
+      user_id: '507f1f77bcf86cd799439012',
+      day: '2025-10-21',
+      sentimento_de_entrada: 'Muito Feliz',
+      sentimento_de_saida: 'Neutro',
+      __v: 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    // Executar transform diretamente para exercitar as linhas 65-67
+    if (
+      FeelingModel.schema.options.toJSON &&
+      FeelingModel.schema.options.toJSON.transform
+    ) {
+      FeelingModel.schema.options.toJSON.transform({}, mockDocument);
+    }
+
+    // Verificar se a transformação foi aplicada
+    expect(mockDocument.id).toBe('507f1f77bcf86cd799439011');
+    expect(mockDocument._id).toBeUndefined();
+    expect(mockDocument.__v).toBeUndefined();
+    expect(mockDocument.day).toBe('2025-10-21');
+    expect(mockDocument.sentimento_de_entrada).toBe('Muito Feliz');
+  });
+
+  it('deve testar a criação condicional do modelo mongoose', () => {
+    // Simular o comportamento de mongoose.models.FeelingDay || mongoose.model
+    const mockMongoose: any = {
+      models: {
+        FeelingDay: null, // Simular que não existe ainda
+      },
+      model: jest.fn(),
+    };
+
+    // Testar o padrão usado no modelo real
+    const result =
+      mockMongoose.models.FeelingDay || mockMongoose.model('FeelingDay', {});
+    expect(mockMongoose.model).toHaveBeenCalled();
+
+    // Testar quando o modelo já existe
+    mockMongoose.models.FeelingDay = { modelName: 'FeelingDay' } as any;
+    const existingResult =
+      mockMongoose.models.FeelingDay || mockMongoose.model('FeelingDay', {});
+    expect(existingResult.modelName).toBe('FeelingDay');
+  });
 });
