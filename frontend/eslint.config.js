@@ -1,3 +1,4 @@
+// frontend/eslint.config.js
 import js from '@eslint/js';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
@@ -6,17 +7,21 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactNative from 'eslint-plugin-react-native';
 import prettier from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+import globals from 'globals';
 
 export default [
   js.configs.recommended,
 
-  // Config principal (TS / React / RN)
+  // Principal (TS / React / RN)
   {
     files: ['**/*.{ts,tsx,js,jsx}'],
     languageOptions: {
       parser: tsparser,
       ecmaVersion: 'latest',
       sourceType: 'module',
+      globals: {
+        ...globals.browser, // 👈 DIZ AO ESLINT QUE ESTAMOS NO BROWSER (console, window, setTimeout, etc.)
+      },
     },
     plugins: {
       '@typescript-eslint': tseslint,
@@ -33,19 +38,26 @@ export default [
       'prettier/prettier': 'error',
       'react/react-in-jsx-scope': 'off',
       'react-native/no-color-literals': 'off',
+
+
+      // Evita conflito de setTimeout
+      'no-redeclare': 'off',
+      '@typescript-eslint/no-redeclare': [
+        'error',
+        { ignoreDeclarationMerge: true }, // 👈 ignora merges entre tipos globais e código
+      ],
     },
-    settings: {
-      react: { version: 'detect' },
-    },
+    settings: { react: { version: 'detect' } },
   },
 
-  // Arquivos de configuração Node.js — reconhecer module/require
+  // Arquivos de config Node.js — reconhecer module/require
   {
     files: ['babel.config.js', 'jest.config.js', 'react-native.config.js'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'script',
       globals: {
+        ...globals.node, // 👈 scripts rodam em Node
         module: 'readonly',
         require: 'readonly',
       },
@@ -57,13 +69,14 @@ export default [
     },
   },
 
-  // Jest setup (reconhecer jest/requires)
+  // Jest setup
   {
     files: ['jest.setup.js'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'script',
       globals: {
+        ...globals.node,
         jest: 'readonly',
         require: 'readonly',
         module: 'readonly',

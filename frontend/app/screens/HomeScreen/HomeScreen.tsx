@@ -10,7 +10,6 @@ import Navbar from '@/components/Navbar/Navbar';
 
 export default function HomeScreen() {
   const handleMoodPress = () => {
-    // eslint-disable-next-line no-undef
     console.log('Botão de humor pressionado');
   };
 
