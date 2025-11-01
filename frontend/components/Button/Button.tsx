@@ -17,7 +17,7 @@ export default function Button({
   return (
     <Pressable
       onPress={disabled ? undefined : onPress}
-      style={[styles.disabled, pressable && styles.disabled]}
+      style={[styles.pressable, disabled && styles.disabled]}
       disabled={disabled}
     >
       <LinearGradient

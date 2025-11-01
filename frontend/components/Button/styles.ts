@@ -8,13 +8,13 @@ export const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
   },
+  disabled: {
+    opacity: 0.6,
+  },
   pressable: {
     borderRadius: 20,
     marginVertical: 10,
     overflow: 'hidden',
-  },
-  disabled: {
-    opacity: 0.6,
   },
   text: {
     color: '#FFFFFF',
