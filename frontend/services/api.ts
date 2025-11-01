@@ -11,5 +11,3 @@ export const api = axios.create({
   baseURL,
   withCredentials: true,
 });
-
-console.log('[API] usando baseURL =', baseURL);
