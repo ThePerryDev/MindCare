@@ -6,7 +6,7 @@
 | **NOME**   | **13/10/2025** | **15/10/2025** | **17/10/2025** | **21/10/2025** | **23/10/2025** | **31/10/2025** |
 |-----------|---------------|---------------|---------------|---------------|---------------|---------------|
 | **Eduardo**   | LDM-050 | XXX-057 | LDM-064 | LDM-071 | LDM-078 | XXX-085 |
-| **Franciele** | LDM-051 | XXX-058 | QA-065 | QA-072 | LDM-079 | XXX-086 |
+| **Franciele** | LDM-051 | XXX-058 | QA-065 | QA-072 | LDM-079 | QA-086 |
 | **Claudia**   | XXX-052 | XXX-059 | XXX-066 | XXX-073 | XXX-080 | XXX-087 |
 | **Willian**   | LDM-053 | LDM-060 | LDM-067 | LDM-074 | LDM-081 | XXX-088 |
 | **Bianca**    | XXX-054 | XXX-061 | XXX-068 | XXX-075 | XXX-082 | XXX-089 |
@@ -31,7 +31,7 @@
 | **17/10/2025** | QA-065 | Elaborando cenários de teste |
 | **21/10/2025** | QA-072 | Finalizando cobertura de testes (BE) |
 | **23/10/2025** | LDM-079 | Suporte técnico consultivo e orientação à equipe, focando na aplicação de boas práticas e na sincronização do workflow das tarefas |
-| **31/10/2025** | XXX-086 | XXX |
+| **31/10/2025** | QA-086 | Criação de novos cenários de teste para (BE) / Reunião de alinhamento com o time para decidir entregáveis para final da Sprint 2 |
 
 
 | **Claudia** | **Nome da tarefa** | **Descrição** |
