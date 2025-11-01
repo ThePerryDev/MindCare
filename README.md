@@ -8,7 +8,7 @@
 | **Eduardo**   | LDM-050 | XXX-057 | LDM-064 | LDM-071 | LDM-078 | XXX-085 |
 | **Franciele** | LDM-051 | XXX-058 | QA-065 | QA-072 | LDM-079 | QA-086 |
 | **Claudia**   | XXX-052 | XXX-059 | XXX-066 | XXX-073 | XXX-080 | XXX-087 |
-| **Willian**   | LDM-053 | LDM-060 | LDM-067 | LDM-074 | LDM-081 | XXX-088 |
+| **Willian**   | LDM-053 | LDM-060 | LDM-067 | LDM-074 | LDM-081 | LDM-088 |
 | **Bianca**    | XXX-054 | XXX-061 | XXX-068 | XXX-075 | XXX-082 | XXX-089 |
 | **Daniel**    | LDM-055 | QA-062 | QA-069 | QA-076 | QA-083 | XXX-090 |
 | **Heclair**   | LDM-056 | XXX-063 | LDM-070 | XXX-077 | XXX-084 | XXX-091 |
@@ -51,7 +51,7 @@
 | **17/10/2025** | LDM-067 | Adicionado componentes: CreateAccountIntro, PasswordRequirements, Checkbox e ConsentCard |
 | **21/10/2025** | XXX-074 | Adicionado Telas SplashScreen, LoadingScreen e CadastroFinalizadoScreen |
 | **23/10/2025** | XXX-081 | Correções nos erros de ESLINT para validação do pipeline |
-| **31/10/2025** | XXX-088 | XXX |
+| **31/10/2025** | XXX-088 | Adicionando Tela SettingsScreen e Reunião de alinhamento com o time para decidir entregáveis para final da Sprint 2 |
 
 
 | **Bianca** | **Nome da tarefa** | **Descrição** |
