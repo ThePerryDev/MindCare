@@ -9,11 +9,15 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-export default function Button({ children, onPress, disabled = false }: ButtonProps) {
+export default function Button({
+  children,
+  onPress,
+  disabled = false,
+}: ButtonProps) {
   return (
     <Pressable
       onPress={disabled ? undefined : onPress}
-      style={[styles.pressable, disabled && { opacity: 0.6 }]}
+      style={[styles.pressable, disabled && styles.disabled]}
       disabled={disabled}
     >
       <LinearGradient

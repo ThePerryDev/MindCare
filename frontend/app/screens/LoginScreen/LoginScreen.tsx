@@ -20,6 +20,7 @@ import Button from '../../../components/Button/Button';
 import logoMindcare from '../../../assets/images/logo_mindcare.png';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/hooks/useAuth';
+import type { AxiosError } from 'axios';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -65,13 +66,14 @@ export default function LoginScreen() {
 
     try {
       setIsSubmitting(true);
-      await login(email, senha); // <-- CHAMA O CONTEXTO!
+      await login(email, senha);
       router.replace('/screens/HomeScreen/HomeScreen');
     } catch (err: unknown) {
+      const axiosError = err as AxiosError<{ error?: string }>;
       const message =
-        err && typeof err === 'object' && 'response' in err
-          ? (err as any).response?.data?.error || (err as any).message
-          : 'Não foi possível fazer login';
+        axiosError.response?.data?.error ||
+        axiosError.message ||
+        'Não foi possível fazer login';
       Alert.alert('Erro', message);
     } finally {
       setIsSubmitting(false);

@@ -10,5 +10,5 @@ export default function RootNavigator() {
 
   if (loading) return <LoadingScreen />;
 
-  return user ? <AppStack /> : <AuthStack />
+  return user ? <AppStack /> : <AuthStack />;
 }

@@ -13,6 +13,9 @@ export const styles = StyleSheet.create({
     marginVertical: 10,
     overflow: 'hidden',
   },
+  disabled: {
+    opacity: 0.6,
+  },
   text: {
     color: '#FFFFFF',
     fontFamily: theme.fonts.semi,
