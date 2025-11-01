@@ -1,9 +1,14 @@
 // app/interfaces/auth.interface.ts
 export interface IUser {
   id: string;
-  name: string;
+  fullName: string;
   email: string;
-  role?: string;
+  phone?: string;
+  birthdate?: string; // pode vir como string do backend
+  height?: number;
+  weight?: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface ILoginResponse {

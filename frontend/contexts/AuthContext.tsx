@@ -1,3 +1,4 @@
+// src/contexts/AuthContext.tsx  (ou frontend/contexts/AuthContext.tsx)
 import React, { createContext, useState, useEffect } from 'react';
 import { api } from '@/services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,72 +11,57 @@ import {
 
 export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   async function login(email: string, password: string) {
-    try {
-      const response = await api.post<ILoginResponse>('/auth/login', {
-        email,
-        password,
-      });
-      setUser(response.data.user);
-      setAccessToken(response.data.accessToken);
-      api.defaults.headers.common['Authorization'] =
-        `Bearer ${response.data.accessToken}`;
-      await AsyncStorage.setItem('@accessToken', response.data.accessToken);
-      await AsyncStorage.setItem('@user', JSON.stringify(response.data.user));
-    } catch (error: any) {
-      console.error(
-        'Erro ao fazer login:',
-        error.response?.data || error.message
-      );
-      throw error;
-    }
+    const response = await api.post<ILoginResponse>('/auth/login', {
+      email,
+      password,
+    });
+
+    setUser(response.data.user);
+    setAccessToken(response.data.accessToken);
+    api.defaults.headers.common['Authorization'] =
+      `Bearer ${response.data.accessToken}`;
+
+    await AsyncStorage.setItem('@accessToken', response.data.accessToken);
+    await AsyncStorage.setItem('@user', JSON.stringify(response.data.user));
   }
 
-  async function register(data: IRegisterData) {
-    try {
-      const response = await api.post<ILoginResponse>('/auth/register', data);
-      setUser(response.data.user);
-      setAccessToken(response.data.accessToken);
-      api.defaults.headers.common['Authorization'] =
-        `Bearer ${response.data.accessToken}`;
-      await AsyncStorage.setItem('@accessToken', response.data.accessToken);
-      await AsyncStorage.setItem('@user', JSON.stringify(response.data.user));
-    } catch (error: any) {
-      console.error(
-        'Erro ao registrar:',
-        error.response?.data || error.message
-      );
-      throw error;
-    }
+  // deixa implementado pra não quebrar o Provider
+  async function register(_data: IRegisterData) {
+    throw new Error('register não implementado');
   }
 
   async function logout() {
-    await api.post('/auth/logout');
-    setUser(null);
-    setAccessToken(null);
-    await AsyncStorage.multiRemove(['@accessToken', '@user']);
-  }
-
-  async function loadStorageData() {
-    const token = await AsyncStorage.getItem('@accessToken');
-    const storedUser = await AsyncStorage.getItem('@user');
-    if (token && storedUser) {
-      setAccessToken(token);
-      setUser(JSON.parse(storedUser));
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    try {
+      await api.post('/auth/logout');
+    } catch {
+      // ok
+    } finally {
+      setUser(null);
+      setAccessToken(null);
+      await AsyncStorage.multiRemove(['@accessToken', '@user']);
+      delete api.defaults.headers.common['Authorization'];
     }
-    setLoading(false);
   }
 
   useEffect(() => {
-    loadStorageData();
+    async function loadStorage() {
+      const token = await AsyncStorage.getItem('@accessToken');
+      const storedUser = await AsyncStorage.getItem('@user');
+
+      if (token && storedUser) {
+        setAccessToken(token);
+        setUser(JSON.parse(storedUser));
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      }
+      setLoading(false);
+    }
+    loadStorage();
   }, []);
 
   return (

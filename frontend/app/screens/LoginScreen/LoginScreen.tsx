@@ -1,3 +1,4 @@
+// frontend/app/screens/LoginScreen/LoginScreen.tsx
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -10,19 +11,24 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import styles from './styles';
 import Input from '../../../components/Input/Input';
 import Button from '../../../components/Button/Button';
 import logoMindcare from '../../../assets/images/logo_mindcare.png';
 import { useRouter } from 'expo-router';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const { login } = useAuth();
   const router = useRouter();
   const scrollRef = useRef<ScrollView>(null);
 
@@ -50,6 +56,33 @@ export default function LoginScreen() {
         : undefined;
 
   const showLogo = !(keyboardVisible && isPasswordFocused);
+
+  async function handleLogin() {
+    if (!email || !senha) {
+      Alert.alert('Atenção', 'Preencha e-mail e senha.');
+      return;
+    }
+
+    console.log('[LOGINSCREEN] clique no botão. Vou chamar login(...)', {
+      email,
+    });
+
+    try {
+      setIsSubmitting(true);
+      await login(email, senha); // <-- CHAMA O CONTEXTO!
+      console.log('[LOGINSCREEN] login sucesso, vou navegar');
+      router.replace('/screens/HomeScreen/HomeScreen');
+    } catch (err: any) {
+      const msg =
+        err?.response?.data?.error ||
+        err?.message ||
+        'Não foi possível fazer login';
+      console.log('[LOGINSCREEN] erro no login:', err?.response || err);
+      Alert.alert('Erro', msg);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
@@ -82,6 +115,8 @@ export default function LoginScreen() {
               placeholder='Digite seu e-mail'
               value={email}
               onChangeText={setEmail}
+              autoCapitalize='none'
+              keyboardType='email-address'
             />
 
             <Input
@@ -94,10 +129,8 @@ export default function LoginScreen() {
               onBlur={() => setIsPasswordFocused(false)}
             />
 
-            <Button
-              onPress={() => router.push('/screens/HomeScreen/HomeScreen')}
-            >
-              <Text>Login</Text>
+            <Button onPress={handleLogin} disabled={isSubmitting}>
+              {isSubmitting ? <ActivityIndicator /> : <Text>Login</Text>}
             </Button>
 
             <Pressable onPress={() => router.push('/')}>
