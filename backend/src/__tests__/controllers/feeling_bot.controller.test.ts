@@ -2,7 +2,6 @@ import request from 'supertest';
 import express from 'express';
 import FeelingBotController from '../../controllers/feeling_bot.controller';
 import FeelingBotModel from '../../models/feeling_bot.model';
-import { AuthRequest } from '../../security/auth.middleware';
 
 // Mock do modelo de feeling bot mantendo as interfaces
 jest.mock('../../models/feeling_bot.model', () => {

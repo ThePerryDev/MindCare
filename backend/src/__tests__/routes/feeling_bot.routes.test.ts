@@ -470,6 +470,7 @@ describe('FeelingBot Routes Integration', () => {
       // Array para rastrear qual controller foi chamado
       const calls: string[] = [];
 
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const FeelingBotController = require('../../controllers/feeling_bot.controller');
 
       FeelingBotController.list.mockImplementation((req: any, res: any) => {

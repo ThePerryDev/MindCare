@@ -1,7 +1,7 @@
 import request from 'supertest';
 import express from 'express';
 import FeelingController from '../../controllers/feeling.controller';
-import FeelingModel, { FEELINGS } from '../../models/feeling.model';
+import FeelingModel from '../../../src/models/feeling.model';
 
 // Mock do modelo de feeling mantendo as constantes
 jest.mock('../../models/feeling.model', () => {
@@ -593,6 +593,73 @@ describe('Feeling Controller', () => {
           .fn()
           .mockResolvedValue(mockFeeling);
       }
+    });
+  });
+
+  describe('Cobertura completa de branches', () => {
+    it('deve cobrir todos os branches do badFeeling em updateSaida', async () => {
+      // Teste com sentimento undefined para cobrir branch específico
+      const response1 = await request(app)
+        .patch('/feelings/saida/2025-10-21')
+        .send({ sentimento_de_saida: undefined });
+
+      expect(response1.status).toBe(400);
+      expect(response1.body.error).toBe('sentimento_de_saida inválido');
+
+      // Teste com sentimento null para cobrir outro branch
+      const response2 = await request(app)
+        .patch('/feelings/saida/2025-10-21')
+        .send({ sentimento_de_saida: null });
+
+      expect(response2.status).toBe(400);
+      expect(response2.body.error).toBe('sentimento_de_saida inválido');
+
+      // Teste com número para cobrir typeof !== 'string'
+      const response3 = await request(app)
+        .patch('/feelings/saida/2025-10-21')
+        .send({ sentimento_de_saida: 123 });
+
+      expect(response3.status).toBe(400);
+      expect(response3.body.error).toBe('sentimento_de_saida inválido');
+
+      // Teste com boolean para cobrir typeof !== 'string'
+      const response4 = await request(app)
+        .patch('/feelings/saida/2025-10-21')
+        .send({ sentimento_de_saida: true });
+
+      expect(response4.status).toBe(400);
+      expect(response4.body.error).toBe('sentimento_de_saida inválido');
+    });
+
+    it('deve cobrir todos os branches do validateDay', async () => {
+      // Teste com day null
+      const response1 = await request(app)
+        .patch('/feelings/entrada/null')
+        .send({ sentimento_de_entrada: 'Neutro' });
+
+      expect([400, 404]).toContain(response1.status);
+
+      // Teste com day undefined
+      const response2 = await request(app)
+        .patch('/feelings/entrada/undefined')
+        .send({ sentimento_de_entrada: 'Neutro' });
+
+      expect([400, 404]).toContain(response2.status);
+
+      // Teste específico para updateSaida com day inválido (linha 202)
+      const response3 = await request(app)
+        .patch('/feelings/saida/invalid-date-format')
+        .send({ sentimento_de_saida: 'Neutro' });
+
+      expect(response3.status).toBe(400);
+      expect(response3.body.error).toBe('day deve estar no formato YYYY-MM-DD');
+
+      // Teste com day vazio para updateSaida
+      const response4 = await request(app)
+        .patch('/feelings/saida/')
+        .send({ sentimento_de_saida: 'Neutro' });
+
+      expect([400, 404]).toContain(response4.status);
     });
   });
 });

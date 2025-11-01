@@ -226,6 +226,7 @@ describe('Feeling Model Coverage', () => {
 
   it('deve testar a criação do modelo real mongoose', async () => {
     // Importar e usar o modelo real para exercitar as linhas finais
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const FeelingModel = require('../../models/feeling.model').default;
 
     // Testar se o modelo foi criado corretamente
@@ -312,6 +313,7 @@ describe('Feeling Model Coverage', () => {
 
   it('deve exercitar o método toJSON do modelo real', () => {
     // Importar o modelo real para executar as linhas finais
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const FeelingModel = require('../../models/feeling.model').default;
 
     // Testar a função transform diretamente
@@ -344,16 +346,17 @@ describe('Feeling Model Coverage', () => {
 
   it('deve testar a criação condicional do modelo mongoose', () => {
     // Simular o comportamento de mongoose.models.FeelingDay || mongoose.model
-    const mockMongoose: any = {
+    const mockMongoose = {
       models: {
         FeelingDay: null, // Simular que não existe ainda
       },
-      model: jest.fn(),
+      model: jest.fn().mockReturnValue({ modelName: 'FeelingDay' }),
     };
 
     // Testar o padrão usado no modelo real
-    const result =
+    const modelResult =
       mockMongoose.models.FeelingDay || mockMongoose.model('FeelingDay', {});
+    expect(modelResult).toBeDefined();
     expect(mockMongoose.model).toHaveBeenCalled();
 
     // Testar quando o modelo já existe
