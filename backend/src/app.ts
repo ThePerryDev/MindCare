@@ -50,8 +50,7 @@ app.use(routes);
 app.use(
   (err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
     console.error(
-      '[ERR MIDDLEWARE]',
-       err
+      '[ERR MIDDLEWARE]', err
     );
   res.status(500).json({ error: 'erro interno' });
   }
