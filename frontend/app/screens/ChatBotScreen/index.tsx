@@ -1,4 +1,3 @@
-/* global setTimeout */
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import {
   View,

@@ -1,3 +1,4 @@
+// frontend/eslint.config.js
 import js from '@eslint/js';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
@@ -19,10 +20,7 @@ export default [
       ecmaVersion: 'latest',
       sourceType: 'module',
       globals: {
-        ...globals.browser, // window, console, etc.
-        ...globals.es2021,
-        // ...globals.node,   // ative se usar globais Node na pasta src
-        __DEV__: 'readonly', // global do React Native
+        ...globals.browser, // 👈 DIZ AO ESLINT QUE ESTAMOS NO BROWSER (console, window, setTimeout, etc.)
       },
     },
     plugins: {
@@ -40,14 +38,16 @@ export default [
       'prettier/prettier': 'error',
       'react/react-in-jsx-scope': 'off',
       'react-native/no-color-literals': 'off',
-      // Se quiser bloquear console em prod, troque por ["warn", { allow: ["warn", "error"] }]
-      'no-console': 'off',
-      // ✅ permite redeclarar nomes iguais a globais nativas (ex.: setTimeout)
-      'no-redeclare': ['error', { builtinGlobals: false }],
+
+
+      // Evita conflito de setTimeout
+      'no-redeclare': 'off',
+      '@typescript-eslint/no-redeclare': [
+        'error',
+        { ignoreDeclarationMerge: true }, // 👈 ignora merges entre tipos globais e código
+      ],
     },
-    settings: {
-      react: { version: 'detect' },
-    },
+    settings: { react: { version: 'detect' } },
   },
 
   // Arquivos de config Node.js — reconhecer module/require
@@ -57,7 +57,7 @@ export default [
       ecmaVersion: 'latest',
       sourceType: 'script',
       globals: {
-        ...globals.node,
+        ...globals.node, // 👈 scripts rodam em Node
         module: 'readonly',
         require: 'readonly',
       },
@@ -77,7 +77,7 @@ export default [
       sourceType: 'script',
       globals: {
         ...globals.node,
-        ...globals.jest,
+        jest: 'readonly',
         require: 'readonly',
         module: 'readonly',
       },

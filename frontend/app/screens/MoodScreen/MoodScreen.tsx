@@ -28,14 +28,13 @@ const STORAGE_KEYS = {
   LAST_LOG_DATE: '@mood/lastLogDate',
 };
 
-// ✅ Tipagem mínima de navegação para evitar "any"
-type Navigation = { goBack?: () => void };
+type Props = {
+  navigation?: {
+    goBack?: () => void;
+  };
+};
 
-export default function MoodScreen({
-  navigation,
-}: {
-  navigation?: Navigation;
-}) {
+export default function MoodScreen({ navigation }: Props) {
   const [selected, setSelected] = useState<Mood | null>(null);
   const today = useMemo(() => dayjs().format('YYYY-MM-DD'), []);
 
@@ -43,12 +42,10 @@ export default function MoodScreen({
     (async () => {
       try {
         const moodJSON = await AsyncStorage.getItem(STORAGE_KEYS.SELECTED_MOOD);
-        if (moodJSON) setSelected(JSON.parse(moodJSON));
-      } catch (error) {
-        // registra em dev; evita bloco vazio (no-empty)
-        if (__DEV__) {
-          console.warn('Falha ao carregar o humor salvo', error);
-        }
+
+        if (moodJSON) setSelected(JSON.parse(moodJSON) as Mood);
+      } catch (err) {
+        console.error('Erro ao carregar humor do storage:', err);
       }
     })();
   }, []);
@@ -62,10 +59,9 @@ export default function MoodScreen({
         JSON.stringify(mood)
       );
       await AsyncStorage.setItem(STORAGE_KEYS.LAST_LOG_DATE, today);
-    } catch (error) {
-      if (__DEV__) {
-        console.warn('Falha ao salvar o humor', error);
-      }
+
+    } catch (err) {
+      console.error('Erro ao salvar humor no storage:', err);
     }
   };
 
@@ -136,8 +132,12 @@ export default function MoodScreen({
   );
 }
 
-// ✅ estilos locais para remover inline styles
+
 const localStyles = StyleSheet.create({
-  headerSpacer: { width: 24 },
-  root: { flex: 1 },
+  headerSpacer: {
+    width: 24,
+  },
+  root: {
+    flex: 1,
+  },
 });
