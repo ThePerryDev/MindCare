@@ -66,6 +66,7 @@ export const createMockUser = (overrides = {}) => ({
   updatedAt: new Date(),
   save: jest.fn(),
   toJSON: function () {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, _id, ...user } = this;
     return { ...user, id: this._id };
   },
