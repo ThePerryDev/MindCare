@@ -234,10 +234,7 @@ describe('Users Controller', () => {
         json: jest.fn().mockReturnThis(),
       };
 
-      const result = await UsersController.getUserDataById(
-        req as any,
-        res as any
-      );
+      await UsersController.getUserDataById(req as any, res as any);
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({
         message: 'O ID do usuário é necessário.',
