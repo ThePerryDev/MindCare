@@ -63,22 +63,16 @@ export default function LoginScreen() {
       return;
     }
 
-    console.log('[LOGINSCREEN] clique no botão. Vou chamar login(...)', {
-      email,
-    });
-
     try {
       setIsSubmitting(true);
       await login(email, senha); // <-- CHAMA O CONTEXTO!
-      console.log('[LOGINSCREEN] login sucesso, vou navegar');
       router.replace('/screens/HomeScreen/HomeScreen');
-    } catch (err: any) {
-      const msg =
-        err?.response?.data?.error ||
-        err?.message ||
-        'Não foi possível fazer login';
-      console.log('[LOGINSCREEN] erro no login:', err?.response || err);
-      Alert.alert('Erro', msg);
+    } catch (err: unknown) {
+      const message =
+        err && typeof err === 'object' && 'response' in err
+          ? (err as any).response?.data?.error || (err as any).message
+          : 'Não foi possível fazer login';
+      Alert.alert('Erro', message);
     } finally {
       setIsSubmitting(false);
     }
