@@ -5,10 +5,10 @@
 
 | **NOME**   | **13/10/2025** | **15/10/2025** | **17/10/2025** | **21/10/2025** | **23/10/2025** | **31/10/2025** |
 |-----------|---------------|---------------|---------------|---------------|---------------|---------------|
-| **Eduardo**   | LDM-050 | LDM-057 | XXX-064 | XXX-071 | XXX-078 | XXX-085 |
-| **Franciele** | LDM-051 | XXX-058 | QA-065 | QA-072 | LDM-079 | XXX-086 |
+| **Eduardo**   | LDM-050 | XXX-057 | LDM-064 | LDM-071 | LDM-078 | XXX-085 |
+| **Franciele** | LDM-051 | XXX-058 | QA-065 | QA-072 | LDM-079 | QA-086 |
 | **Claudia**   | XXX-052 | XXX-059 | XXX-066 | XXX-073 | XXX-080 | XXX-087 |
-| **Willian**   | LDM-053 | LDM-060 | LDM-067 | XXX-074 | XXX-081 | XXX-088 |
+| **Willian**   | LDM-053 | LDM-060 | LDM-067 | LDM-074 | LDM-081 | LDM-088 |
 | **Bianca**    | XXX-054 | XXX-061 | XXX-068 | XXX-075 | XXX-082 | XXX-089 |
 | **Daniel**    | LDM-055 | QA-062 | QA-069 | QA-076 | QA-083 | XXX-090 |
 | **Heclair**   | LDM-056 | XXX-063 | LDM-070 | XXX-077 | XXX-084 | XXX-091 |
@@ -17,10 +17,10 @@
 | **Eduardo**   | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
 | **13/10/2025** | LDM-050 | Refinamento de produto e reunião de alinhamento com o time |
-| **15/10/2025** | LDM-057 | Desenvolvimento de componentes e da tela home do aplicativo |
-| **17/10/2025** | XXX-064 | XXX |
-| **21/10/2025** | XXX-071 | XXX |
-| **23/10/2025** | XXX-078 | XXX |
+| **15/10/2025** | XXX-057 | Feriado - dia dos professores |
+| **17/10/2025** | LDM-064 | Desenvolvimento de componentes e da tela home do aplicativo |
+| **21/10/2025** | LDM-071 | Conexão Backend/Frontend e revisão de Pull Requests |
+| **23/10/2025** | XXX-078 | Continuando conexão de Backend/Frontend |
 | **31/10/2025** | XXX-085 | XXX |
 
 
@@ -31,7 +31,7 @@
 | **17/10/2025** | QA-065 | Elaborando cenários de teste |
 | **21/10/2025** | QA-072 | Finalizando cobertura de testes (BE) |
 | **23/10/2025** | LDM-079 | Suporte técnico consultivo e orientação à equipe, focando na aplicação de boas práticas e na sincronização do workflow das tarefas |
-| **31/10/2025** | XXX-086 | XXX |
+| **31/10/2025** | QA-086 | Criação de novos cenários de teste para (BE) / Reunião de alinhamento com o time para decidir entregáveis para final da Sprint 2 |
 
 
 | **Claudia** | **Nome da tarefa** | **Descrição** |
@@ -49,9 +49,9 @@
 | **13/10/2025** | LDM-053 | Reunião de alinhamento e distribuição de atividades da Sprint II |
 | **15/10/2025** | LDM-060 | Criação do componente StepProgress e telas de cadastro inacabadas |
 | **17/10/2025** | LDM-067 | Adicionado componentes: CreateAccountIntro, PasswordRequirements, Checkbox e ConsentCard |
-| **21/10/2025** | XXX-074 | XXX |
-| **23/10/2025** | XXX-081 | XXX |
-| **31/10/2025** | XXX-088 | XXX |
+| **21/10/2025** | XXX-074 | Adicionado Telas SplashScreen, LoadingScreen e CadastroFinalizadoScreen |
+| **23/10/2025** | XXX-081 | Correções nos erros de ESLINT para validação do pipeline |
+| **31/10/2025** | XXX-088 | Adicionando Tela SettingsScreen e Reunião de alinhamento com o time para decidir entregáveis para final da Sprint 2 |
 
 
 | **Bianca** | **Nome da tarefa** | **Descrição** |

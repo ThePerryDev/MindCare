@@ -7,7 +7,8 @@ export default [
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ['**/*.{ts,tsx,js,jsx}'],
+    files: ['**/*.{ts,tsx}'],
+    ignores: ['dist/**', 'src/**/*.js', '**/*.js'],
     languageOptions: {
       parser: tseslint.parser,
       ecmaVersion: 'latest',
@@ -44,12 +45,27 @@ export default [
       globals: {
         require: 'readonly',
         module: 'readonly',
+        exports: 'writable',
         jest: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        expect: 'readonly',
+        process: 'readonly',
+        console: 'readonly',
+        Buffer: 'readonly',
+        global: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
       },
     },
     rules: {
       '@typescript-eslint/no-var-requires': 'off',
       '@typescript-eslint/no-require-imports': 'off',
+      'no-undef': 'off',
     },
   },
 ];

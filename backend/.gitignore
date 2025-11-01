@@ -32,6 +32,10 @@ pids/
 # TypeScript cache
 *.tsbuildinfo
 
+# Compiled JavaScript files (should not be in src/)
+src/**/*.js
+src/**/*.js.map
+
 # IDE/Editor files
 .vscode/
 .idea/
