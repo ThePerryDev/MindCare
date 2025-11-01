@@ -2,14 +2,14 @@ import { theme } from '../../styles/theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
+  disabled: {
+    opacity: 0.6,
+  },
   gradient: {
     alignItems: 'center',
     borderRadius: 20,
     height: 50,
     justifyContent: 'center',
-  },
-  disabled: {
-    opacity: 0.6,
   },
   pressable: {
     borderRadius: 20,

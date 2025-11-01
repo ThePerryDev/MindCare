@@ -20,9 +20,7 @@ export default function AppStack() {
       <Tab.Screen
         name='Trilha'
         component={() => (
-          <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-          >
+          <View>
             <Text>Trilha em breve</Text>
           </View>
         )}
@@ -30,9 +28,7 @@ export default function AppStack() {
       <Tab.Screen
         name='Perfil'
         component={() => (
-          <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-          >
+          <View>
             <Text>Perfil em breve</Text>
           </View>
         )}
