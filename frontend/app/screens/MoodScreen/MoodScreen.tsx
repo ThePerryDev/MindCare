@@ -1,3 +1,4 @@
+// frontend/app/screens/MoodScreen/MoodScreen.tsx
 import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -5,14 +6,22 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import dayjs from 'dayjs';
+import { router } from 'expo-router';
 
 import { styles } from './styles';
 import Card from '@/components/Card/Card';
 import { theme } from '@/styles/theme';
 
+type MoodLabel =
+  | 'Muito Feliz'
+  | 'Irritado'
+  | 'Neutro'
+  | 'Triste'
+  | 'Muito Triste';
+
 type Mood = {
   emoji: string;
-  label: 'Muito Feliz' | 'Irritado' | 'Neutro' | 'Triste' | 'Muito Triste';
+  label: MoodLabel;
 };
 
 const MOODS: Mood[] = [
@@ -28,13 +37,7 @@ const STORAGE_KEYS = {
   LAST_LOG_DATE: '@mood/lastLogDate',
 };
 
-type Props = {
-  navigation?: {
-    goBack?: () => void;
-  };
-};
-
-export default function MoodScreen({ navigation }: Props) {
+export default function MoodScreen() {
   const [selected, setSelected] = useState<Mood | null>(null);
   const today = useMemo(() => dayjs().format('YYYY-MM-DD'), []);
 
@@ -42,7 +45,6 @@ export default function MoodScreen({ navigation }: Props) {
     (async () => {
       try {
         const moodJSON = await AsyncStorage.getItem(STORAGE_KEYS.SELECTED_MOOD);
-
         if (moodJSON) setSelected(JSON.parse(moodJSON) as Mood);
       } catch (err) {
         console.error('Erro ao carregar humor do storage:', err);
@@ -60,6 +62,11 @@ export default function MoodScreen({ navigation }: Props) {
       );
       await AsyncStorage.setItem(STORAGE_KEYS.LAST_LOG_DATE, today);
 
+      // ➜ Navega para o chat levando o humor selecionado
+      router.push({
+        pathname: '/chat',
+        params: { mood: mood.label, emoji: mood.emoji },
+      });
     } catch (err) {
       console.error('Erro ao salvar humor no storage:', err);
     }
@@ -81,9 +88,14 @@ export default function MoodScreen({ navigation }: Props) {
 
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation?.goBack?.()}>
+          {/* ⬇️ Voltar para a Home explicitamente */}
+          <TouchableOpacity
+            onPress={() => router.replace('/home')}
+            accessibilityLabel='Voltar para Home'
+          >
             <Text style={styles.backArrow}>‹</Text>
           </TouchableOpacity>
+
           <Text style={styles.pageTitle}>Como está se sentindo hoje?</Text>
           <View style={localStyles.headerSpacer} />
         </View>
@@ -132,12 +144,7 @@ export default function MoodScreen({ navigation }: Props) {
   );
 }
 
-
 const localStyles = StyleSheet.create({
-  headerSpacer: {
-    width: 24,
-  },
-  root: {
-    flex: 1,
-  },
+  headerSpacer: { width: 24 },
+  root: { flex: 1 },
 });

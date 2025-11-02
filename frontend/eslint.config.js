@@ -39,7 +39,6 @@ export default [
       'react/react-in-jsx-scope': 'off',
       'react-native/no-color-literals': 'off',
 
-
       // Evita conflito de setTimeout
       'no-redeclare': 'off',
       '@typescript-eslint/no-redeclare': [

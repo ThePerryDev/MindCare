@@ -1,4 +1,4 @@
-/* global setTimeout, clearTimeout */
+/* eslint-disable @typescript-eslint/no-redeclare */
 import { Image, View, Text } from 'react-native';
 import { useEffect } from 'react';
 import { useRouter } from 'expo-router';
