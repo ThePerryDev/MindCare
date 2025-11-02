@@ -8,10 +8,15 @@ import RowItem from '@/components/RowItem/RowItem';
 import Button from '@/components/Button/Button';
 import EditFieldModal from '@/components/EditFieldModal/EditFieldModal';
 import EditPasswordModal from '@/components/EditPasswordModal/EditPasswordModal';
+import TermsOfUse from '@/components/TermsOfUse/TermsOfUse';
+import PrivacyPolicy from '@/components/PrivacyPolicy/PrivacyPolicy';
+import PersonalDataLGPD from '@/components/PersonalDataLGPD/PersonalDataLGPD';
+import ConfirmDeleteModal from '@/components/ConfirmDeleteModal/ConfirmDeleteModal';
 import { styles } from './styles';
 import { theme } from '@/styles/theme';
+import Navbar from '@/components/Navbar/Navbar';
 
-/** Modal simples interno só para placeholders de Termos/Licenças/Excluir */
+/** Modal simples interno só para placeholder de Licenças */
 function InfoModal({
   visible,
   title,
@@ -34,7 +39,9 @@ function InfoModal({
       <View style={styles.infoSheet}>
         <Text style={styles.infoTitle}>{title}</Text>
         <Text style={styles.infoText}>{message}</Text>
-        <Button onPress={onClose}>Fechar</Button>
+        <Button onPress={onClose}>
+          <Text>Fechar</Text>
+        </Button>
       </View>
     </Modal>
   );
@@ -50,6 +57,8 @@ type ModalState =
         | 'weight'
         | 'password'
         | 'terms'
+        | 'privacy'
+        | 'lgpd'
         | 'licenses'
         | 'delete';
     };
@@ -57,10 +66,9 @@ type ModalState =
 export default function SettingsScreen() {
   const router = useRouter();
 
-  // estados de exibição
   const [modal, setModal] = useState<ModalState>({ key: null });
 
-  // estados de dados (placeholders locais até integrar API)
+  // placeholders locais até integrar API
   const [username, setUsername] = useState('Robinson');
   const [email, setEmail] = useState('usuario@email.com');
   const [height, setHeight] = useState('1.75m');
@@ -85,35 +93,35 @@ export default function SettingsScreen() {
             <RowItem
               label='Nome de Usuário'
               value={username}
-              icon='edit-2'
+              icon='pencil'
               variant='edit'
               onPress={() => open('username')}
             />
             <RowItem
               label='Email'
               value={email}
-              icon='edit-2'
+              icon='pencil'
               variant='edit'
               onPress={() => open('email')}
             />
             <RowItem
               label='Altura'
               value={height}
-              icon='edit-2'
+              icon='pencil'
               variant='edit'
               onPress={() => open('height')}
             />
             <RowItem
               label='Peso'
               value={weight}
-              icon='edit-2'
+              icon='pencil'
               variant='edit'
               onPress={() => open('weight')}
             />
             <RowItem
               label='Senha'
               value='Modifique sua senha'
-              icon='edit-2'
+              icon='pencil'
               variant='edit'
               onPress={() => open('password')}
               muted
@@ -122,21 +130,29 @@ export default function SettingsScreen() {
 
           {/* Sobre */}
           <SectionCard title='Sobre'>
-            <RowItem label='Versão do App' value='MindCare v1.0.0' disabled />
+            <RowItem label='Versão do App' value='MindCare v1.0.0' />
             <RowItem
               label='Termos de Uso'
               value='Leia nossos termos de uso'
-              icon='search'
+              icon='text-search-variant'
               variant='link'
               onPress={() => open('terms')}
               muted
             />
             <RowItem
-              label='Licenças'
-              value='Bibliotecas e recursos utilizados'
-              icon='search'
+              label='Política de Privacidade'
+              value='Leia nossas políticas de privacidade'
+              icon='text-search-variant'
               variant='link'
-              onPress={() => open('licenses')}
+              onPress={() => open('privacy')}
+              muted
+            />
+            <RowItem
+              label='Tratamento de Dados Pessoais'
+              value='Leia nossos termos de consentimento'
+              icon='text-search-variant'
+              variant='link'
+              onPress={() => open('lgpd')}
               muted
             />
           </SectionCard>
@@ -146,7 +162,7 @@ export default function SettingsScreen() {
             <RowItem
               label='Excluir Conta'
               value='Exclui permanentemente sua conta'
-              icon='x-circle'
+              icon='close-circle-outline'
               variant='danger'
               onPress={() => open('delete')}
               muted
@@ -162,7 +178,7 @@ export default function SettingsScreen() {
           </View>
         </ScrollView>
 
-        {/* ---- MODAIS ---- */}
+        {/* ---- MODAIS DE EDIÇÃO ---- */}
         <EditFieldModal
           visible={modal.key === 'username'}
           title='Nome de Usuário'
@@ -221,32 +237,37 @@ export default function SettingsScreen() {
         <EditPasswordModal
           visible={modal.key === 'password'}
           onClose={close}
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           onSubmit={pwd => {
             // TODO: integrar mudança de senha
             close();
           }}
         />
 
-        {/* Placeholders de info */}
-        <InfoModal
-          visible={modal.key === 'terms'}
-          title='Termos de Uso'
-          message='Aqui você exibirá os Termos de Uso (conteúdo real em breve).'
-          onClose={close}
-        />
+        {/* ---- POPUPS REAIS ---- */}
+        <TermsOfUse visible={modal.key === 'terms'} onClose={close} />
+        <PrivacyPolicy visible={modal.key === 'privacy'} onClose={close} />
+        <PersonalDataLGPD visible={modal.key === 'lgpd'} onClose={close} />
+
+        {/* ---- PLACEHOLDER LICENÇAS ---- */}
         <InfoModal
           visible={modal.key === 'licenses'}
           title='Licenças'
           message='Aqui você exibirá as bibliotecas e recursos utilizados.'
           onClose={close}
         />
-        <InfoModal
+
+        {/* ---- CONFIRMAÇÃO DE EXCLUSÃO ---- */}
+        <ConfirmDeleteModal
           visible={modal.key === 'delete'}
-          title='Excluir conta'
-          message='Confirmação de exclusão de conta (fluxo a implementar).'
           onClose={close}
+          onConfirm={() => {
+            // TODO: implementar exclusão real da conta
+            close();
+          }}
         />
       </LinearGradient>
+      <Navbar />
     </SafeAreaView>
   );
 }

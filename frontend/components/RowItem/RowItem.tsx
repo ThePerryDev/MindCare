@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { styles, variants } from './styles';
 
 type RowVariant = 'edit' | 'link' | 'danger';
@@ -8,7 +8,7 @@ type RowVariant = 'edit' | 'link' | 'danger';
 interface RowItemProps {
   label: string;
   value?: string;
-  icon?: keyof typeof Feather.glyphMap;
+  icon?: keyof typeof MaterialCommunityIcons.glyphMap;
   variant?: RowVariant;
   muted?: boolean;
   disabled?: boolean;
@@ -26,6 +26,7 @@ export default function RowItem({
 }: RowItemProps) {
   const v = variants[variant];
   return (
+    // eslint-disable-next-line react-native/no-inline-styles
     <View style={[styles.row, disabled && { opacity: 0.7 }]}>
       <View style={styles.left}>
         <Text style={styles.label}>{label}</Text>
@@ -44,7 +45,7 @@ export default function RowItem({
           onPress={!disabled ? onPress : undefined}
           style={[styles.iconBtn, v.btn]}
         >
-          <Feather name={icon} size={18} color={v.iconColor} />
+          <MaterialCommunityIcons name={icon} size={25} color={v.iconColor} />
         </Pressable>
       )}
     </View>

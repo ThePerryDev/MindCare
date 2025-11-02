@@ -1,10 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, Pressable } from 'react-native';
-import { Feather } from '@expo/vector-icons';
 import PasswordInput from '@/components/PasswordInput/PasswordInput';
 import Button from '@/components/Button/Button';
+import CloseButton from '@/components/CloseButton/CloseButton';
 import { styles } from './styles';
-import { theme } from '@/styles/theme';
 
 export interface EditPasswordModalProps {
   visible: boolean;
@@ -27,11 +26,6 @@ export default function EditPasswordModal({
     }
   }, [visible]);
 
-  const canSubmit = useMemo(
-    () => pwd.length > 0 && confirm.length > 0 && pwd === confirm,
-    [pwd, confirm]
-  );
-
   return (
     <Modal
       transparent
@@ -48,14 +42,7 @@ export default function EditPasswordModal({
         <View style={styles.header}>
           <View style={styles.headerSpacer} />
           <Text style={styles.headerTitle}>Senha</Text>
-          <Pressable
-            style={styles.close}
-            onPress={onClose}
-            hitSlop={8}
-            accessibilityLabel='Fechar'
-          >
-            <Feather name='x' size={20} color={theme.colors.primary} />
-          </Pressable>
+          <CloseButton onPress={onClose} size={28} />
         </View>
 
         {/* Form */}
@@ -72,13 +59,9 @@ export default function EditPasswordModal({
             onChangeText={setConfirm}
             placeholder='Confirme a nova senha'
           />
-          <Button onPress={() => onSubmit(pwd)}>Atualizar</Button>
-
-          {!canSubmit && (
-            <Text style={styles.hint}>
-              As senhas devem ser iguais para atualizar.
-            </Text>
-          )}
+          <Button onPress={() => onSubmit(pwd)}>
+            <Text>Atualizar</Text>
+          </Button>
         </View>
       </View>
     </Modal>

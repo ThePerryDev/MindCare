@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, Pressable } from 'react-native';
-import { Feather } from '@expo/vector-icons';
 import Input from '@/components/Input/Input';
 import Button from '@/components/Button/Button';
+import CloseButton from '@/components/CloseButton/CloseButton';
 import { styles } from './styles';
-import { theme } from '@/styles/theme';
 
 type KeyboardType =
   | 'default'
@@ -53,18 +52,11 @@ export default function EditFieldModal({
 
       {/* Sheet */}
       <View style={styles.sheet}>
-        {/* Header com título centralizado e botão X à direita */}
+        {/* Header com título centralizado e CloseButton à direita */}
         <View style={styles.header}>
           <View style={styles.headerSpacer} />
           <Text style={styles.headerTitle}>{title}</Text>
-          <Pressable
-            style={styles.close}
-            onPress={onClose}
-            hitSlop={8}
-            accessibilityLabel='Fechar'
-          >
-            <Feather name='x' size={20} color={theme.colors.primary} />
-          </Pressable>
+          <CloseButton onPress={onClose} size={28} />
         </View>
 
         {/* Form */}
@@ -76,7 +68,9 @@ export default function EditFieldModal({
             placeholder={placeholder}
             keyboardType={keyboardType}
           />
-          <Button onPress={() => onSubmit(text)}>Atualizar</Button>
+          <Button onPress={() => onSubmit(text)}>
+            <Text>Atualizar</Text>
+          </Button>
         </View>
       </View>
     </Modal>

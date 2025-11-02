@@ -2,46 +2,51 @@ import { StyleSheet } from 'react-native';
 import { theme } from '@/styles/theme';
 
 export const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
+  iconBtn: {
     alignItems: 'center',
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#EDEDF5',
+    borderRadius: 17,
+    height: 34,
+    justifyContent: 'center',
+    width: 34,
   },
-  left: { flex: 1 },
   label: {
+    color: '#343A40',
     fontFamily: theme.fonts.semi,
     fontSize: 14,
-    color: theme.colors.title,
+    fontWeight: 'bold',
     marginBottom: 3,
   },
+  left: {
+    flex: 1,
+  },
+  row: {
+    alignItems: 'center',
+    borderBottomColor: '#EDEDF5',
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    paddingVertical: 12,
+  },
   value: {
+    color: '#6C757D',
     fontFamily: theme.fonts.regular,
     fontSize: 13,
-    color: theme.colors.text,
   },
-  valueMuted: { color: theme.colors.textMuted },
-  iconBtn: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-    alignItems: 'center',
-    justifyContent: 'center',
+  valueMuted: {
+    color: '#6C757D',
   },
 });
 
 export const variants = {
   edit: {
-    btn: { backgroundColor: '#EFF2FF' },
-    iconColor: theme.colors.primary,
+    btn: { backgroundColor: 'transparent' },
+    iconColor: '#4C46B6',
   },
   link: {
-    btn: { backgroundColor: '#EFF2FF' },
-    iconColor: theme.colors.primary,
+    btn: { backgroundColor: 'transparent' },
+    iconColor: '#4C46B6',
   },
   danger: {
-    btn: { backgroundColor: '#FDEBEB' },
+    btn: { backgroundColor: 'transparent' },
     iconColor: '#D93838',
   },
 };

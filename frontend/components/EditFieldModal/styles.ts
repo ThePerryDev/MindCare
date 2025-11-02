@@ -16,7 +16,6 @@ export const styles = StyleSheet.create({
   },
   // Body
   form: {
-    gap: 12,
     marginTop: 4,
   },
   // Header
@@ -30,10 +29,11 @@ export const styles = StyleSheet.create({
     width: 28,
   },
   headerTitle: {
-    color: theme.colors.primary,
+    color: '#4C46B6',
     flex: 1,
     fontFamily: theme.fonts.semi,
     fontSize: 18,
+    fontWeight: 'bold',
     textAlign: 'center',
   },
   sheet: {
@@ -48,6 +48,6 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.25,
     shadowRadius: 18,
-    top: '16%',
+    top: '20%',
   },
 });

@@ -2,16 +2,12 @@ import { StyleSheet } from 'react-native';
 import { theme } from '@/styles/theme';
 
 export const styles = StyleSheet.create({
-  bg: {
-    flex: 1,
-  },
+  bg: { flex: 1 },
   content: {
     padding: 20,
-    paddingBottom: 40,
+    paddingBottom: 70, // ✅ mais folga por causa do Navbar
   },
-  footer: {
-    marginTop: 14,
-  },
+  footer: { marginTop: 14 },
   infoBackdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0,0,0,0.25)',
@@ -31,13 +27,13 @@ export const styles = StyleSheet.create({
     top: '20%',
   },
   infoText: {
-    color: theme.colors.textMuted,
+    color: '#4C46B6',
     fontFamily: theme.fonts.regular,
     fontSize: 14,
     textAlign: 'center',
   },
   infoTitle: {
-    color: theme.colors.primary,
+    color: '#4C46B6',
     fontFamily: theme.fonts.semi,
     fontSize: 18,
     textAlign: 'center',
@@ -48,7 +44,7 @@ export const styles = StyleSheet.create({
     gap: 8,
   },
   modalText: {
-    color: theme.colors.textMuted,
+    color: '#4C46B6',
     fontFamily: theme.fonts.regular,
     fontSize: 14,
   },
@@ -57,9 +53,10 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    color: theme.colors.title,
+    color: '#4C46B6',
     fontFamily: theme.fonts.bold,
     fontSize: 22,
+    fontWeight: 'bold',
     marginBottom: 12,
     textAlign: 'center',
   },

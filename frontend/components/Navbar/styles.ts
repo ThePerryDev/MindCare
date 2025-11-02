@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const NAVBAR_HEIGHT = 40;
+export const NAVBAR_HEIGHT = 60;
 
 export const styles = StyleSheet.create({
   container: {
