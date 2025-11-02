@@ -1,12 +1,15 @@
-// frontend/app/index.tsx
+// app/index.tsx
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import SplashScreen from './screens/SplashScreen/SplashScreen';
+import { AuthProvider } from '@/contexts/AuthContext';
+import RootNavigator from './navigation/RootNavigator';
 
 export default function App() {
   return (
     <SafeAreaProvider>
-      <SplashScreen />
+      <AuthProvider>
+        <RootNavigator />
+      </AuthProvider>
     </SafeAreaProvider>
   );
 }

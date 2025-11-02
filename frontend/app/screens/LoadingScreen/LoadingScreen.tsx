@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'expo-router';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { LinearGradient } from 'expo-linear-gradient';
-import { styles } from './styles';
+import styles from './styles';
 import AnimatedLoader from '@/components/AnimatedLoader/AnimatedLoader.native';
 import loadingAnim from '../../../assets/animations/loading.json';
 

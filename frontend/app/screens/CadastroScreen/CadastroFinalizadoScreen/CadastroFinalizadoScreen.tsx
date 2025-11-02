@@ -2,7 +2,7 @@
 import { Image, View, Text } from 'react-native';
 import { useEffect } from 'react';
 import { useRouter } from 'expo-router';
-import { styles } from './styles';
+import styles from './styles';
 import platypus from '../../../../assets/images/Platypus.png';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { LinearGradient } from 'expo-linear-gradient';

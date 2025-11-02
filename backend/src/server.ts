@@ -10,7 +10,7 @@ async function start() {
   try {
     await connect(MONGO_URI);
     app.listen(PORT, () =>
-      console.log(`Server ouvindo em http://localhost:${PORT}`)
+      console.log(`Server ouvindo em http://192.168.1.3:${PORT}`)
     );
   } catch (e) {
     console.error('Falha ao iniciar', e);

@@ -2,7 +2,7 @@
 import { Image, View } from 'react-native';
 import { useEffect } from 'react';
 import { useRouter } from 'expo-router';
-import { styles } from './styles';
+import styles from './styles';
 import logoMindcare from '../../../assets/images/logo_mindcare.png';
 
 export default function SplashScreen() {
