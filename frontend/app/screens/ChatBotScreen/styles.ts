@@ -3,7 +3,10 @@ import { StyleSheet } from 'react-native';
 export const INPUT_HEIGHT = 56;
 export const CHIPS_HEIGHT = 44;
 
-const styles = StyleSheet.create({
+// ⬇ folga fixa para “subir” o input mesmo SEM teclado
+export const INPUT_BOTTOM_GAP = 40;
+
+export const styles = StyleSheet.create({
   backButton: {
     alignItems: 'center',
     height: 36,
@@ -27,9 +30,7 @@ const styles = StyleSheet.create({
     width: 32,
   },
 
-  botAvatarSmallIcon: {
-    fontSize: 16,
-  },
+  botAvatarSmallIcon: { fontSize: 16 },
 
   botBubble: {
     backgroundColor: '#FFF',
@@ -54,9 +55,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  flex: {
-    flex: 1,
+  chipsBar: {
+    backgroundColor: '#F4EFFF',
+    height: CHIPS_HEIGHT,
+    paddingHorizontal: 12,
   },
+
+  flex: { flex: 1 },
 
   header: {
     alignItems: 'center',
@@ -73,9 +78,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 
-  headerCenter: {
-    alignItems: 'center',
-  },
+  headerCenter: { alignItems: 'center' },
 
   headerRight: {
     borderRadius: 18,
@@ -102,17 +105,13 @@ const styles = StyleSheet.create({
     maxHeight: 110,
   },
 
-  inputArea: {
-    backgroundColor: '#F4EFFF',
-    paddingBottom: 60,
-    paddingTop: 8,
-  },
-
   inputRow: {
     alignItems: 'flex-end',
     flexDirection: 'row',
     gap: 10,
+    marginBottom: INPUT_BOTTOM_GAP, // ✅ agora vem antes de paddingTop
     paddingHorizontal: 12,
+    paddingTop: 8,
   },
 
   inputWrapper: {
@@ -135,12 +134,6 @@ const styles = StyleSheet.create({
   messagesContent: {
     gap: 10,
     paddingTop: 10,
-  },
-
-  quickRepliesContainer: {
-    height: CHIPS_HEIGHT,
-    marginBottom: 8,
-    paddingHorizontal: 12,
   },
 
   quickRepliesContent: {
@@ -167,13 +160,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 
-  rowLeft: {
-    justifyContent: 'flex-start',
-  },
+  rowLeft: { justifyContent: 'flex-start' },
 
-  rowRight: {
-    justifyContent: 'flex-end',
-  },
+  rowRight: { justifyContent: 'flex-end' },
 
   sendButton: {
     alignItems: 'center',

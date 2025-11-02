@@ -36,12 +36,12 @@
 
 | **Claudia** | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **13/10/2025** | XXX-052 | XXX |
-| **15/10/2025** | XXX-059 | XXX |
-| **17/10/2025** | XXX-066 | XXX |
-| **21/10/2025** | XXX-073 | XXX |
-| **23/10/2025** | XXX-080 | XXX |
-| **31/10/2025** | XXX-087 | XXX |
+| **13/10/2025** | LDM-052 | Reunião de alinhamento e distribuição de atividades da Sprint II |
+| **15/10/2025** | LDM-059 | Feriado - dia dos professores |
+| **17/10/2025** | LDM-066 | Inicio FrontEnd tela chatbot |
+| **21/10/2025** | LDM-073 | Correção Estlint e Prettier |
+| **23/10/2025** | LDM-080 | Finalização da Tela Chat bot e inicio da Tela Perfil usuário |
+| **31/10/2025** | LDM-087 | Finalização da Tela de perfil usuário |
 
 
 | **Willian** | **Nome da tarefa** | **Descrição** |

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import Button from '@/components/Button/Button';
 import styles from './styles';
 import WeeklyResults from '@/components/WeeklyResults/WeeklyResults';
@@ -9,9 +10,10 @@ import ContinueImproving from '@/components/ContinueImproving/ContinueImproving'
 import Navbar from '@/components/Navbar/Navbar';
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   const handleMoodPress = () => {
-    // eslint-disable-next-line no-undef
-    console.log('Botão de humor pressionado');
+    router.push('/mood');
   };
 
   return (
@@ -22,21 +24,16 @@ export default function HomeScreen() {
       style={styles.background}
     >
       <SafeAreaView style={styles.container}>
-        {/* Saudação */}
-        <Text style={styles.greeting}>Boa noite, Robson !</Text>
+        <Text style={styles.greeting}>Boa noite, Robson!</Text>
 
-        {/* Botão principal */}
         <View style={styles.buttonWrapper}>
           <Button onPress={handleMoodPress}>
             <Text>Como está se sentindo hoje?</Text>
           </Button>
         </View>
 
-        {/* Componentes principais */}
         <WeeklyResults />
         <ContinueImproving />
-
-        {/* Navbar */}
         <Navbar />
       </SafeAreaView>
     </LinearGradient>
