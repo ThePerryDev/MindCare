@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redeclare */
 import { View, Text } from 'react-native';
 import { useEffect } from 'react';
 import { useRouter } from 'expo-router';
