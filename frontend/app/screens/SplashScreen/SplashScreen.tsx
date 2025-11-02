@@ -1,4 +1,3 @@
-/* global setTimeout, clearTimeout */
 import { Image, View } from 'react-native';
 import { useEffect } from 'react';
 import { useRouter } from 'expo-router';
