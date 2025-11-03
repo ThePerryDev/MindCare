@@ -49,9 +49,9 @@
 | **13/10/2025** | LDM-053 | Reunião de alinhamento e distribuição de atividades da Sprint II |
 | **15/10/2025** | LDM-060 | Criação do componente StepProgress e telas de cadastro inacabadas |
 | **17/10/2025** | LDM-067 | Adicionado componentes: CreateAccountIntro, PasswordRequirements, Checkbox e ConsentCard |
-| **21/10/2025** | XXX-074 | Adicionado Telas SplashScreen, LoadingScreen e CadastroFinalizadoScreen |
-| **23/10/2025** | XXX-081 | Correções nos erros de ESLINT para validação do pipeline |
-| **31/10/2025** | XXX-088 | Adicionando Tela SettingsScreen e Reunião de alinhamento com o time para decidir entregáveis para final da Sprint 2 |
+| **21/10/2025** | LDM-074 | Adicionado Telas SplashScreen, LoadingScreen e CadastroFinalizadoScreen |
+| **23/10/2025** | LDM-081 | Correções nos erros de ESLINT para validação do pipeline |
+| **31/10/2025** | LDM-088 | Adicionando Tela SettingsScreen e Reunião de alinhamento com o time para decidir entregáveis para final da Sprint 2 |
 
 
 | **Bianca** | **Nome da tarefa** | **Descrição** |
