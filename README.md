@@ -7,7 +7,7 @@
 |-----------|---------------|---------------|---------------|---------------|---------------|---------------|
 | **Eduardo**   | LDM-050 | XXX-057 | LDM-064 | LDM-071 | LDM-078 | LDM-085 |
 | **Franciele** | LDM-051 | XXX-058 | QA-065 | QA-072 | LDM-079 | QA-086 |
-| **Claudia**   | XXX-052 | XXX-059 | XXX-066 | XXX-073 | XXX-080 | XXX-087 |
+| **Claudia**   | LDM-052 | LDM-059 | LDM-066 | LDM-073 | LDM-080 | LDM-087 |
 | **Willian**   | LDM-053 | LDM-060 | LDM-067 | LDM-074 | LDM-081 | LDM-088 |
 | **Bianca**    | XXX-054 | XXX-061 | XXX-068 | XXX-075 | XXX-082 | XXX-089 |
 | **Daniel**    | LDM-055 | QA-062 | QA-069 | QA-076 | QA-083 | XXX-090 |
