@@ -20,7 +20,7 @@
 | **15/10/2025** | XXX-057 | Feriado - dia dos professores |
 | **17/10/2025** | LDM-064 | Desenvolvimento de componentes e da tela home do aplicativo |
 | **21/10/2025** | LDM-071 | Conexão Backend/Frontend e revisão de Pull Requests |
-| **23/10/2025** | XXX-078 | Continuando conexão de Backend/Frontend |
+| **23/10/2025** | LDM-078 | Continuando conexão de Backend/Frontend |
 | **31/10/2025** | XXX-085 | XXX |
 
 
