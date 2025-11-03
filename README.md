@@ -11,7 +11,7 @@
 | **Willian**   | LDM-053 | LDM-060 | LDM-067 | LDM-074 | LDM-081 | LDM-088 |
 | **Bianca**    | XXX-054 | XXX-061 | XXX-068 | XXX-075 | XXX-082 | XXX-089 |
 | **Daniel**    | LDM-055 | QA-062 | QA-069 | QA-076 | QA-083 | XXX-090 |
-| **Heclair**   | LDM-056 | XXX-063 | LDM-070 | XXX-077 | XXX-084 | XXX-091 |
+| **Heclair**   | LDM-056 | XXX-063 | LDM-070 | LDM-077 | LDM-084 | LDM-091 |
 
 
 | **Eduardo**   | **Nome da tarefa** | **Descrição** |
@@ -79,6 +79,6 @@
 | **13/10/2025** | LDM-056 |  Reunião de alinhamento e distribuição de atividades da Sprint II |
 | **15/10/2025** | XXX-063 | Feriado - dia dos professores |
 | **17/10/2025** | LDM-070 | Setup inicial do projeto para criação das coleções de registro e trilhas |
-| **21/10/2025** | XXX-077 | XXX |
-| **23/10/2025** | XXX-084 | XXX |
-| **31/10/2025** | XXX-091 | XXX |
+| **21/10/2025** | LDM-077 | Criação da coleção de registro de sentimento de entrada e saída, em conjunto com controllers e rotas |
+| **23/10/2025** | LDM-084 | Criação da coleção de registro de sentimento identificado pelo chat bot, em conjunto com controllers e rotas |
+| **31/10/2025** | LDM-091 | Atividade conjunta com Eduardo para finalização da funcionalidade login |
