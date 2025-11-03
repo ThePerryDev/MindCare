@@ -9,7 +9,7 @@
 | **Franciele** | LDM-051 | XXX-058 | QA-065 | QA-072 | LDM-079 | QA-086 |
 | **Claudia**   | LDM-052 | LDM-059 | LDM-066 | LDM-073 | LDM-080 | LDM-087 |
 | **Willian**   | LDM-053 | LDM-060 | LDM-067 | LDM-074 | LDM-081 | LDM-088 |
-| **Bianca**    | XXX-054 | XXX-061 | XXX-068 | XXX-075 | XXX-082 | XXX-089 |
+| **Bianca**    | LDM-054 | LDM-061 | LDM-068 | LDM-075 | LDM-082 | LDM-089 |
 | **Daniel**    | LDM-055 | QA-062 | QA-069 | QA-076 | QA-083 | XXX-090 |
 | **Heclair**   | LDM-056 | XXX-063 | LDM-070 | LDM-077 | LDM-084 | LDM-091 |
 
@@ -56,12 +56,12 @@
 
 | **Bianca** | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **13/10/2025** | XXX-054 | XXX |
-| **15/10/2025** | XXX-061 | XXX |
-| **17/10/2025** | XXX-068 | XXX |
-| **21/10/2025** | XXX-075 | XXX |
-| **23/10/2025** | XXX-082 | XXX |
-| **31/10/2025** | XXX-089 | XXX |
+| **13/10/2025** | LDM-054 | Reunião de alinhamento e distribuição de atividades da Sprint II |
+| **15/10/2025** | LDM-061 | Feriado - dia dos professores |
+| **17/10/2025** | LDM-068 | Inicio da tela de humor |
+| **21/10/2025** | LDM-075 | Conclusão da tela de humor |
+| **23/10/2025** | LDM-082 | Correção de erros do Eslint e Prettier |
+| **31/10/2025** | LDM-089 | Documentação da sprint 2 |
 
 
 | **Daniel** | **Nome da tarefa** | **Descrição** |
