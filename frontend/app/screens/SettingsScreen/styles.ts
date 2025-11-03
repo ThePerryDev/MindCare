@@ -52,6 +52,10 @@ export const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     flex: 1,
   },
+  savingIndicator: {
+    alignItems: 'center',
+    marginTop: 16,
+  },
   title: {
     color: '#4C46B6',
     fontFamily: theme.fonts.bold,

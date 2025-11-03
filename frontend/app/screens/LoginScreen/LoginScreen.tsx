@@ -21,6 +21,7 @@ import logoMindcare from '../../../assets/images/logo_mindcare.png';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/hooks/useAuth';
 import type { AxiosError } from 'axios';
+import PasswordInput from '@/components/PasswordInput/PasswordInput';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -115,12 +116,11 @@ export default function LoginScreen() {
               keyboardType='email-address'
             />
 
-            <Input
+            <PasswordInput
               label='Senha'
               placeholder='Digite sua senha'
               value={senha}
               onChangeText={setSenha}
-              secureTextEntry
               onFocus={() => setIsPasswordFocused(true)}
               onBlur={() => setIsPasswordFocused(false)}
             />

@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, ScrollView, Modal, Pressable } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  Modal,
+  Pressable,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
+// import { useRouter } from 'expo-router'; // ❌ removido: não é usado
 import SectionCard from '@/components/SectionCard/SectionCard';
 import RowItem from '@/components/RowItem/RowItem';
 import Button from '@/components/Button/Button';
@@ -15,6 +23,23 @@ import ConfirmDeleteModal from '@/components/ConfirmDeleteModal/ConfirmDeleteMod
 import { styles } from './styles';
 import { theme } from '@/styles/theme';
 import Navbar from '@/components/Navbar/Navbar';
+import { useAuth } from '@/hooks/useAuth';
+
+/** Util: extrai mensagem de erro sem usar `any` */
+function getErrorMessage(err: unknown): string {
+  if (err instanceof Error) return err.message;
+  if (typeof err === 'string') return err;
+  try {
+    // casos de erro vindo da API (Axios) como { message: "..." }
+    if (err && typeof err === 'object' && 'message' in err) {
+      const m = (err as { message?: unknown }).message;
+      if (typeof m === 'string') return m;
+    }
+  } catch {
+    /* empty */
+  }
+  return '';
+}
 
 /** Modal simples interno só para placeholder de Licenças */
 function InfoModal({
@@ -64,15 +89,25 @@ type ModalState =
     };
 
 export default function SettingsScreen() {
-  const router = useRouter();
+  // const router = useRouter(); // ❌ removido: não é usado
+  const { user, logout, updateProfile, deleteAccount } = useAuth();
 
   const [modal, setModal] = useState<ModalState>({ key: null });
+  const [loggingOut, setLoggingOut] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
-  // placeholders locais até integrar API
-  const [username, setUsername] = useState('Robinson');
-  const [email, setEmail] = useState('usuario@email.com');
-  const [height, setHeight] = useState('1.75m');
-  const [weight, setWeight] = useState('70kg');
+  // valores exibidos vindos do backend
+  const username = useMemo(() => user?.fullName ?? '—', [user]);
+  const email = useMemo(() => user?.email ?? '—', [user]);
+  const height = useMemo(
+    () => (user?.height != null ? String(user.height) : '—'),
+    [user]
+  );
+  const weight = useMemo(
+    () => (user?.weight != null ? String(user.weight) : '—'),
+    [user]
+  );
 
   const open = (key: Exclude<ModalState['key'], null>) => setModal({ key });
   const close = () => setModal({ key: null });
@@ -171,76 +206,161 @@ export default function SettingsScreen() {
 
           <View style={styles.footer}>
             <Button
-              onPress={() => router.replace('/screens/LoginScreen/LoginScreen')}
+              onPress={async () => {
+                try {
+                  setLoggingOut(true);
+                  await logout();
+                } catch {
+                  Alert.alert(
+                    'Erro',
+                    'Não foi possível sair. Tente novamente.'
+                  );
+                } finally {
+                  setLoggingOut(false);
+                }
+              }}
+              disabled={loggingOut}
             >
-              <Text>Logout</Text>
+              {loggingOut ? <ActivityIndicator /> : <Text>Logout</Text>}
             </Button>
           </View>
+
+          {saving && (
+            <View style={styles.savingIndicator}>
+              <ActivityIndicator />
+            </View>
+          )}
         </ScrollView>
 
         {/* ---- MODAIS DE EDIÇÃO ---- */}
+        {/* Nome */}
         <EditFieldModal
           visible={modal.key === 'username'}
           title='Nome de Usuário'
           label='Nome de Usuário'
           placeholder='Digite o novo nome de usuário'
-          value={username}
+          value={user?.fullName ?? ''}
           onClose={close}
-          onSubmit={val => {
-            setUsername(val);
-            close();
+          onSubmit={async (val: string) => {
+            try {
+              setSaving(true);
+              await updateProfile({ fullName: val });
+              Alert.alert('Sucesso', 'Nome atualizado!');
+            } catch (err: unknown) {
+              const msg =
+                getErrorMessage(err) || 'Não foi possível atualizar o nome.';
+              Alert.alert('Erro', msg);
+            } finally {
+              setSaving(false);
+              close();
+            }
           }}
         />
 
+        {/* Email */}
         <EditFieldModal
           visible={modal.key === 'email'}
           title='Email'
           label='Email'
           placeholder='Digite o novo email'
           keyboardType='email-address'
-          value={email}
+          value={user?.email ?? ''}
           onClose={close}
-          onSubmit={val => {
-            setEmail(val);
-            close();
+          onSubmit={async (val: string) => {
+            try {
+              setSaving(true);
+              await updateProfile({ email: val });
+              Alert.alert(
+                'Sucesso',
+                'Email atualizado! Você pode precisar entrar novamente.'
+              );
+            } catch (err: unknown) {
+              const msg =
+                getErrorMessage(err) || 'Não foi possível atualizar o email.';
+              Alert.alert('Erro', msg);
+            } finally {
+              setSaving(false);
+              close();
+            }
           }}
         />
 
+        {/* Altura */}
         <EditFieldModal
           visible={modal.key === 'height'}
           title='Altura'
           label='Altura'
-          placeholder='Digite a nova altura'
+          placeholder='Digite a nova altura (ex.: 1.75)'
           keyboardType='decimal-pad'
-          value={height}
+          value={user?.height != null ? String(user.height) : ''}
           onClose={close}
-          onSubmit={val => {
-            setHeight(val);
-            close();
+          onSubmit={async (val: string) => {
+            try {
+              setSaving(true);
+              const parsed = Number(String(val).replace(',', '.'));
+              await updateProfile({
+                height: Number.isFinite(parsed) ? parsed : undefined,
+              });
+              Alert.alert('Sucesso', 'Altura atualizada!');
+            } catch (err: unknown) {
+              const msg =
+                getErrorMessage(err) || 'Não foi possível atualizar a altura.';
+              Alert.alert('Erro', msg);
+            } finally {
+              setSaving(false);
+              close();
+            }
           }}
         />
 
+        {/* Peso */}
         <EditFieldModal
           visible={modal.key === 'weight'}
           title='Peso'
           label='Peso'
-          placeholder='Digite o novo peso'
+          placeholder='Digite o novo peso (ex.: 70.5)'
           keyboardType='decimal-pad'
-          value={weight}
+          value={user?.weight != null ? String(user.weight) : ''}
           onClose={close}
-          onSubmit={val => {
-            setWeight(val);
-            close();
+          onSubmit={async (val: string) => {
+            try {
+              setSaving(true);
+              const parsed = Number(String(val).replace(',', '.'));
+              await updateProfile({
+                weight: Number.isFinite(parsed) ? parsed : undefined,
+              });
+              Alert.alert('Sucesso', 'Peso atualizado!');
+            } catch (err: unknown) {
+              const msg =
+                getErrorMessage(err) || 'Não foi possível atualizar o peso.';
+              Alert.alert('Erro', msg);
+            } finally {
+              setSaving(false);
+              close();
+            }
           }}
         />
 
+        {/* Senha */}
         <EditPasswordModal
           visible={modal.key === 'password'}
           onClose={close}
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          onSubmit={pwd => {
-            // TODO: integrar mudança de senha
-            close();
+          onSubmit={async (pwd: string, confirmPwd: string) => {
+            try {
+              setSaving(true);
+              await updateProfile({
+                password: pwd,
+                confirmPassword: confirmPwd,
+              });
+              Alert.alert('Sucesso', 'Senha atualizada!');
+            } catch (err: unknown) {
+              const msg =
+                getErrorMessage(err) || 'Não foi possível atualizar a senha.';
+              Alert.alert('Erro', msg);
+            } finally {
+              setSaving(false);
+              close();
+            }
           }}
         />
 
@@ -261,10 +381,20 @@ export default function SettingsScreen() {
         <ConfirmDeleteModal
           visible={modal.key === 'delete'}
           onClose={close}
-          onConfirm={() => {
-            // TODO: implementar exclusão real da conta
-            close();
+          onConfirm={async () => {
+            try {
+              setDeleting(true);
+              await deleteAccount(); // já redireciona para Login no contexto
+            } catch (err: unknown) {
+              const msg =
+                getErrorMessage(err) || 'Não foi possível excluir a conta.';
+              Alert.alert('Erro', msg);
+              setDeleting(false);
+            } finally {
+              close();
+            }
           }}
+          loading={deleting}
         />
       </LinearGradient>
       <Navbar />

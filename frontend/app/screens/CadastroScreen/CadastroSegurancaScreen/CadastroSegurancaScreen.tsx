@@ -10,7 +10,8 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
-  InteractionManager, // +++
+  InteractionManager,
+  Alert,
 } from 'react-native';
 import Button from '../../../../components/Button/Button';
 import ReturnButton from '@/components/Return_Button/Return_Button';
@@ -20,6 +21,12 @@ import styles from './styles';
 import CreateAccountIntro from '@/components/CreateAccountIntro/CreateAccountIntro';
 import PasswordRequirements from '@/components/PasswordRequirements/PasswordRequirements';
 import PasswordInput from '@/components/PasswordInput/PasswordInput';
+import { useRegisterFlow } from '@/contexts/RegisterFlowContext';
+
+function validatePassword(pwd: string) {
+  // Regra sugerida: mínimo 6, ao menos 1 letra e 1 número
+  return /[A-Za-z]/.test(pwd) && /\d/.test(pwd) && pwd.length >= 6;
+}
 
 export default function CadastroSegurancaScreen() {
   const [password, setPassword] = useState('');
@@ -27,8 +34,9 @@ export default function CadastroSegurancaScreen() {
   const scrollRef = useRef<ScrollView>(null);
   const [kbHeight, setKbHeight] = useState(0);
   const [step] = React.useState<1 | 2 | 3>(2);
-  const insets = useSafeAreaInsets(); // +++
+  const insets = useSafeAreaInsets();
   const router = useRouter();
+  const { setStep2 } = useRegisterFlow();
 
   useEffect(() => {
     const onShow = Keyboard.addListener('keyboardDidShow', e => {
@@ -45,12 +53,35 @@ export default function CadastroSegurancaScreen() {
 
   const kavBehavior = Platform.OS === 'ios' ? 'padding' : 'height';
 
-  // sem parâmetros (não usamos o evento) e sem setTimeout
   const handleConfirmFocus = () => {
-    // aguarda o teclado/animações e rola até o fim
     InteractionManager.runAfterInteractions(() => {
       scrollRef.current?.scrollToEnd({ animated: true });
     });
+  };
+
+  const handleNext = () => {
+    if (!password || !confirmpassword) {
+      Alert.alert('Atenção', 'Preencha a senha e a confirmação.');
+      return;
+    }
+    if (password !== confirmpassword) {
+      Alert.alert('Atenção', 'As senhas não coincidem.');
+      return;
+    }
+    if (!validatePassword(password)) {
+      Alert.alert(
+        'Atenção',
+        'Senha fraca. Use letras, números e 6+ caracteres.'
+      );
+      return;
+    }
+
+    // Persiste a etapa 2 no contexto
+    setStep2({ password, confirmPassword: confirmpassword });
+
+    router.push(
+      '/screens/CadastroScreen/CadastroConfirmacaoScreen/CadastroConfirmacaoScreen'
+    );
   };
 
   return (
@@ -70,7 +101,7 @@ export default function CadastroSegurancaScreen() {
             ]}
             keyboardShouldPersistTaps='handled'
             keyboardDismissMode='on-drag'
-            automaticallyAdjustKeyboardInsets={true}
+            automaticallyAdjustKeyboardInsets
             showsVerticalScrollIndicator={false}
           >
             <CreateAccountIntro />
@@ -105,13 +136,7 @@ export default function CadastroSegurancaScreen() {
               <Text>Voltar</Text>
             </ReturnButton>
 
-            <Button
-              onPress={() =>
-                router.push(
-                  '/screens/CadastroScreen/CadastroConfirmacaoScreen/CadastroConfirmacaoScreen'
-                )
-              }
-            >
+            <Button onPress={handleNext}>
               <Text>Próximo</Text>
             </Button>
           </ScrollView>
