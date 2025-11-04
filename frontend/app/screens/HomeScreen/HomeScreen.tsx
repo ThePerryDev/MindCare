@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -8,13 +8,25 @@ import styles from './styles';
 import WeeklyResults from '@/components/WeeklyResults/WeeklyResults';
 import ContinueImproving from '@/components/ContinueImproving/ContinueImproving';
 import Navbar from '@/components/Navbar/Navbar';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { user } = useAuth();
 
-  const handleMoodPress = () => {
-    router.push('/mood');
-  };
+  // Primeiro nome
+  const firstName = useMemo(() => {
+    if (!user?.fullName) return 'Usuário';
+    return user.fullName.split(' ')[0];
+  }, [user]);
+
+  // Saudação de acordo com horário
+  const greeting = useMemo(() => {
+    const hour = new Date().getHours();
+    if (hour >= 5 && hour < 12) return 'Bom dia';
+    if (hour >= 12 && hour < 18) return 'Boa tarde';
+    return 'Boa noite';
+  }, []);
 
   return (
     <LinearGradient
@@ -24,10 +36,12 @@ export default function HomeScreen() {
       style={styles.background}
     >
       <SafeAreaView style={styles.container}>
-        <Text style={styles.greeting}>Boa noite, Robson!</Text>
+        <Text style={styles.greeting}>
+          {greeting}, {firstName}!
+        </Text>
 
         <View style={styles.buttonWrapper}>
-          <Button onPress={handleMoodPress}>
+          <Button onPress={() => router.push('/mood')}>
             <Text>Como está se sentindo hoje?</Text>
           </Button>
         </View>

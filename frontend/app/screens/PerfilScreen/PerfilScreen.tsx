@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-chart-kit';
 import { useRouter } from 'expo-router';
 import { styles } from './styles';
+import Navbar from '@/components/Navbar/Navbar';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -327,6 +328,7 @@ export default function PerfilScreen() {
             </View>
           </View>
         </ScrollView>
+        <Navbar />
       </SafeAreaView>
     </LinearGradient>
   );

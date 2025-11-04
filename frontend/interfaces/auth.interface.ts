@@ -1,6 +1,6 @@
 // app/interfaces/auth.interface.ts
 export interface IUser {
-  id: string;
+  _id: string;
   fullName: string;
   email: string;
   phone?: string;
@@ -17,9 +17,14 @@ export interface ILoginResponse {
 }
 
 export interface IRegisterData {
-  name: string;
+  fullName: string;
   email: string;
+  phone: string;
+  birthdate: string; // ISO "1999-05-15"
+  height: number; // em cm no seu backend
+  weight: number; // em kg
   password: string;
+  confirmPassword: string;
 }
 
 export interface IAuthContext {
@@ -29,4 +34,8 @@ export interface IAuthContext {
   login: (email: string, password: string) => Promise<void>;
   register: (data: IRegisterData) => Promise<void>;
   logout: () => Promise<void>;
+  updateProfile(
+    patch: Partial<IUser> & { password?: string; confirmPassword?: string }
+  ): Promise<void>;
+  deleteAccount(): Promise<void>;
 }

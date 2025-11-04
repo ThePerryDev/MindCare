@@ -1,19 +1,34 @@
 import React from 'react';
-import { Modal, View, Text, Pressable } from 'react-native';
+import { Modal, View, Text, Pressable, ActivityIndicator } from 'react-native';
 import CloseDeleteButton from '../CloseDeleteButton/CloseDeleteButton';
 import { styles } from './styles';
 
 export interface ConfirmDeleteModalProps {
   visible: boolean;
   onClose: () => void;
-  onConfirm: () => void; // ação de exclusão (placeholder por enquanto)
+  onConfirm: () => Promise<void> | void;
+  loading?: boolean;
 }
 
 export default function ConfirmDeleteModal({
   visible,
   onClose,
   onConfirm,
+  loading = false,
 }: ConfirmDeleteModalProps) {
+  // Handlers que sempre são funções (evitam undefined na prop onPress)
+  const handleBackdropPress = () => {
+    if (!loading) onClose();
+  };
+
+  const handleHeaderClose = () => {
+    if (!loading) onClose();
+  };
+
+  const handleConfirm = () => {
+    if (!loading) onConfirm();
+  };
+
   return (
     <Modal
       transparent
@@ -22,15 +37,14 @@ export default function ConfirmDeleteModal({
       onRequestClose={onClose}
     >
       {/* Backdrop clicável */}
-      <Pressable style={styles.backdrop} onPress={onClose} />
+      <Pressable style={styles.backdrop} onPress={handleBackdropPress} />
 
       {/* Card */}
       <View style={styles.card}>
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title}>Atenção !</Text>
-          {/* por enquanto usando o CloseButton padrão */}
-          <CloseDeleteButton onPress={onClose} size={28} />
+          <CloseDeleteButton onPress={handleHeaderClose} size={28} />
         </View>
 
         {/* Mensagem */}
@@ -41,12 +55,18 @@ export default function ConfirmDeleteModal({
 
         {/* Botão vermelho de excluir */}
         <Pressable
-          style={styles.dangerButton}
-          onPress={onConfirm}
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={[styles.dangerButton, loading && { opacity: 0.6 }]}
+          onPress={handleConfirm}
+          disabled={loading}
           accessibilityRole='button'
           accessibilityLabel='Excluir Conta'
         >
-          <Text style={styles.dangerText}>Excluir Conta</Text>
+          {loading ? (
+            <ActivityIndicator color='#fff' />
+          ) : (
+            <Text style={styles.dangerText}>Excluir Conta</Text>
+          )}
         </Pressable>
       </View>
     </Modal>

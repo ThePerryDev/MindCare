@@ -8,7 +8,7 @@ import { styles } from './styles';
 export interface EditPasswordModalProps {
   visible: boolean;
   onClose: () => void;
-  onSubmit: (password: string) => void; // apenas UI/UX (placeholder)
+  onSubmit: (password: string, confirmPassword: string) => void;
 }
 
 export default function EditPasswordModal({
@@ -59,7 +59,7 @@ export default function EditPasswordModal({
             onChangeText={setConfirm}
             placeholder='Confirme a nova senha'
           />
-          <Button onPress={() => onSubmit(pwd)}>
+          <Button onPress={() => onSubmit(pwd, confirm)}>
             <Text>Atualizar</Text>
           </Button>
         </View>
