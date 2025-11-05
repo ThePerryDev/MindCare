@@ -19,20 +19,17 @@ A partir do desafio proposto pela FATEC, a equipe The Perry Dev apresentou como 
 
 Projeto conduzido a partir da metodologia ágil, aplicando o framework Scrum, para incentivar a proatividade, autonomia, colaboração e a entrega de valor de todos os envolvidos.
 
-:pushpin: Status do Projeto: [**Em andamento**] <!--(https://github.com/ThePerryDev/NutriPerry/tree/sp1/develop) -->
+:pushpin: Status do Projeto: [**Em andamento**]
 
 ### Entregas de Sprints
 
 Cada entrega do projeto será identificada por meio da criação de uma tag no repositório [MindCare](https://github.com/ThePerryDev/MindCare). Além disso, serão criadas branches específicas para cada atividade (task) realizada, seguindo o seguinte padrão: sp0-000/nome/nomeDaTask, permitindo um controle mais detalhado das etapas de desenvolvimento e facilitando o acompanhamento da evolução do projeto. Observe a relação a seguir:
 
-| Sprint | Previsão | Status | Histórico | Link da Apresentação |
-| :----: | :------------------------: | :-------------- | :----------------------------------: | :-------------------------------------------------------------------------------------------------------: |
-| 01 | De 16/09/25 a 02/10/25 | 🟢 Finalizado | [Ver relatório](https://github.com/ThePerryDev/MindCare/releases/tag/sprint_1) | [Apresentação SPRINT 01](https://youtu.be/lf4rOiNSk8A) |
-| 02 | De 13/10/25 a 31/10/25 | 🟡 Em andamento | [Ver relatório](#sprint2) | [Apresentação SPRINT 02](xxxx) |
-| 03 | De 06/11/25 a 18/11/25 | 🔴 Não iniciado | [Ver relatório](#sprint3) | [Apresentação SPRINT 03](xxxx) |
-
-
-<!--🟡-->
+| Sprint | Previsão | Status | Histórico/Releases | Link da Apresentação | Gráfico Burndown
+| :----: | :------------------------: | :-------------- | :----------------------------------: | :-----------------------------------------------------------------------: |  :-----------------------------------------------------------------------: |
+| 01 | De 16/09/25 a 02/10/25 | 🟢 Finalizado | [Ver relatório](https://github.com/ThePerryDev/MindCare/releases/tag/sprint_1) | [Apresentação SPRINT 01](https://youtu.be/lf4rOiNSk8A) |  |
+| 02 | De 13/10/25 a 31/10/25 | 🟢 Finalizado | [Ver relatório](https://github.com/ThePerryDev/MindCare/releases/tag/sprint_2) | [Apresentação SPRINT 02](https://www.youtube.com/watch?v=OspOHwWwxlQ) |  |
+| 03 | De 06/11/25 a 18/11/25 | 🟡 Em andamento | [Ver relatório](#sprint3) | [Apresentação SPRINT 03](xxxx) |  |
 
 <span id="backlogs">
 
@@ -57,7 +54,8 @@ Cada entrega do projeto será identificada por meio da criação de uma tag no r
 
 Para o desenvolvimento deste projeto, foram empregadas diversas linguagens, ferramentas, tecnologias e bibliotecas, selecionadas de forma criteriosa para assegurar uma implementação eficiente e em conformidade com os requisitos estabelecidos. A seguir, apresentamos os principais recursos utilizados.
 
-<img src="https://img.shields.io/badge/VS Code-20232A?style=for-the-badge&logo=VisualStudioCode&logoColor=007ACC" alt="VS Code" />
+<!-- VS Code -->
+<img src="https://img.shields.io/badge/VS%20Code-20232A?style=for-the-badge&logo=VisualStudioCode&logoColor=007ACC" alt="VS Code" />
 <!-- Figma -->
 <img src="https://img.shields.io/badge/Figma-20232A?style=for-the-badge&logo=Figma&logoColor=F24E1E" alt="Figma" />
 <!-- Canva -->
@@ -68,6 +66,16 @@ Para o desenvolvimento deste projeto, foram empregadas diversas linguagens, ferr
 <img src="https://img.shields.io/badge/Docker-20232A?style=for-the-badge&logo=Docker&logoColor=2496ED" alt="Docker" />
 <!-- TypeScript -->
 <img src="https://img.shields.io/badge/TypeScript-20232A?style=for-the-badge&logo=TypeScript&logoColor=3178C6" alt="TypeScript" />
+<!-- React Native -->
+<img src="https://img.shields.io/badge/React%20Native-20232A?style=for-the-badge&logo=React&logoColor=61DAFB" alt="React Native" />
+<!-- Expo -->
+<img src="https://img.shields.io/badge/Expo-20232A?style=for-the-badge&logo=Expo&logoColor=FFFFFF" alt="Expo" />
+<!-- Node.js -->
+<img src="https://img.shields.io/badge/Node.js-20232A?style=for-the-badge&logo=Node.js&logoColor=339933" alt="Node.js" />
+<!-- MongoDB -->
+<img src="https://img.shields.io/badge/MongoDB-20232A?style=for-the-badge&logo=MongoDB&logoColor=47A248" alt="MongoDB" />
+<!-- Pinterest -->
+<img src="https://img.shields.io/badge/Pinterest-20232A?style=for-the-badge&logo=Pinterest&logoColor=E60023" alt="Pinterest" />
 
 <span id="equipe">
 
