@@ -1,84 +1,84 @@
 # MindCare 
 
 
-# Sprint 1
+# Sprint 2
 
-| **NOME**   | **16/09/2025** | **18/09/2025** | **22/09/2025** | **24/09/2025** | **26/09/2025** | **30/09/2025** | **02/10/2025** |
-|-----------|---------------|---------------|---------------|---------------|---------------|---------------|---------------|
-| **Eduardo**   | PLN-001 | EPP-008 | LDM-015 | LDM-022 | LDM-029 | XX-036 | LDM-043 |
-| **Franciele**    | PLN-002 | LDM-009 | LDM-016 | LDM-023 | LDM-030 | LDM-037 | LDM-044 |
-| **Claudia**    | PLN-003 | EPP-010 | LDM-017 | LDM-024 | LDM-031 | LDM-038 | LDM-045 |
-| **Willian** | PLN-004 | EPP-011 | LDM-018 | LDM-025 | LDM-032 | LDM-039 | LDM-046 |
-| **Bianca**   | PLN-005 | LDM-012 | LDM-019 | LDM-026 | LDM-033 | LDM-040 | LDM-047 |
-| **Daniel**   | PLN-006 | QT-013 | QT-020 | QT-027 | QT-034 |QT-041 | QT-048 |
-| **Heclair**   | PLN-007 | PLN-014 | PLN-021 | PLN-028 | PLN-035 | XX-042 | LDN-049 |
+| **NOME**   | **13/10/2025** | **15/10/2025** | **17/10/2025** | **21/10/2025** | **23/10/2025** | **31/10/2025** |
+|-----------|---------------|---------------|---------------|---------------|---------------|---------------|
+| **Eduardo**   | LDM-050 | XXX-057 | LDM-064 | LDM-071 | LDM-078 | LDM-085 |
+| **Franciele** | LDM-051 | XXX-058 | QA-065 | QA-072 | LDM-079 | QA-086 |
+| **Claudia**   | LDM-052 | LDM-059 | LDM-066 | LDM-073 | LDM-080 | LDM-087 |
+| **Willian**   | LDM-053 | LDM-060 | LDM-067 | LDM-074 | LDM-081 | LDM-088 |
+| **Bianca**    | LDM-054 | XXX-061 | LDM-068 | LDM-075 | LDM-082 | LDM-089 |
+| **Daniel**    | LDM-055 | QA-062 | QA-069 | QA-076 | QA-083 | XXX-090 |
+| **Heclair**   | LDM-056 | XXX-063 | LDM-070 | LDM-077 | LDM-084 | LDM-091 |
+
 
 | **Eduardo**   | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **16/09/2025**   | PLN-001 | Estruturação do projeto |
-| **18/09/2025**   | EPP-008 | Design de components no Figma |
-| **22/09/2025**   | LDM-015 | Correção na estruturação da pasta FrontEnd e no React Native |
-| **24/09/2025**   | LDM-022 | Criação de componentes reutilizáveis e correções no FrontEnd |
-| **26/09/2025**   | XX-029 | Continuação na criação de componentes reutilizáveis |
-| **30/09/2025**   | XX-036 | XXX |
-| **02/10/2025**   | LDM-043 | Reunião para fechamento das entregas da sprint 1 e apresentação individual |
+| **13/10/2025** | LDM-050 | Refinamento de produto e reunião de alinhamento com o time |
+| **15/10/2025** | XXX-057 | Feriado - dia dos professores |
+| **17/10/2025** | LDM-064 | Desenvolvimento de componentes e da tela home do aplicativo |
+| **21/10/2025** | LDM-071 | Conexão Backend/Frontend e revisão de Pull Requests |
+| **23/10/2025** | LDM-078 | Continuando conexão de Backend/Frontend |
+| **31/10/2025** | XXX-085 | XXX |
 
-| **Franciele**   | **Nome da tarefa** | **Descrição** |
-|-----------|---------------|---------------|
-| **16/09/2025**   | PLN-002 | Estruturação do projeto |
-| **18/09/2025**   | LDM-009 | Finalizando preparação do ambiente de DEV para equipe |
-| **22/09/2025**   | LDM-016 | Criação de banco, conexão e rotas (Users) |
-| **24/09/2025**   | LDM-023 | Refinamento técnico (tasks-BE) |
-| **26/09/2025**   | LDM-030 | Reorganizando plano de entrega para Sprint 1 e reunião de alinhamento com o time |
-| **30/09/2025**   | LDM-037 | Refatoração model, controller e rotas para usuário/autenticação |
-| **02/10/2025**   | LDM-044 | Reunião final com a equipe para fechar pacote de entregáveis para Sprint 1 |
 
-| **Claudia**   | **Nome da tarefa** | **Descrição** |
+| **Franciele** | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **16/09/2025**   | PLN-003 | Desenvolvimento de telas protótipo Figma, Telas: Onboarding, Login, Cadastros, Termos, Politica e LGPD|
-| **18/09/2025**   | EPP-010 | Desenvolvimento de telas protótipo Figma, Telas: Home, Atividade da trilha, ChatBot |
-| **22/09/2025**   | LDM-017 | Desenvolvimento de telas protótipo Figma, Telas: Trilhas |
-| **24/09/2025**   | LDM-024 | Desenvolvimento de telas protótipo Figma, Tela: Progresso |
-| **26/09/2025**   | LDM-031 | Desenvolvimento de telas protótipo Figma, Tela: Perfil |
-| **30/09/2025**   | LDM-038 | Desenvolvimento de telas protótipo Figma, Prototype e  criação de imagens PNG de telas do projeto |
-| **02/10/2025**   | LDM-045 | Criação de video MP4 e GIF do Prototype Figma, reunião de finalizaçãoda sprint, ajuste quadro kanban|
+| **13/10/2025** | LDM-051 | Refinamento de produto e reunião de alinhamento com o time |
+| **15/10/2025** | XXX-058 | Feriado - dia dos professores |
+| **17/10/2025** | QA-065 | Elaborando cenários de teste |
+| **21/10/2025** | QA-072 | Finalizando cobertura de testes (BE) |
+| **23/10/2025** | LDM-079 | Suporte técnico consultivo e orientação à equipe, focando na aplicação de boas práticas e na sincronização do workflow das tarefas |
+| **31/10/2025** | QA-086 | Criação de novos cenários de teste para (BE) / Reunião de alinhamento com o time para decidir entregáveis para final da Sprint 2 |
 
-| **Willian**   | **Nome da tarefa** | **Descrição** |
-|-----------|---------------|---------------|
-| **16/09/2025**   | PLN-004 | Briefing Inicial |
-| **18/09/2025**   | EPP-011 | Wireframe do Projeto |
-| **22/09/2025**   | LDM-018 | Desenvolvido Opção de Design das Telas de Login, Cadastros, Splash, Carregando. |
-| **24/09/2025**   | LDM-025 | Desenvolvido Opção de Design das Telas de Home e Chatbot. |
-| **26/09/2025**   | LDM-032 | Desenvolvido Opção de Design das Telas de Check de Sentimento, Trilhas e Configurações. |
-| **30/09/2025**   | LDM-039 | Desenvolvido Opção de Design da Tela de Perfil e criação do componente Return Button, correções visuais nos componentes button e input e correções do expo/metro. |
-| **02/10/2025**   | LDM-046 | Reunião para fechamento das entregas da sprint 1 e apresentação individual |
 
-| **Bianca**   | **Nome da tarefa** | **Descrição** |
+| **Claudia** | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **16/09/2025**   | PLN-005 | Reunião de Briefing Inicial com o time para definição de tasks e escopo do projeto, criação do design inicial do readme.md. |
-| **18/09/2025**   | LDM-012 | Continuação do design e atualização da estrutura e da documentação do readme.md |
-| **22/09/2025**   | LDM-019 | Continuação do design e atualização da estrutura e da documentação do readme.md |
-| **24/09/2025**   | LDM-026 | Criação do conteúdo das trilhas |
-| **26/09/2025**   | LDM-033 | Alinhamento com a equipe sobre alguns detalhes e continuação da documentação do readme.md |
-| **30/09/2025**   | LDM-040 | Alinhamento com a equipe sobre alguns detalhes, criação do User Storie e Requisitos funcionais e não funcionais e continuação da documentação do readme.md |
-| **02/10/2025**   | LDM-047 | Alinhamento com a equipe sobre detalhes finais da sprint, finalização das imagens para colocar na documentação e finalização do readme.md |
+| **13/10/2025** | LDM-052 | Reunião de alinhamento e distribuição de atividades da Sprint II |
+| **15/10/2025** | LDM-059 | Feriado - dia dos professores |
+| **17/10/2025** | LDM-066 | Inicio FrontEnd tela chatbot |
+| **21/10/2025** | LDM-073 | Correção Estlint e Prettier |
+| **23/10/2025** | LDM-080 | Finalização da Tela Chat bot e inicio da Tela Perfil usuário |
+| **31/10/2025** | LDM-087 | Finalização da Tela de perfil usuário |
 
-| **Daniel**   | **Nome da tarefa** | **Descrição** |
-|-----------|---------------|---------------|
-| **16/09/2025**   | PLN-006 | Criação de backlog e primeira daily |
-| **18/09/2025**   | QT-013 | Modelar e selecionar imagens do docker, além de Github Actions, ESLINT, Prettier e primeiros testes com Jest |
-| **22/09/2025**   | QT-020 | Integrar docker e ci.yml github actions a partir da develop (não deu certo) |
-| **24/09/2025**   | QT-027 | Criar do zero o ambiente frontend localmente. -> implementação de Docker, ainda não é possível hot reload, porém o expo abre dentro do container |
-| **26/09/2025**   | QT-034 | Pipeline de integração contínua com ESLint, Prettier e expo |
-| **30/09/2025**   | QT-041 | Correção da branch develop para manutenção de testes e qualidade de software |
-| **02/10/2025**   | QT-048 | Implementação de pipeline backend (incompleto) |
 
-| **Heclair**   | **Nome da tarefa** | **Descrição** |
+| **Willian** | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **16/09/2025**   | PLN-007 | Início do projeto e pesquisas para elaboração do treinamento |
-| **18/09/2025**   | PLN-014 | Primeiro modelo treinado e testes com backend em Python para consumo da aplicação |
-| **22/09/2025**   | PLN-021 | Início de um novo modelo utilizando outro dataset para treinamento e estrutura de fallback |
-| **24/09/2025**   | PLN-028 | Testes com o chat para compreender responsividade e resultados do treinamento |
-| **26/09/2025**   | PLN-035 | Estudo dos modelos llama para implementação nos treinamentos e bibliotecas para compreensão de sentimentos |
-| **30/09/2025**   | XX-042 | XXX |
-| **02/10/2025**   | LDN-049 | Reunião para fechamento das entregas da sprint 1 e apresentação individual |
+| **13/10/2025** | LDM-053 | Reunião de alinhamento e distribuição de atividades da Sprint II |
+| **15/10/2025** | LDM-060 | Criação do componente StepProgress e telas de cadastro inacabadas |
+| **17/10/2025** | LDM-067 | Adicionado componentes: CreateAccountIntro, PasswordRequirements, Checkbox e ConsentCard |
+| **21/10/2025** | LDM-074 | Adicionado Telas SplashScreen, LoadingScreen e CadastroFinalizadoScreen |
+| **23/10/2025** | LDM-081 | Correções nos erros de ESLINT para validação do pipeline |
+| **31/10/2025** | LDM-088 | Adicionando Tela SettingsScreen e Reunião de alinhamento com o time para decidir entregáveis para final da Sprint 2 |
+
+
+| **Bianca** | **Nome da tarefa** | **Descrição** |
+|-----------|---------------|---------------|
+| **13/10/2025** | LDM-054 | Reunião de alinhamento e distribuição de atividades da Sprint II |
+| **15/10/2025** | XXX-061 | Feriado - dia dos professores |
+| **17/10/2025** | LDM-068 | Inicio da tela de humor |
+| **21/10/2025** | LDM-075 | Conclusão da tela de humor |
+| **23/10/2025** | LDM-082 | Correção de erros do Eslint e Prettier |
+| **31/10/2025** | LDM-089 | Documentação da sprint 2 |
+
+
+| **Daniel** | **Nome da tarefa** | **Descrição** |
+|-----------|---------------|---------------|
+| **13/10/2025** | LDM-055 | Refinamento de produto e reunião de alinhamento com o time |
+| **15/10/2025** | QA-062 | Implementação de pipeline de integração contínua backend |
+| **17/10/2025** | QA-069 | Implementação de container Docker para o CRUD (incompleto) |
+| **21/10/2025** | QA-076 | Continuação de container Docker para o CRUD (incompleto) |
+| **23/10/2025** | QA-083 | Correção de erros da develop de eSLint e e outros |
+| **31/10/2025** | XXX-090 | XXX |
+
+
+| **Heclair** | **Nome da tarefa** | **Descrição** |
+|-----------|---------------|---------------|
+| **13/10/2025** | LDM-056 |  Reunião de alinhamento e distribuição de atividades da Sprint II |
+| **15/10/2025** | XXX-063 | Feriado - dia dos professores |
+| **17/10/2025** | LDM-070 | Setup inicial do projeto para criação das coleções de registro e trilhas |
+| **21/10/2025** | LDM-077 | Criação da coleção de registro de sentimento de entrada e saída, em conjunto com controllers e rotas |
+| **23/10/2025** | LDM-084 | Criação da coleção de registro de sentimento identificado pelo chat bot, em conjunto com controllers e rotas |
+| **31/10/2025** | LDM-091 | Atividade conjunta com Eduardo para finalização da funcionalidade login |

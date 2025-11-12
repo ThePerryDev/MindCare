@@ -5,12 +5,21 @@ import { styles } from './styles';
 
 interface ButtonProps {
   children: React.ReactNode;
-  onPress: (event: GestureResponderEvent) => void;
+  onPress?: (event: GestureResponderEvent) => void;
+  disabled?: boolean;
 }
 
-export default function Button({ children, onPress }: ButtonProps) {
+export default function Button({
+  children,
+  onPress,
+  disabled = false,
+}: ButtonProps) {
   return (
-    <Pressable onPress={onPress} style={styles.pressable}>
+    <Pressable
+      onPress={disabled ? undefined : onPress}
+      style={[styles.pressable, disabled && styles.disabled]}
+      disabled={disabled}
+    >
       <LinearGradient
         colors={['#4776E6', '#8E54E9']}
         start={{ x: 0, y: 0 }}

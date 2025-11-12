@@ -10,12 +10,16 @@ export interface AuthRequest extends Request {
 export function authGuard(req: AuthRequest, res: Response, next: NextFunction) {
   const header = req.headers.authorization || '';
   const [, token] = header.split(' '); // Bearer <token>
-  if (!token) return res.status(401).json({ error: 'token ausente' });
+
+  if (!token) {
+    return res.status(401).json({ error: 'token ausente' });
+  }
+
   try {
     const payload = jwt.verify(token, JWT_SECRET) as any;
     req.user = { sub: payload.sub, email: payload.email };
     return next();
-  } catch (_e) {
+  } catch {
     return res.status(401).json({ error: 'token inválido ou expirado' });
   }
 }

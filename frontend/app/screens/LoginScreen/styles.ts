@@ -1,7 +1,7 @@
 import { theme } from '../../../styles/theme';
 import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   contentBase: {
     paddingHorizontal: 35,
   },
@@ -35,13 +35,15 @@ export const styles = StyleSheet.create({
     color: '#9B7EFF',
     fontFamily: theme.fonts.medium,
     fontSize: 14,
+    fontWeight: 'bold',
     marginTop: 10,
     textAlign: 'center',
   },
   linkRegister: {
     color: '#9B7EFF',
-    fontFamily: theme.fonts.semi,
+    fontFamily: theme.fonts.bold,
     fontSize: 14,
+    fontWeight: 'bold',
   },
   padLarge: {
     paddingBottom: 0,
@@ -67,3 +69,5 @@ export const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
+
+export default styles;

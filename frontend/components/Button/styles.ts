@@ -2,6 +2,9 @@ import { theme } from '../../styles/theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
+  disabled: {
+    opacity: 0.6,
+  },
   gradient: {
     alignItems: 'center',
     borderRadius: 20,

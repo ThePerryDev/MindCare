@@ -1,0 +1,17 @@
+import { StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  image: {
+    alignSelf: 'center',
+    height: 250,
+    resizeMode: 'contain',
+    width: 250,
+  },
+});
+
+export default styles;
