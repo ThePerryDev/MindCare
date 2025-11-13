@@ -6,7 +6,7 @@
 | **NOME**      | **06/11/2025** | **10/11/2025** | **12/11/2025** | **14/11/2025** | **18/11/2025** |
 | ------------- | -------------- | -------------- | -------------- | -------------- | -------------- |
 | **Eduardo**   | XXX-092        | XXX-099        | XXX-106        | XXX-113        | XXX-120        |
-| **Franciele** | XXX-093        | XXX-100        | XXX-107        | XXX-114        | XXX-121        |
+| **Franciele** | LDM-093        | LDM-100        | LDM-107        | XXX-114        | XXX-121        |
 | **Claudia**   | XXX-094        | XXX-101        | XXX-108        | XXX-115        | XXX-122        |
 | **Willian**   | XXX-095        | XXX-102        | XXX-109        | XXX-116        | XXX-123        |
 | **Bianca**    | XXX-096        | XXX-103        | XXX-110        | XXX-117        | XXX-124        |
@@ -26,9 +26,9 @@
 
 | **Franciele** | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **06/11/2025** | XXX-093 |  |
-| **10/11/2025** | XXX-100 |  |
-| **12/11/2025** | XXX-107 |  |
+| **06/11/2025** | LDM-093 | Refinamento de negócio e alinhamento com o time  |
+| **10/11/2025** | LDM-100 | Refinamento técnico [BE]  |
+| **12/11/2025** | LDM-107 | Levantamento/estudo de serviços de nuvem |
 | **14/11/2025** | XXX-114 |  |
 | **18/11/2025** | XXX-121 |  |
 
