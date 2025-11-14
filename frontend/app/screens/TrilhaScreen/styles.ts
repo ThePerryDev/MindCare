@@ -3,20 +3,20 @@ import { StyleSheet } from 'react-native';
 import { theme } from '@/styles/theme';
 
 export const styles = StyleSheet.create({
-  // ===== BASE QUE VOCÊ ENVIOU =====
+  // ===== BASE =====
   bg: { flex: 1 },
   content: {
     padding: 20,
-    paddingBottom: 70, // mais folga por causa do Navbar
+    paddingBottom: 70,
   },
   footer: { marginTop: 14 },
   infoBackdrop: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.25)',
+    backgroundColor: 'rgba(0,0,0,0.35)',
   },
   infoSheet: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
+    borderRadius: 24,
     elevation: 8,
     left: 16,
     padding: 16,
@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.25,
     shadowRadius: 18,
-    top: '20%',
+    top: '18%',
   },
   infoText: {
     color: '#4C46B6',
@@ -67,7 +67,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  // ===== NOVOS ESTILOS PRA TELA DE TRILHAS =====
+  // ===== HEADER TRILHAS =====
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -83,7 +83,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.7)',
   },
 
-  // Cards de trilhas
+  // ===== CARDS DE TRILHA =====
   trackCard: {
     borderRadius: 20,
     padding: 16,
@@ -199,7 +199,7 @@ export const styles = StyleSheet.create({
     borderRadius: 999,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#6C4FF6', // roxinho
+    backgroundColor: '#6C4FF6',
   },
   primaryButtonCompleted: {
     backgroundColor: '#18C37D',
@@ -236,5 +236,283 @@ export const styles = StyleSheet.create({
   },
   secondaryButtonTextDisabled: {
     color: '#B0B4C5',
+  },
+
+  // ===== MODAL 1 – DETALHES =====
+  modalCard: {
+    paddingHorizontal: 20,
+    paddingVertical: 22,
+  },
+  modalTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  modalTrackTitle: {
+    fontFamily: theme.fonts.semi,
+    fontSize: 16,
+    color: '#2C2C4E',
+  },
+  modalCloseIcon: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#E0D8FF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalDivider: {
+    height: 1,
+    backgroundColor: '#EEE9FF',
+    marginBottom: 16,
+  },
+  modalActivityTitle: {
+    fontFamily: theme.fonts.bold,
+    fontSize: 18,
+    color: '#4C46B6',
+    marginBottom: 8,
+  },
+  modalDescription: {
+    fontFamily: theme.fonts.regular,
+    fontSize: 14,
+    color: '#6C6A8A',
+    marginBottom: 16,
+  },
+  modalBenefitsTitle: {
+    fontFamily: theme.fonts.semi,
+    fontSize: 14,
+    color: '#4C46B6',
+    marginBottom: 8,
+  },
+  modalBenefitRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 4,
+  },
+  modalBenefitCheck: {
+    fontSize: 16,
+    color: '#1BAA5C',
+    marginRight: 6,
+    marginTop: 1,
+  },
+  modalBenefitText: {
+    flex: 1,
+    fontFamily: theme.fonts.regular,
+    fontSize: 14,
+    color: '#4F4F70',
+  },
+  modalActionWrapper: {
+    marginTop: 18,
+  },
+  modalActionButton: {
+    borderRadius: 999,
+    paddingVertical: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalActionButtonText: {
+    fontFamily: theme.fonts.semi,
+    fontSize: 15,
+    color: '#FFFFFF',
+  },
+
+  // ===== MODAL 2 – SESSÃO / TIMER =====
+  sessionModalCard: {
+    paddingHorizontal: 20,
+    paddingVertical: 22,
+  },
+  sessionTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  sessionDayText: {
+    fontFamily: theme.fonts.semi,
+    fontSize: 16,
+    color: '#2C2C4E',
+  },
+  sessionDivider: {
+    height: 1,
+    backgroundColor: '#EEE9FF',
+    marginBottom: 20,
+  },
+  sessionHeaderCenter: {
+    alignItems: 'center',
+    marginBottom: 18,
+  },
+  sessionIconCircle: {
+    width: 56,
+    height: 56,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 12,
+  },
+  sessionIconText: {
+    fontFamily: theme.fonts.bold,
+    fontSize: 18,
+    color: '#FFFFFF',
+  },
+  sessionTitle: {
+    fontFamily: theme.fonts.semi,
+    fontSize: 18,
+    color: '#2C2C4E',
+    marginBottom: 4,
+  },
+  sessionDurationText: {
+    fontFamily: theme.fonts.regular,
+    fontSize: 13,
+    color: '#8C8CA3',
+    marginBottom: 8,
+  },
+  sessionDescription: {
+    fontFamily: theme.fonts.regular,
+    fontSize: 14,
+    color: '#6C6A8A',
+    textAlign: 'center',
+  },
+  sessionSectionTitle: {
+    fontFamily: theme.fonts.semi,
+    fontSize: 15,
+    color: '#2C2C4E',
+    marginBottom: 10,
+  },
+  sessionActivityCard: {
+    borderRadius: 14,
+    backgroundColor: '#F7F5FF',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    marginBottom: 8,
+  },
+  sessionActivityLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  sessionActivityIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 12,
+    marginRight: 10,
+    backgroundColor: '#7D8CFF',
+  },
+  sessionActivityTextBlock: {
+    flex: 1,
+  },
+  sessionActivityTitle: {
+    fontFamily: theme.fonts.semi,
+    fontSize: 14,
+    color: '#2C2C4E',
+    marginBottom: 2,
+  },
+  sessionActivitySubtitle: {
+    fontFamily: theme.fonts.regular,
+    fontSize: 12,
+    color: '#7A7A99',
+  },
+
+  sessionStatusRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 16,
+    marginBottom: 6,
+  },
+  sessionStatusLabel: {
+    fontFamily: theme.fonts.semi,
+    fontSize: 13,
+    color: '#4C46B6',
+  },
+  sessionStatusTime: {
+    fontFamily: theme.fonts.semi,
+    fontSize: 13,
+    color: '#4C46B6',
+  },
+  sessionProgressBarTrack: {
+    width: '100%',
+    height: 4,
+    borderRadius: 999,
+    backgroundColor: '#E6E6F2',
+    overflow: 'hidden',
+    marginBottom: 18,
+  },
+  sessionProgressBarFill: {
+    height: '100%',
+    borderRadius: 999,
+    backgroundColor: '#6C4FF6',
+  },
+
+  sessionControlsRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 32,
+  },
+  sessionControlButton: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+    // ===== MODAL 3 – DETALHES DO EXERCÍCIO =====
+  activityModalCard: {
+    paddingHorizontal: 20,
+    paddingVertical: 22,
+  },
+  activityModalTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 4,
+  },
+  activityModalTitle: {
+    fontFamily: theme.fonts.semi,
+    fontSize: 17,
+    color: '#2C2C4E',
+  },
+  activityModalSubtitle: {
+    fontFamily: theme.fonts.regular,
+    fontSize: 13,
+    color: '#8C8CA3',
+    marginBottom: 10,
+  },
+  activityModalDivider: {
+    height: 1,
+    backgroundColor: '#EEE9FF',
+    marginBottom: 12,
+  },
+  activityModalSectionTitle: {
+    fontFamily: theme.fonts.semi,
+    fontSize: 14,
+    color: '#4C46B6',
+    marginBottom: 6,
+    marginTop: 6,
+  },
+  activityModalDescription: {
+    fontFamily: theme.fonts.regular,
+    fontSize: 14,
+    color: '#6C6A8A',
+    marginBottom: 8,
+  },
+  activityModalTipRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 4,
+  },
+  activityModalBullet: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    marginTop: 6,
+    marginRight: 8,
+    backgroundColor: '#6C4FF6',
+  },
+  activityModalTipText: {
+    flex: 1,
+    fontFamily: theme.fonts.regular,
+    fontSize: 13,
+    color: '#4F4F70',
   },
 });
