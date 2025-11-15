@@ -1,0 +1,76 @@
+# ================================
+#  Ambientes / Configuração
+# ================================
+
+venv/
+.env
+*.env
+
+# ================================
+#  Cache do Python
+# ================================
+
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# ================================
+#  Build / Eggs
+# ================================
+
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# ================================
+#  IDE / Editor
+# ================================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ================================
+#  Dados grandes e sensíveis
+# ================================
+# NÃO versionar datasets
+nlp/data/raw/
+nlp/data/processed/
+dataset/
+*.csv
+*.xlsx
+
+# ================================
+#  Modelos treinados
+# ================================
+# IMPORTANTE: versionar APENAS os modelos usados pela API
+# Portanto, ignore tudo EXCETO os modelos da pasta baseline
+
+# Ignora a pasta inteira
+nlp/models/*
+
+# ...mas inclui os modelos finais necessários na API:
+!nlp/models/baseline/
+!nlp/models/baseline/**
+
+# Caso você queira manter também os paths do BERT no futuro:
+#!nlp/models/bertimbau/
+#!nlp/models/bertimbau/**
+
+# ================================
+#  Logs / Outputs
+# ================================
+
+logs/
+*.log
+
+# ================================
+#  Jupyter
+# ================================
+
+.ipynb_checkpoints/
+*.ipynb
