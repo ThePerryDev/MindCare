@@ -47,19 +47,16 @@ dataset/
 # ================================
 #  Modelos treinados
 # ================================
-# IMPORTANTE: versionar APENAS os modelos usados pela API
-# Portanto, ignore tudo EXCETO os modelos da pasta baseline
-
-# Ignora a pasta inteira
+# Ignora tudo em nlp/models
 nlp/models/*
 
-# ...mas inclui os modelos finais necessários na API:
-!nlp/models/baseline/
-!nlp/models/baseline/**
+# MAS não ignore as pastas emotions e crisis (modelos em uso pela API)
+!nlp/models/emotions/
+!nlp/models/emotions/**
+!nlp/models/crisis/
+!nlp/models/crisis/**
 
-# Caso você queira manter também os paths do BERT no futuro:
-#!nlp/models/bertimbau/
-#!nlp/models/bertimbau/**
+
 
 # ================================
 #  Logs / Outputs
