@@ -515,4 +515,56 @@ export const styles = StyleSheet.create({
     fontSize: 13,
     color: '#4F4F70',
   },
+    // ===== MODAL 4 – TELA DE CONCLUSÃO =====
+  completionSafe: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
+  completionGradient: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingBottom: 72,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  completionContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  completionTitle: {
+    fontFamily: theme.fonts.bold,
+    fontSize: 24,
+    color: '#7745D8',
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  completionSubtitle: {
+    fontFamily: theme.fonts.semi,
+    fontSize: 16,
+    color: '#7A5DF5',
+    textAlign: 'center',
+    marginHorizontal: 16,
+    marginBottom: 24,
+  },
+  completionImage: {
+    width: 220,
+    height: 220,
+    resizeMode: 'contain',
+    marginBottom: 32,
+  },
+  completionButton: {
+    marginTop: 8,
+    paddingHorizontal: 32,
+    paddingVertical: 10,
+    borderRadius: 999,
+    backgroundColor: '#6C4FF6',
+  },
+  completionButtonText: {
+    fontFamily: theme.fonts.semi,
+    fontSize: 15,
+    color: '#FFFFFF',
+    textAlign: 'center',
+  },
+
 });

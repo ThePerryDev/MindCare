@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Modal,
   Pressable,
+  Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -15,7 +16,26 @@ import { styles } from './styles';
 import { theme } from '@/styles/theme';
 import Navbar from '@/components/Navbar/Navbar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { trilhaAnsiedadeLeve } from '../../../components/Trilhas/trilha-ansiedade-leve';
+
+import TrackCard, { Track } from '@/components/Trilhas/TrackCard';
+
+import {
+  trilhaAnsiedadeLeve,
+  trilhaEstresseTrabalho,
+  trilhaSonoRelaxamento,
+  trilhaHumorPositivoMotivacao,
+  trilhaMuitoFeliz,
+  trilhaNeutro,
+  trilhaTriste,
+  trilhaIrritado,
+  trilhaMuitoTriste,
+  trilhaMindfulnessBasico,
+  trilhaAlivioEstresse,
+  trilhaGratidaoFelicidade,
+  trilhaControleAnsiedade,
+} from '@/components/Trilhas/models';
+
+import type { TrilhaModel } from '@/components/Trilhas/types';
 
 const PROGRESS_PREFIX = '@mindcare/trilha-progress/';
 
@@ -41,20 +61,6 @@ async function advanceDay(trackKey: string): Promise<number> {
   return next;
 }
 
-type TrackStatus = 'completed' | 'in_progress' | 'not_started' | 'locked';
-
-type Track = {
-  id: string;
-  title: string;
-  level: 'Iniciante' | 'Intermediário';
-  duration: string;
-  progressPercent: number;
-  totalSteps: number;
-  completedSteps: number;
-  status: TrackStatus;
-  backgroundColor: string;
-};
-
 type TrackDetails = {
   activityTitle: string;
   description: string;
@@ -79,55 +85,70 @@ type Session = {
   totalSeconds: number;
 };
 
-const TRACKS: Track[] = [
-  {
-    id: 'mindfulness-basic',
-    title: 'Mindfullness Básico',
-    level: 'Iniciante',
-    duration: '5–10 min',
-    progressPercent: 100,
-    totalSteps: 7,
-    completedSteps: 7,
-    status: 'completed',
-    backgroundColor: '#DFF4EE',
-  },
-  {
-    id: 'stress-relief',
-    title: 'Alívio do Estresse',
-    level: 'Intermediário',
-    duration: '10–15 min',
-    progressPercent: 43,
-    totalSteps: 7,
-    completedSteps: 3,
-    status: 'in_progress',
-    backgroundColor: '#FFEDE1',
-  },
-  {
-    id: 'gratitude',
-    title: 'Gratidão e Felicidade',
-    level: 'Iniciante',
-    duration: '5–10 min',
-    progressPercent: 0,
-    totalSteps: 7,
-    completedSteps: 0,
-    status: 'not_started',
-    backgroundColor: '#F3EEFF',
-  },
-  {
-    id: 'anxiety-control',
-    title: 'Controle de Ansiedade',
-    level: 'Intermediário',
-    duration: '10–15 min',
-    progressPercent: 0,
-    totalSteps: 7,
-    completedSteps: 0,
-    status: 'locked',
-    backgroundColor: '#F1F4F7',
-  },
+/**
+ * Lista de trilhas vindas dos models
+ */
+const TRILHAS: TrilhaModel[] = [
+  trilhaAnsiedadeLeve,
+  trilhaEstresseTrabalho,
+  trilhaSonoRelaxamento,
+  trilhaHumorPositivoMotivacao,
+  trilhaMuitoFeliz,
+  trilhaNeutro,
+  trilhaTriste,
+  trilhaIrritado,
+  trilhaMuitoTriste,
+  trilhaMindfulnessBasico,
+  trilhaAlivioEstresse,
+  trilhaGratidaoFelicidade,
+  trilhaControleAnsiedade,
 ];
 
+/**
+ * Cores usadas para os cards (vai ciclando)
+ */
+const CARD_COLORS = [
+  '#DFF4EE',
+  '#FFEDE1',
+  '#F3EEFF',
+  '#F1F4F7',
+  '#FFF6E5',
+  '#E6F4FF',
+];
+
+/**
+ * Gera os TRACKS (cards) a partir dos models de trilha
+ */
+const TRACKS: Track[] = TRILHAS.map((trilha, index) => {
+  let duration = '—';
+
+  if (trilha.minMinutes && trilha.maxMinutes) {
+    duration = `${trilha.minMinutes}–${trilha.maxMinutes} min`;
+  } else if (trilha.minMinutes && !trilha.maxMinutes) {
+    duration = `${trilha.minMinutes} min`;
+  }
+
+  return {
+    id: trilha.key,
+    title: trilha.name,
+    level: trilha.level,
+    duration,
+    progressPercent: 0, // depois você pode ligar com AsyncStorage
+    totalSteps: trilha.days.length,
+    completedSteps: 0, // idem
+    status: 'not_started',
+    backgroundColor: CARD_COLORS[index % CARD_COLORS.length],
+  };
+});
+
+/**
+ * Usaremos a trilha de Ansiedade Leve como fallback
+ * para o conteúdo dos detalhes/sessão por enquanto
+ */
+const FALLBACK_SESSION_TRACK_KEY = trilhaAnsiedadeLeve.key;
+
 const TRACK_DETAILS: Record<string, TrackDetails> = {
-  'mindfulness-basic': {
+  [FALLBACK_SESSION_TRACK_KEY]: {
     activityTitle: 'Respiração Consciente',
     description:
       'Pratique respiração profunda por alguns minutos para acalmar a mente e reduzir o estresse.',
@@ -137,41 +158,11 @@ const TRACK_DETAILS: Record<string, TrackDetails> = {
       'Promove relaxamento',
     ],
   },
-  'stress-relief': {
-    activityTitle: 'Alívio de Tensão',
-    description:
-      'Sequência guiada para aliviar tensões físicas acumuladas no corpo.',
-    benefits: [
-      'Diminui tensão muscular',
-      'Aumenta sensação de bem-estar',
-      'Ajuda a desacelerar a mente',
-    ],
-  },
-  gratitude: {
-    activityTitle: 'Jornada da Gratidão',
-    description:
-      'Reflexão guiada para reconhecer momentos positivos do seu dia.',
-    benefits: [
-      'Estimula pensamentos positivos',
-      'Fortalece emoções agradáveis',
-      'Ajuda a cultivar gratidão diária',
-    ],
-  },
-  'anxiety-control': {
-    activityTitle: 'Ancoragem no Presente',
-    description:
-      'Exercício para trazer a atenção ao momento presente e reduzir sintomas de ansiedade.',
-    benefits: [
-      'Auxilia em crises de ansiedade',
-      'Melhora a percepção corporal',
-      'Desenvolve autocontrole emocional',
-    ],
-  },
 };
 
 const SESSION_DETAILS: Record<string, Session> = {
-  'mindfulness-basic': {
-    trackId: 'mindfulness-basic',
+  [FALLBACK_SESSION_TRACK_KEY]: {
+    trackId: FALLBACK_SESSION_TRACK_KEY,
     dayLabel: 'Dia 1',
     activityTitle: 'Respiração Consciente',
     minutes: 5,
@@ -205,7 +196,7 @@ const SESSION_DETAILS: Record<string, Session> = {
         ],
       },
     ],
-    totalSeconds: 5 * 60, 
+    totalSeconds: 5 * 60,
   },
 };
 
@@ -218,8 +209,9 @@ function formatTime(seconds: number): string {
 export default function TrilhaScreen() {
   const [currentDay, setCurrentDay] = useState(1);
 
+  // por enquanto, o progresso está amarrado só à trilha de Ansiedade Leve
   useEffect(() => {
-    getCurrentDay('trilha-ansiedade-leve').then(setCurrentDay);
+    getCurrentDay(trilhaAnsiedadeLeve.key).then(setCurrentDay);
   }, []);
 
   const router = useRouter();
@@ -232,6 +224,9 @@ export default function TrilhaScreen() {
   const [remainingSeconds, setRemainingSeconds] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // NOVO: controla exibição da tela de "Parabéns!"
+  const [showCompletion, setShowCompletion] = useState(false);
+
   useEffect(() => {
     if (!session || !isPlaying || remainingSeconds <= 0) return;
 
@@ -239,12 +234,16 @@ export default function TrilhaScreen() {
       setRemainingSeconds(prev => {
         if (prev <= 1) {
           clearInterval(id);
-          if (session.trackId === 'mindfulness-basic') {
-            advanceDay('trilha-ansiedade-leve')
+
+          if (session.trackId === FALLBACK_SESSION_TRACK_KEY) {
+            advanceDay(trilhaAnsiedadeLeve.key)
               .then(setCurrentDay)
-              .catch(() => {
-              });
+              .catch(() => {});
           }
+
+          // terminou a atividade
+          setIsPlaying(false);
+          setShowCompletion(true);
 
           return 0;
         }
@@ -255,66 +254,6 @@ export default function TrilhaScreen() {
 
     return () => clearInterval(id);
   }, [session, isPlaying, remainingSeconds]);
-
-  const renderStep = (track: Track, index: number) => {
-    const stepNumber = index + 1;
-
-    if (track.status === 'locked') {
-      return (
-        <View key={stepNumber} style={[styles.step, styles.stepLocked]}>
-          <Text style={[styles.stepText, styles.stepTextLocked]}>
-            {stepNumber}
-          </Text>
-        </View>
-      );
-    }
-
-    if (stepNumber <= track.completedSteps) {
-      return (
-        <View key={stepNumber} style={[styles.step, styles.stepCompleted]}>
-          <Text style={[styles.stepText, styles.stepTextCompleted]}>
-            {stepNumber}
-          </Text>
-        </View>
-      );
-    }
-
-    if (
-      track.status === 'in_progress' &&
-      stepNumber === track.completedSteps + 1
-    ) {
-      return (
-        <View key={stepNumber} style={[styles.step, styles.stepCurrent]}>
-          <Text style={[styles.stepText, styles.stepTextCurrent]}>
-            {stepNumber}
-          </Text>
-        </View>
-      );
-    }
-
-    return (
-      <View key={stepNumber} style={styles.step}>
-        <Text style={styles.stepText}>{stepNumber}</Text>
-      </View>
-    );
-  };
-
-  const renderPrimaryButtonLabel = (track: Track) => {
-    switch (track.status) {
-      case 'completed':
-        return 'Concluída';
-      case 'in_progress':
-        return 'Continuar';
-      case 'not_started':
-        return 'Iniciar';
-      case 'locked':
-        return 'Bloqueado';
-      default:
-        return 'Iniciar';
-    }
-  };
-
-  const isPrimaryButtonDisabled = (track: Track) => track.status === 'locked';
 
   const closeDetailsModal = () => setSelectedTrack(null);
 
@@ -327,7 +266,7 @@ export default function TrilhaScreen() {
     if (track.status === 'locked') return;
 
     const sessionData =
-      SESSION_DETAILS[track.id] ?? SESSION_DETAILS['mindfulness-basic'];
+      SESSION_DETAILS[track.id] ?? SESSION_DETAILS[FALLBACK_SESSION_TRACK_KEY];
 
     const firstActivity = sessionData.activities[0];
 
@@ -340,7 +279,7 @@ export default function TrilhaScreen() {
 
   const handleStartSession = (track: Track) => {
     const sessionData =
-      SESSION_DETAILS[track.id] ?? SESSION_DETAILS['mindfulness-basic'];
+      SESSION_DETAILS[track.id] ?? SESSION_DETAILS[FALLBACK_SESSION_TRACK_KEY];
 
     setSession(sessionData);
     setSelectedActivity(null);
@@ -355,11 +294,18 @@ export default function TrilhaScreen() {
     setSelectedActivity(null);
   };
 
+  // quando fecha a tela de "Parabéns", também fechamos a sessão
+  const handleCloseCompletion = () => {
+    setShowCompletion(false);
+    closeSessionModal();
+  };
+
   const progress =
     session && session.totalSeconds > 0
       ? 1 - remainingSeconds / session.totalSeconds
       : 0;
 
+  // ainda usando só a trilha de Ansiedade Leve no modal de sessão
   const currentDayIndex = Math.max(
     0,
     Math.min(currentDay - 1, trilhaAnsiedadeLeve.days.length - 1)
@@ -383,9 +329,9 @@ export default function TrilhaScreen() {
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
               <MaterialCommunityIcons
-                name='chevron-left'
+                name="chevron-left"
                 size={28}
-                color='#4C46B6'
+                color="#4C46B6"
               />
             </TouchableOpacity>
             <Text style={styles.title}>Trilhas</Text>
@@ -393,88 +339,12 @@ export default function TrilhaScreen() {
 
           {/* LISTA DE TRILHAS */}
           {TRACKS.map(track => (
-            <View
+            <TrackCard
               key={track.id}
-              style={[
-                styles.trackCard,
-                { backgroundColor: track.backgroundColor },
-              ]}
-            >
-              {/* Header do card */}
-              <View style={styles.trackHeader}>
-                <View style={styles.trackIcon} />
-                <View style={styles.trackHeaderText}>
-                  <Text style={styles.trackTitle}>{track.title}</Text>
-                  <View style={styles.trackMetaRow}>
-                    <View style={styles.levelBadge}>
-                      <Text style={styles.levelBadgeText}>{track.level}</Text>
-                    </View>
-                    <Text style={styles.durationText}>{track.duration}</Text>
-                  </View>
-                </View>
-              </View>
-
-              {/* Progresso */}
-              <View style={styles.progressRow}>
-                <Text style={styles.progressLabel}>
-                  {track.status === 'locked' ? 'Bloqueada' : 'Progresso'}
-                </Text>
-                <Text style={styles.progressPercent}>
-                  {track.progressPercent}%
-                </Text>
-              </View>
-
-              {/* Etapas */}
-              <View style={styles.stepsRow}>
-                {Array.from({ length: track.totalSteps }).map((_, i) =>
-                  renderStep(track, i)
-                )}
-              </View>
-
-              {/* Botões */}
-              <View style={styles.trackActions}>
-                <TouchableOpacity
-                  style={[
-                    styles.primaryButton,
-                    isPrimaryButtonDisabled(track) &&
-                      styles.primaryButtonDisabled,
-                    track.status === 'completed' &&
-                      styles.primaryButtonCompleted,
-                  ]}
-                  disabled={isPrimaryButtonDisabled(track)}
-                  onPress={() => handlePrimaryPress(track)}
-                >
-                  <Text
-                    style={[
-                      styles.primaryButtonText,
-                      isPrimaryButtonDisabled(track) &&
-                        styles.primaryButtonTextDisabled,
-                    ]}
-                  >
-                    {renderPrimaryButtonLabel(track)}
-                  </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={[
-                    styles.secondaryButton,
-                    track.status === 'locked' && styles.secondaryButtonDisabled,
-                  ]}
-                  disabled={track.status === 'locked'}
-                  onPress={() => handleDetailsPress(track)}
-                >
-                  <Text
-                    style={[
-                      styles.secondaryButtonText,
-                      track.status === 'locked' &&
-                        styles.secondaryButtonTextDisabled,
-                    ]}
-                  >
-                    Detalhes
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+              track={track}
+              onPrimaryPress={() => handlePrimaryPress(track)}
+              onDetailsPress={() => handleDetailsPress(track)}
+            />
           ))}
         </ScrollView>
 
@@ -482,7 +352,7 @@ export default function TrilhaScreen() {
         <Modal
           transparent
           visible={!!selectedTrack}
-          animationType='fade'
+          animationType="fade"
           onRequestClose={closeDetailsModal}
         >
           <Pressable style={styles.infoBackdrop} onPress={closeDetailsModal} />
@@ -498,9 +368,9 @@ export default function TrilhaScreen() {
                 >
                   <View style={styles.modalCloseIcon}>
                     <MaterialCommunityIcons
-                      name='close'
+                      name="close"
                       size={18}
-                      color='#7B6AFB'
+                      color="#7B6AFB"
                     />
                   </View>
                 </TouchableOpacity>
@@ -511,7 +381,7 @@ export default function TrilhaScreen() {
               {(() => {
                 const details =
                   TRACK_DETAILS[selectedTrack.id] ??
-                  TRACK_DETAILS['mindfulness-basic'];
+                  TRACK_DETAILS[FALLBACK_SESSION_TRACK_KEY];
 
                 return (
                   <>
@@ -567,7 +437,7 @@ export default function TrilhaScreen() {
         <Modal
           transparent
           visible={!!session}
-          animationType='fade'
+          animationType="fade"
           onRequestClose={closeSessionModal}
         >
           <Pressable style={styles.infoBackdrop} onPress={closeSessionModal} />
@@ -582,9 +452,9 @@ export default function TrilhaScreen() {
                 >
                   <View style={styles.modalCloseIcon}>
                     <MaterialCommunityIcons
-                      name='close'
+                      name="close"
                       size={18}
-                      color='#7B6AFB'
+                      color="#7B6AFB"
                     />
                   </View>
                 </TouchableOpacity>
@@ -602,17 +472,14 @@ export default function TrilhaScreen() {
                   <Text style={styles.sessionIconText}>{currentDay}</Text>
                 </LinearGradient>
 
-                {/* título: micro-hábito do dia atual da trilha 1 */}
                 <Text style={styles.sessionTitle}>
                   {currentDayData.microHabit}
                 </Text>
 
-                {/* duração: label definidinha no model ("5 min", "7 min", "—", etc.) */}
                 <Text style={styles.sessionDurationText}>
                   {currentDayData.durationLabel}
                 </Text>
 
-                {/* objetivo: frase curtinha da coluna “Objetivo” */}
                 <Text style={styles.sessionDescription}>
                   {currentDayData.goal}
                 </Text>
@@ -673,9 +540,9 @@ export default function TrilhaScreen() {
                     style={styles.sessionControlButton}
                   >
                     <MaterialCommunityIcons
-                      name='pause'
+                      name="pause"
                       size={22}
-                      color='#6C4FF6'
+                      color="#6C4FF6"
                     />
                   </LinearGradient>
                 </TouchableOpacity>
@@ -697,9 +564,9 @@ export default function TrilhaScreen() {
                     style={styles.sessionControlButton}
                   >
                     <MaterialCommunityIcons
-                      name='play'
+                      name="play"
                       size={22}
-                      color='#FFFFFF'
+                      color="#FFFFFF"
                     />
                   </LinearGradient>
                 </TouchableOpacity>
@@ -712,7 +579,7 @@ export default function TrilhaScreen() {
         <Modal
           transparent
           visible={!!selectedActivity}
-          animationType='fade'
+          animationType="fade"
           onRequestClose={() => setSelectedActivity(null)}
         >
           <Pressable
@@ -731,9 +598,9 @@ export default function TrilhaScreen() {
                 >
                   <View style={styles.modalCloseIcon}>
                     <MaterialCommunityIcons
-                      name='close'
+                      name="close"
                       size={18}
-                      color='#7B6AFB'
+                      color="#7B6AFB"
                     />
                   </View>
                 </TouchableOpacity>
@@ -770,7 +637,45 @@ export default function TrilhaScreen() {
           )}
         </Modal>
 
-        <Navbar />
+        {/* MODAL 4 – TELA DE CONCLUSÃO ("Parabéns!") */}
+        <Modal
+          transparent={false}
+          visible={showCompletion}
+          animationType="fade"
+          onRequestClose={handleCloseCompletion}
+        >
+          <SafeAreaView style={styles.completionSafe}>
+            <LinearGradient
+              colors={[theme.colors.gradientStart, theme.colors.gradientEnd]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0.9, y: 1 }}
+              style={styles.completionGradient}
+            >
+              <View style={styles.completionContent}>
+                <Text style={styles.completionTitle}>Parabéns !</Text>
+                <Text style={styles.completionSubtitle}>
+                  Você completou a atividade com sucesso!
+                </Text>
+
+                <Image
+                  // 🔽 AJUSTE o caminho desse require para o asset real do ornitorrinco
+                  source={require('@/assets/ornitorrinco-doutor.png')}
+                  style={styles.completionImage}
+                />
+
+                <TouchableOpacity
+                  style={styles.completionButton}
+                  onPress={handleCloseCompletion}
+                  activeOpacity={0.9}
+                >
+                  <Text style={styles.completionButtonText}>Voltar</Text>
+                </TouchableOpacity>
+              </View>
+
+              <Navbar />
+            </LinearGradient>
+          </SafeAreaView>
+        </Modal>
       </LinearGradient>
     </SafeAreaView>
   );

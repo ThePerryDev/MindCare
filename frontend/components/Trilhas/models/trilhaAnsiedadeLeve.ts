@@ -1,5 +1,8 @@
-// components/model/trilha/trilha-ansiedade-leve/index.ts
 import { TrilhaModel } from '../types';
+
+/**
+ * Trilha 1 – Ansiedade Leve / Foco no Presente
+ */
 
 export const trilhaAnsiedadeLeve: TrilhaModel = {
   id: 1,
@@ -19,7 +22,8 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
     },
     {
       day: 2,
-      microHabit: 'Lista de preocupações → reclassificar o que pode ser feito agora',
+      microHabit:
+        'Lista de preocupações → reclassificar o que pode ser feito agora',
       durationMinutes: 7,
       durationLabel: '7 min',
       goal: 'Criar clareza',
@@ -54,8 +58,7 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
     },
     {
       day: 7,
-      microHabit:
-        'Revisão da semana (humor antes/depois) + Parabéns',
+      microHabit: 'Revisão da semana (humor antes/depois) + Parabéns',
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Reforço positivo',
