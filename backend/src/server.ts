@@ -9,31 +9,21 @@ const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/mindcare';
 
 async function start() {
   try {
+    // 1. Conecta no Mongo usando a mesma lógica que já funcionava antes
     await connect(MONGO_URI);
-    // força bind na LAN tb
+
+    // 2. Garante que as trilhas sejam criadas/atualizadas
+    await ensureDefaultTrails();
+    console.log('[trails] trilhas padrão criadas/atualizadas com sucesso');
+
+    // 3. Sobe a API igual antes
     app.listen(PORT, '0.0.0.0', () =>
-      console.log(`Server ouvindo em http://192.168.18.20:${PORT}`)
+      console.log(`Server ouvindo em http://192.168.18.46:${PORT}`)
     );
   } catch (e) {
     console.error('Falha ao iniciar', e);
     process.exit(1);
   }
 }
-
-async function bootstrap() {
-  const mongoUri = process.env.MONGO_URI as string;
-  await connect(mongoUri);
-  await ensureDefaultTrails(); // <- garante trilhas toda inicialização
-
-  const port = process.env.PORT || 3000;
-  app.listen(port, () => {
-    console.log(`Server ouvindo em http://192.168.18.20:${port}`);
-  });
-}
-
-bootstrap().catch(err => {
-  console.error('[server] erro ao subir aplicação', err);
-  process.exit(1);
-});
 
 start();

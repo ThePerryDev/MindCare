@@ -1,5 +1,8 @@
+// src/controllers/trail.controller.ts
+
 import { Response } from 'express';
 import moment from 'moment-timezone';
+import mongoose from 'mongoose';
 import TrailModel from '../models/trail.model';
 import TrailLogModel from '../models/trail_log.model';
 import { AuthRequest } from '../security/auth.middleware';
@@ -12,10 +15,10 @@ function todayString() {
   return moment().tz(TZ).format('YYYY-MM-DD');
 }
 
-// GET /api/v1/trails
+// GET /api/v1/trails -> lista todas (ordenadas por trailId)
 export async function listTrails(_req: AuthRequest, res: Response) {
   try {
-    const trails = await TrailModel.find().sort({ nome: 1 });
+    const trails = await TrailModel.find().sort({ trailId: 1 });
     return res.status(200).json({ trails: trails.map(t => t.toJSON()) });
   } catch (err: any) {
     return res
@@ -24,26 +27,61 @@ export async function listTrails(_req: AuthRequest, res: Response) {
   }
 }
 
+// GET /api/v1/trails/id/:trailId  (busca por ID curto)
+export async function getTrailById(req: AuthRequest, res: Response) {
+  try {
+    const trailId = Number(req.params.trailId);
+    if (isNaN(trailId)) {
+      return res.status(400).json({ error: 'trailId deve ser um número' });
+    }
+
+    const trail = await TrailModel.findOne({ trailId });
+    if (!trail) {
+      return res.status(404).json({ error: 'trilha não encontrada' });
+    }
+
+    return res.status(200).json({ trail: trail.toJSON() });
+  } catch (err: any) {
+    return res
+      .status(500)
+      .json({ error: err.message || 'erro ao buscar trilha' });
+  }
+}
+
+// GET /api/v1/trails/obj/:id  (busca pelo ObjectId)
+export async function getTrailByObjectId(req: AuthRequest, res: Response) {
+  try {
+    const id = req.params.id;
+
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({ error: 'id inválido' });
+    }
+
+    const trail = await TrailModel.findById(id);
+    if (!trail) {
+      return res.status(404).json({ error: 'trilha não encontrada' });
+    }
+
+    return res.status(200).json({ trail: trail.toJSON() });
+  } catch (err: any) {
+    return res
+      .status(500)
+      .json({ error: err.message || 'erro ao buscar trilha' });
+  }
+}
+
 /**
  * POST /api/v1/trails/registro
- * Body:
- * {
- *   day?: 'YYYY-MM-DD'        // opcional, default = hoje
- *   trail_id: string,
- *   diaDaTrilha: number,      // 1..7
- *   sentimentoDisparador?: string (de preferência em FEELINGS)
- *   origemSentimento?: 'entrada' | 'saida' | 'bot' | 'manual'
- * }
+ * Registra um exercício concluído
  */
 export async function registrarExercicio(req: AuthRequest, res: Response) {
   try {
     const userId = req.user?.sub;
-    if (!userId) {
-      return res.status(401).json({ error: 'não autenticado' });
-    }
+    if (!userId) return res.status(401).json({ error: 'não autenticado' });
 
     const {
       day,
+      trailId,
       trail_id,
       diaDaTrilha,
       sentimentoDisparador,
@@ -53,23 +91,40 @@ export async function registrarExercicio(req: AuthRequest, res: Response) {
     const dayStr =
       day && moment(day, 'YYYY-MM-DD', true).isValid() ? day : todayString();
 
-    if (!trail_id) {
-      return res.status(400).json({ error: 'trail_id é obrigatório' });
-    }
-    if (!diaDaTrilha || diaDaTrilha < 1 || diaDaTrilha > 7) {
-      return res
-        .status(400)
-        .json({ error: 'diaDaTrilha deve ser um número entre 1 e 7' });
+    if (!trailId && !trail_id)
+      return res.status(400).json({ error: 'informe trailId ou trail_id' });
+
+    if (!diaDaTrilha || diaDaTrilha < 1 || diaDaTrilha > 7)
+      return res.status(400).json({ error: 'diaDaTrilha deve ser 1..7' });
+
+    let trailObjectId: mongoose.Types.ObjectId | null = null;
+
+    if (typeof trailId === 'number') {
+      const t = await TrailModel.findOne({ trailId }).select('_id');
+      if (!t)
+        return res
+          .status(404)
+          .json({ error: `trilha trailId=${trailId} não encontrada` });
+      trailObjectId = t._id as mongoose.Types.ObjectId;
+    } else if (typeof trail_id === 'string') {
+      if (!mongoose.isValidObjectId(trail_id))
+        return res.status(400).json({ error: 'trail_id inválido' });
+
+      const t = await TrailModel.findById(trail_id).select('_id');
+      if (!t)
+        return res
+          .status(404)
+          .json({ error: `trilha id=${trail_id} não encontrada` });
+      trailObjectId = t._id as mongoose.Types.ObjectId;
     }
 
-    // valida sentimento, se vier um dos fixos
-    let sentimentoVal: string | undefined = sentimentoDisparador;
+    let sentimentoVal = sentimentoDisparador;
     if (sentimentoDisparador && FEELINGS.includes(sentimentoDisparador)) {
       sentimentoVal = sentimentoDisparador;
     }
 
     const exec = {
-      trail_id,
+      trail_id: trailObjectId!,
       diaDaTrilha,
       sentimentoDisparador: sentimentoVal,
       origemSentimento: origemSentimento || 'bot',
@@ -93,28 +148,15 @@ export async function registrarExercicio(req: AuthRequest, res: Response) {
   }
 }
 
-/**
- * GET /api/v1/trails/stats?period=day|week|month|year|all
- * Retorna:
- * {
- *   period: 'day' | ...,
- *   inicio: 'YYYY-MM-DD' | null,
- *   fim: 'YYYY-MM-DD' | null,
- *   totalExercicios: number,
- *   totalTrilhas: number, // trilhas distintas
- *   porTrilha: [{ trail_id, totalExercicios }],
- *   porSentimento: [{ sentimentoDisparador, totalExercicios }]
- * }
- */
+// GET /api/v1/trails/stats
 export async function stats(req: AuthRequest, res: Response) {
   try {
     const userId = req.user?.sub;
-    if (!userId) {
-      return res.status(401).json({ error: 'não autenticado' });
-    }
+    if (!userId) return res.status(401).json({ error: 'não autenticado' });
 
     const period = (req.query.period as string) || 'all';
     const today = moment().tz(TZ);
+
     let inicio: moment.Moment | null = null;
     let fim: moment.Moment | null = today.clone().endOf('day');
 
@@ -135,10 +177,9 @@ export async function stats(req: AuthRequest, res: Response) {
       default:
         inicio = null;
         fim = null;
-        break;
     }
 
-    const match: any = { user_id: userId };
+    const match: any = { user_id: new mongoose.Types.ObjectId(userId) };
     if (inicio && fim) {
       match.day = {
         $gte: inicio.format('YYYY-MM-DD'),
@@ -156,9 +197,7 @@ export async function stats(req: AuthRequest, res: Response) {
               $group: {
                 _id: null,
                 totalExercicios: { $sum: 1 },
-                trilhasDistintas: {
-                  $addToSet: '$exercicios.trail_id',
-                },
+                trilhasDistintas: { $addToSet: '$exercicios.trail_id' },
               },
             },
           ],
@@ -184,23 +223,20 @@ export async function stats(req: AuthRequest, res: Response) {
 
     const result = await TrailLogModel.aggregate(pipeline);
 
-    const geral = result[0]?.geral?.[0];
-    const totalExercicios = geral?.totalExercicios || 0;
-    const totalTrilhas = geral?.trilhasDistintas
+    const geral = result[0]?.geral?.[0] || {};
+    const totalExercicios = geral.totalExercicios || 0;
+    const totalTrilhas = geral.trilhasDistintas
       ? geral.trilhasDistintas.length
       : 0;
 
-    const porTrilha = result[0]?.porTrilha || [];
-    const porSentimento = result[0]?.porSentimento || [];
-
     return res.status(200).json({
       period,
-      inicio: inicio ? inicio.format('YYYY-MM-DD') : null,
-      fim: fim ? fim.format('YYYY-MM-DD') : null,
+      inicio: inicio?.format('YYYY-MM-DD') || null,
+      fim: fim?.format('YYYY-MM-DD') || null,
       totalExercicios,
       totalTrilhas,
-      porTrilha,
-      porSentimento,
+      porTrilha: result[0]?.porTrilha || [],
+      porSentimento: result[0]?.porSentimento || [],
     });
   } catch (err: any) {
     return res

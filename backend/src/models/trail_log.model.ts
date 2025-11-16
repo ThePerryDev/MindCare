@@ -1,3 +1,5 @@
+// src/models/trail_log.model.ts
+
 import mongoose, { Schema, Document, Types } from 'mongoose';
 import { FeelingValue } from './feeling.model';
 

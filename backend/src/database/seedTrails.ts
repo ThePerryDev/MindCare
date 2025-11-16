@@ -1,10 +1,10 @@
 // src/database/seedTrails.ts
-import TrailModel, { TrailCode, ITrail } from '../models/trail.model';
+
+import TrailModel, { TrailCode } from '../models/trail.model';
 import { FeelingValue } from '../models/feeling.model';
 
-type TrailSeed = Omit<ITrail, 'id' | '_id' | 'createdAt' | 'updatedAt'>;
-
-const TRAILS_SEED: {
+type SeedTrail = {
+  trailId: number;
   code: TrailCode;
   nome: string;
   descricao?: string;
@@ -16,8 +16,11 @@ const TRAILS_SEED: {
     duracaoMinutos?: number;
     objetivo?: string;
   }[];
-}[] = [
+};
+
+const TRAILS_SEED: SeedTrail[] = [
   {
+    trailId: 1,
     code: 'TRILHA_ANSIEDADE_LEVE',
     nome: 'Trilha 1 - Ansiedade Leve / Foco no Presente',
     sentimentosRecomendados: ['Irritado', 'Neutro', 'Triste', 'Muito Triste'],
@@ -68,6 +71,7 @@ const TRAILS_SEED: {
     ],
   },
   {
+    trailId: 2,
     code: 'TRILHA_ESTRESSE_TRABALHO',
     nome: 'Trilha 2 - Estresse no Trabalho / Estudo',
     sentimentosRecomendados: ['Irritado', 'Triste', 'Muito Triste', 'Neutro'],
@@ -117,6 +121,7 @@ const TRAILS_SEED: {
     ],
   },
   {
+    trailId: 3,
     code: 'TRILHA_SONO_RELAX',
     nome: 'Trilha 3 - Sono e Relaxamento',
     sentimentosRecomendados: ['Triste', 'Muito Triste', 'Neutro'],
@@ -165,6 +170,7 @@ const TRAILS_SEED: {
     ],
   },
   {
+    trailId: 4,
     code: 'TRILHA_HUMOR_POSITIVO',
     nome: 'Trilha 4 - Humor Positivo e Motivação',
     sentimentosRecomendados: ['Muito Feliz', 'Neutro'],
@@ -213,113 +219,52 @@ const TRAILS_SEED: {
     ],
   },
   {
+    trailId: 5,
     code: 'TRILHA_MUITO_FELIZ',
     nome: 'Trilha 5 - Muito Feliz',
     sentimentosRecomendados: ['Muito Feliz'],
     dias: [
-      {
-        ordem: 1,
-        titulo: 'Escrever 3 coisas pelas quais é grato',
-      },
-      {
-        ordem: 2,
-        titulo: 'Compartilhar uma mensagem positiva com alguém',
-      },
-      {
-        ordem: 3,
-        titulo: 'Respiração profunda consciente',
-        duracaoMinutos: 5,
-      },
-      {
-        ordem: 4,
-        titulo: 'Caminhar ao ar livre ouvindo música animada',
-      },
-      {
-        ordem: 5,
-        titulo: 'Registrar em diário um momento marcante do dia',
-      },
-      {
-        ordem: 6,
-        titulo: 'Alongamento leve',
-      },
-      {
-        ordem: 7,
-        titulo: 'Ouvir música favorita e cantar junto',
-      },
+      { ordem: 1, titulo: 'Escrever 3 coisas pelas quais é grato' },
+      { ordem: 2, titulo: 'Compartilhar uma mensagem positiva com alguém' },
+      { ordem: 3, titulo: 'Respiração profunda consciente', duracaoMinutos: 5 },
+      { ordem: 4, titulo: 'Caminhar ao ar livre ouvindo música animada' },
+      { ordem: 5, titulo: 'Registrar em diário um momento marcante do dia' },
+      { ordem: 6, titulo: 'Alongamento leve' },
+      { ordem: 7, titulo: 'Ouvir música favorita e cantar junto' },
     ],
   },
   {
+    trailId: 6,
     code: 'TRILHA_NEUTRO',
     nome: 'Trilha 6 - Neutro',
     sentimentosRecomendados: ['Neutro'],
     dias: [
-      {
-        ordem: 1,
-        titulo: 'Meditação guiada',
-        duracaoMinutos: 5,
-      },
-      {
-        ordem: 2,
-        titulo: 'Escrever como foi o dia e pontos bons',
-      },
-      {
-        ordem: 3,
-        titulo: 'Ouvir música calma',
-      },
-      {
-        ordem: 4,
-        titulo: 'Tomar chá/café observando aromas e sabores',
-      },
-      {
-        ordem: 5,
-        titulo: 'Respiração quadrada (4-4-4-4)',
-      },
-      {
-        ordem: 6,
-        titulo: 'Caminhar devagar observando o ambiente',
-      },
-      {
-        ordem: 7,
-        titulo: 'Listar uma meta pequena para a semana',
-      },
+      { ordem: 1, titulo: 'Meditação guiada', duracaoMinutos: 5 },
+      { ordem: 2, titulo: 'Escrever como foi o dia e pontos bons' },
+      { ordem: 3, titulo: 'Ouvir música calma' },
+      { ordem: 4, titulo: 'Tomar chá/café observando aromas e sabores' },
+      { ordem: 5, titulo: 'Respiração quadrada (4-4-4-4)' },
+      { ordem: 6, titulo: 'Caminhar devagar observando o ambiente' },
+      { ordem: 7, titulo: 'Listar uma meta pequena para a semana' },
     ],
   },
   {
+    trailId: 7,
     code: 'TRILHA_TRISTE',
     nome: 'Trilha 7 - Triste',
     sentimentosRecomendados: ['Triste'],
     dias: [
-      {
-        ordem: 1,
-        titulo: 'Escrita livre sobre o que sente (sem julgamentos)',
-      },
-      {
-        ordem: 2,
-        titulo: 'Respiração 4-7-8',
-      },
-      {
-        ordem: 3,
-        titulo: 'Ouvir música calma e relaxante',
-      },
-      {
-        ordem: 4,
-        titulo: 'Lista de coisas que já superou no passado',
-      },
-      {
-        ordem: 5,
-        titulo: 'Alongamento focado em ombros e peito',
-      },
-      {
-        ordem: 6,
-        titulo: 'Enviar mensagem para alguém de confiança',
-      },
-      {
-        ordem: 7,
-        titulo: 'Assistir a vídeo curto engraçado ou inspirador',
-      },
+      { ordem: 1, titulo: 'Escrita livre sobre o que sente (sem julgamentos)' },
+      { ordem: 2, titulo: 'Respiração 4-7-8' },
+      { ordem: 3, titulo: 'Ouvir música calma e relaxante' },
+      { ordem: 4, titulo: 'Lista de coisas que já superou no passado' },
+      { ordem: 5, titulo: 'Alongamento focado em ombros e peito' },
+      { ordem: 6, titulo: 'Enviar mensagem para alguém de confiança' },
+      { ordem: 7, titulo: 'Assistir a vídeo curto engraçado ou inspirador' },
     ],
   },
   {
+    trailId: 8,
     code: 'TRILHA_IRRITADO',
     nome: 'Trilha 8 - Irritado',
     sentimentosRecomendados: ['Irritado'],
@@ -338,18 +283,9 @@ const TRAILS_SEED: {
         titulo:
           "Técnica do 'tempo fora': fechar os olhos e respirar 10 vezes fundo",
       },
-      {
-        ordem: 4,
-        titulo: 'Alongamento focado em pescoço e mandíbula',
-      },
-      {
-        ordem: 5,
-        titulo: 'Ouvir música rítmica (dançar se possível)',
-      },
-      {
-        ordem: 6,
-        titulo: 'Caminhada curta',
-      },
+      { ordem: 4, titulo: 'Alongamento focado em pescoço e mandíbula' },
+      { ordem: 5, titulo: 'Ouvir música rítmica (dançar se possível)' },
+      { ordem: 6, titulo: 'Caminhada curta' },
       {
         ordem: 7,
         titulo: 'Banho consciente, focando na sensação da água no corpo',
@@ -357,14 +293,12 @@ const TRAILS_SEED: {
     ],
   },
   {
+    trailId: 9,
     code: 'TRILHA_MUITO_TRISTE',
     nome: 'Trilha 9 - Muito Triste',
     sentimentosRecomendados: ['Muito Triste'],
     dias: [
-      {
-        ordem: 1,
-        titulo: 'Respiração lenta com mão no coração e na barriga',
-      },
+      { ordem: 1, titulo: 'Respiração lenta com mão no coração e na barriga' },
       {
         ordem: 2,
         titulo:
@@ -374,22 +308,10 @@ const TRAILS_SEED: {
         ordem: 3,
         titulo: 'Ouvir meditação guiada sobre acolhimento emocional',
       },
-      {
-        ordem: 4,
-        titulo: 'Exercício leve (yoga suave ou alongamento)',
-      },
-      {
-        ordem: 5,
-        titulo: 'Relembrar memória boa olhando fotos/vídeos',
-      },
-      {
-        ordem: 6,
-        titulo: 'Tomar um pouco de sol e observar o ambiente',
-      },
-      {
-        ordem: 7,
-        titulo: 'Conectar-se com alguém (ligação ou mensagem)',
-      },
+      { ordem: 4, titulo: 'Exercício leve (yoga suave ou alongamento)' },
+      { ordem: 5, titulo: 'Relembrar memória boa olhando fotos/vídeos' },
+      { ordem: 6, titulo: 'Tomar um pouco de sol e observar o ambiente' },
+      { ordem: 7, titulo: 'Conectar-se com alguém (ligação ou mensagem)' },
     ],
   },
 ];
@@ -397,8 +319,8 @@ const TRAILS_SEED: {
 export async function ensureDefaultTrails() {
   for (const trail of TRAILS_SEED) {
     await TrailModel.findOneAndUpdate(
-      { code: trail.code },
-      { $set: trail },
+      { code: trail.code }, // chave estável de seed
+      { $set: trail }, // inclui/atualiza trailId também
       { upsert: true, new: true }
     );
   }

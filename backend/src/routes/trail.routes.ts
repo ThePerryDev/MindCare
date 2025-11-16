@@ -1,17 +1,23 @@
+// src/routes/trail.routes.ts
+
 import { Router } from 'express';
 import { authGuard } from '../security/auth.middleware';
 import {
   listTrails,
+  getTrailById,
+  getTrailByObjectId,
   registrarExercicio,
   stats,
 } from '../controllers/trail.controller';
 
 const router = Router();
 
-router.use(authGuard); // todas exigem usuário logado
+router.use(authGuard);
 
-router.get('/', listTrails); // GET /api/v1/trails  -> lista definições das trilhas
-router.post('/registro', registrarExercicio); // POST /api/v1/trails/registro -> registra 1 exercício concluído
-router.get('/stats', stats); // GET /api/v1/trails/stats?period=day|week|month|year|all
+router.get('/', listTrails);
+router.get('/id/:trailId', getTrailById);
+router.get('/obj/:id', getTrailByObjectId);
+router.post('/registro', registrarExercicio);
+router.get('/stats', stats);
 
 export default router;

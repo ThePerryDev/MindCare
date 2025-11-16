@@ -1,4 +1,6 @@
-import mongoose, { Schema, Document, Types } from 'mongoose';
+// src/models/trail.model.ts
+
+import mongoose, { Schema, Document } from 'mongoose';
 import { FEELINGS, FeelingValue } from './feeling.model';
 
 export type TrailCode =
@@ -21,11 +23,12 @@ export interface ITrailStep {
 }
 
 export interface ITrail extends Document {
+  trailId: number; // ID curto e estável para uso no app (1..9)
   code: TrailCode; // chave estável pra seed
   nome: string; // "Trilha 1 - Ansiedade Leve / Foco no Presente"
   descricao?: string;
   dias: ITrailStep[]; // 7 micro-hábitos
-  sentimentosRecomendados: FeelingValue[]; // ligação com FEELINGS (Muito Feliz, etc.)
+  sentimentosRecomendados: FeelingValue[]; // ligação com FEELINGS
   createdAt: Date;
   updatedAt: Date;
 }
@@ -43,6 +46,12 @@ const TrailStepSchema = new Schema<ITrailStep>(
 
 const TrailSchema = new Schema<ITrail>(
   {
+    trailId: {
+      type: Number,
+      required: true,
+      unique: true,
+      index: true,
+    },
     code: {
       type: String,
       required: true,
