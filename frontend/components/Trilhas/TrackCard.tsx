@@ -1,4 +1,3 @@
-// components/Trilhas/TrackCard.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from '@/app/screens/TrilhaScreen/styles';
@@ -26,15 +25,15 @@ type TrackCardProps = {
 function renderPrimaryButtonLabel(status: TrackStatus) {
   switch (status) {
     case 'completed':
-      return 'Concluída';
+      return 'Concluído';
     case 'in_progress':
       return 'Continuar';
     case 'not_started':
-      return 'Iniciar';
+      return 'Começar';
     case 'locked':
       return 'Bloqueado';
     default:
-      return 'Iniciar';
+      return 'Começar';
   }
 }
 
@@ -89,6 +88,12 @@ const TrackCard: React.FC<TrackCardProps> = ({
   const isPrimaryButtonDisabled = track.status === 'locked';
   const primaryLabel = renderPrimaryButtonLabel(track.status);
 
+  const isCompleted = track.status === 'completed';
+  const isLocked = track.status === 'locked';
+
+  const progressLabel =
+    isLocked ? 'Bloqueada' : isCompleted ? 'Trilha concluída' : 'Progresso';
+
   return (
     <View
       style={[
@@ -96,7 +101,6 @@ const TrackCard: React.FC<TrackCardProps> = ({
         { backgroundColor: track.backgroundColor },
       ]}
     >
-      {/* Header do card */}
       <View style={styles.trackHeader}>
         <View style={styles.trackIcon} />
         <View style={styles.trackHeaderText}>
@@ -110,30 +114,25 @@ const TrackCard: React.FC<TrackCardProps> = ({
         </View>
       </View>
 
-      {/* Progresso */}
       <View style={styles.progressRow}>
-        <Text style={styles.progressLabel}>
-          {track.status === 'locked' ? 'Bloqueada' : 'Progresso'}
-        </Text>
+        <Text style={styles.progressLabel}>{progressLabel}</Text>
         <Text style={styles.progressPercent}>
           {track.progressPercent}%
         </Text>
       </View>
 
-      {/* Etapas */}
       <View style={styles.stepsRow}>
         {Array.from({ length: track.totalSteps }).map((_, i) =>
           renderStep(track, i)
         )}
       </View>
 
-      {/* Botões */}
       <View style={styles.trackActions}>
         <TouchableOpacity
           style={[
             styles.primaryButton,
-            isPrimaryButtonDisabled && styles.primaryButtonDisabled,
-            track.status === 'completed' && styles.primaryButtonCompleted,
+            isLocked && styles.primaryButtonDisabled,
+            isCompleted && styles.primaryButtonCompleted,
           ]}
           disabled={isPrimaryButtonDisabled}
           onPress={onPrimaryPress}
@@ -141,7 +140,7 @@ const TrackCard: React.FC<TrackCardProps> = ({
           <Text
             style={[
               styles.primaryButtonText,
-              isPrimaryButtonDisabled && styles.primaryButtonTextDisabled,
+              isLocked && styles.primaryButtonTextDisabled,
             ]}
           >
             {primaryLabel}
@@ -151,16 +150,15 @@ const TrackCard: React.FC<TrackCardProps> = ({
         <TouchableOpacity
           style={[
             styles.secondaryButton,
-            track.status === 'locked' && styles.secondaryButtonDisabled,
+            isLocked && styles.secondaryButtonDisabled,
           ]}
-          disabled={track.status === 'locked'}
+          disabled={isLocked}
           onPress={onDetailsPress}
         >
           <Text
             style={[
               styles.secondaryButtonText,
-              track.status === 'locked' &&
-                styles.secondaryButtonTextDisabled,
+              isLocked && styles.secondaryButtonTextDisabled,
             ]}
           >
             Detalhes

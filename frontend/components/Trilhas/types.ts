@@ -12,6 +12,7 @@ export type TrilhaDay = {
   /** Objetivo daquele micro-hábito */
   goal: string;
   benefits: [ string, string, string ];
+  howTo: string[]
 };
 
 export type TrilhaModel = {

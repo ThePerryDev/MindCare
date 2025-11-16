@@ -23,6 +23,14 @@ export const trilhaAlivioEstresse: TrilhaModel = {
         'Ajuda a desacelerar os pensamentos',
         'Promove sensação de descanso mental',
       ],
+      howTo: [
+        'Coloque uma música suave e mantenha o volume baixo.',
+        'Sente-se ou deite-se confortavelmente.',
+        'Inspire profundamente pelo nariz por 4 segundos.',
+        'Expire lentamente pela boca por 6 segundos.',
+        'Mantenha os ombros relaxados durante todo o exercício.',
+        'Repita o ciclo até completar o tempo.'
+      ],
     },
     {
       day: 2,
@@ -34,6 +42,14 @@ export const trilhaAlivioEstresse: TrilhaModel = {
         'Alivia dores causadas por má postura e estresse',
         'Melhora mobilidade da coluna',
         'Reduz sensação de peso nas costas',
+      ],
+      howTo: [
+        'Gire o pescoço lentamente para um lado e mantenha por alguns segundos.',
+        'Repita para o outro lado sem forçar.',
+        'Eleve os ombros até perto das orelhas e solte devagar.',
+        'Faça rotações lentas dos ombros para frente e para trás.',
+        'Estique levemente a coluna inclinando o tronco para os lados.',
+        'Respire devagar durante todo o alongamento.'
       ],
     },
     {
@@ -48,6 +64,13 @@ export const trilhaAlivioEstresse: TrilhaModel = {
         'Diminui sobrecarga mental',
         'Ajuda a definir próximos passos de forma mais calma',
       ],
+      howTo: [
+        'Pegue papel ou bloco de notas e escreva todas as preocupações que vierem à mente.',
+        'Leia a lista e marque o que pode ser resolvido agora.',
+        'Classifique o restante entre: “agendar” ou “soltar”.',
+        'Tome uma ação simples relacionada a uma preocupação que pode ser resolvida.',
+        'Guarde as anotações e finalize respirando lentamente.'
+      ],
     },
     {
       day: 4,
@@ -59,6 +82,14 @@ export const trilhaAlivioEstresse: TrilhaModel = {
         'Alterna tensão e relaxamento de grupos musculares',
         'Ajuda o corpo a reconhecer estados de relaxamento',
         'Reduz sintomas físicos do estresse',
+      ],
+      howTo: [
+        'Sente-se ou deite-se confortavelmente.',
+        'Comece pelos pés: contraia por 3 segundos e relaxe.',
+        'Suba para as pernas, glúteos, barriga e peito repetindo o processo.',
+        'Faça o mesmo com braços, mãos, ombros e rosto.',
+        'Mantenha a respiração calma e profunda.',
+        'Sinta o corpo ficando mais leve conforme vai relaxando.'
       ],
     },
     {
@@ -72,6 +103,14 @@ export const trilhaAlivioEstresse: TrilhaModel = {
         'Reduz sensação de ameaça constante',
         'Aumenta sensação de proteção emocional',
       ],
+      howTo: [
+        'Feche os olhos e respire fundo algumas vezes.',
+        'Imagine um lugar onde você se sente completamente seguro(a).',
+        'Observe mentalmente detalhes como luz, cores, texturas e sons.',
+        'Perceba como seu corpo responde a essa imagem.',
+        'Fique alguns instantes nesse lugar, respirando devagar.',
+        'Finalize trazendo essa sensação de segurança de volta ao momento presente.'
+      ],
     },
     {
       day: 6,
@@ -83,6 +122,14 @@ export const trilhaAlivioEstresse: TrilhaModel = {
         'Une movimento corporal e atenção plena',
         'Reduz estresse acumulado no fim do dia',
         'Melhora disposição física e mental',
+      ],
+      howTo: [
+        'Comece caminhando em ritmo leve e constante.',
+        'Inspire enquanto dá dois passos e expire nos próximos dois.',
+        'Observe os pés tocando o chão e o movimento dos braços.',
+        'Desvie a atenção gentilmente sempre que surgirem pensamentos.',
+        'Mantenha foco na respiração e no ritmo da caminhada.',
+        'Finalize diminuindo o ritmo e respirando fundo.'
       ],
     },
     {
@@ -96,6 +143,13 @@ export const trilhaAlivioEstresse: TrilhaModel = {
         'Ajuda a perceber gatilhos e respostas mais saudáveis',
         'Fortalece repertório de enfrentamento do estresse',
         'Cria plano de melhoria contínua',
+      ],
+      howTo: [
+        'Pense nas situações que mais geraram estresse durante a semana.',
+        'Observe como você reagiu em cada uma delas.',
+        'Identifique estratégias que funcionaram bem para você.',
+        'Anote algo que deseja melhorar ou repetir na próxima semana.',
+        'Respire fundo e reconheça sua evolução até aqui.'
       ],
     },
   ],

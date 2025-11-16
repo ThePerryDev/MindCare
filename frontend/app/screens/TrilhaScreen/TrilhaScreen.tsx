@@ -43,20 +43,20 @@ async function getCurrentDay(trackKey: string): Promise<number> {
   try {
     const raw = await AsyncStorage.getItem(PROGRESS_PREFIX + trackKey);
     const n = Number(raw);
-    return Number.isFinite(n) && n >= 1 && n <= 7 ? n : 1;
+    return Number.isFinite(n) && n >= 1 && n <= 8 ? n : 1;
   } catch {
     return 1;
   }
 }
 
 async function setCurrentDay(trackKey: string, day: number): Promise<void> {
-  const safeDay = Math.max(1, Math.min(7, day));
+  const safeDay = Math.max(1, Math.min(8, day));
   await AsyncStorage.setItem(PROGRESS_PREFIX + trackKey, String(safeDay));
 }
 
 async function advanceDay(trackKey: string): Promise<number> {
   const current = await getCurrentDay(trackKey);
-  const next = Math.min(current + 1, 7);
+  const next = current + 1;
   await setCurrentDay(trackKey, next);
   return next;
 }
@@ -85,19 +85,13 @@ type Session = {
   totalSeconds: number;
 };
 
-/**
- * Define a cor de fundo do card de acordo com o status da trilha
- */
 function getTrackBackgroundColor(status: Track['status']): string {
   switch (status) {
     case 'completed':
-      // #10B981 com ~20% de transparência
-      return 'rgba(16, 185, 129, 0.2)';
+      return 'rgba(16, 185, 129, 0.2)'; // verde claro
     case 'in_progress':
-      // #F59E0B com ~20% de transparência
-      return 'rgba(245, 158, 11, 0.2)';
+      return 'rgba(245, 158, 11, 0.2)'; // amarelo claro
     case 'not_started':
-      // #E5E7EB opaco
       return '#E5E7EB';
     case 'locked':
     default:
@@ -105,9 +99,6 @@ function getTrackBackgroundColor(status: Track['status']): string {
   }
 }
 
-/**
- * Lista de trilhas vindas dos models
- */
 const TRILHAS: TrilhaModel[] = [
   trilhaAnsiedadeLeve,
   trilhaEstresseTrabalho,
@@ -126,9 +117,6 @@ const TRILHAS: TrilhaModel[] = [
 
 const DEFAULT_TRILHA = trilhaAnsiedadeLeve;
 
-/**
- * Extrai minutos da label do dia ou usa minMinutes / fallback
- */
 function getMinutesFromDay(trilha: TrilhaModel, dayIndex: number): number {
   const day = trilha.days[dayIndex];
   if (day?.durationLabel) {
@@ -143,7 +131,7 @@ function getMinutesFromDay(trilha: TrilhaModel, dayIndex: number): number {
     return trilha.minMinutes;
   }
 
-  return 5; // fallback
+  return 5;
 }
 
 function formatTime(seconds: number): string {
@@ -166,27 +154,32 @@ export default function TrilhaScreen() {
   const [remainingSeconds, setRemainingSeconds] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showCompletion, setShowCompletion] = useState(false);
+  const [hasFinished, setHasFinished] = useState(false); // 👈 controle de término
 
-  /**
-   * Recalcula os TRACKS lendo o currentDay de cada trilha no AsyncStorage
-   */
+  const [detailsShowStartButton, setDetailsShowStartButton] =
+    useState<boolean>(true);
+
   const refreshTracks = useCallback(async () => {
     const newTracks: Track[] = [];
 
     for (const trilha of TRILHAS) {
       const totalSteps = trilha.days.length || 1;
-      let day = 1;
+      let storedDay = 1;
+
       try {
-        day = await getCurrentDay(trilha.key);
+        storedDay = await getCurrentDay(trilha.key);
       } catch {
-        day = 1;
+        storedDay = 1;
       }
 
-      const currentStep = Math.max(1, Math.min(day, totalSteps));
-      const completedSteps = currentStep - 1;
+      let completedSteps = storedDay - 1;
+
+      if (completedSteps < 0) completedSteps = 0;
+      if (completedSteps > totalSteps) completedSteps = totalSteps;
 
       let status: Track['status'];
-      if (completedSteps <= 0) {
+
+      if (completedSteps === 0) {
         status = 'not_started';
       } else if (completedSteps >= totalSteps) {
         status = 'completed';
@@ -225,44 +218,40 @@ export default function TrilhaScreen() {
   }, [refreshTracks]);
 
   useEffect(() => {
-    if (!session || !isPlaying) return;
+    if (!session) return;
+    if (!isPlaying) return;
 
-    const id = setInterval(() => {
-      setRemainingSeconds(prev => {
-        if (prev <= 1) {
-          clearInterval(id);
+    if (remainingSeconds <= 0) {
+      setIsPlaying(false);
+      setHasFinished(true);
+      return;
+    }
 
-          if (session.trackId) {
-            advanceDay(session.trackId)
-              .then(day => {
-                setCurrentDay(day);
-                refreshTracks(); // atualiza cards depois de avançar o dia
-              })
-              .catch(() => {});
-          }
-
-          setIsPlaying(false);
-          setShowCompletion(true);
-
-          return 0;
-        }
-
-        return prev - 1;
-      });
+    const timeoutId = setTimeout(() => {
+      setRemainingSeconds(prev => prev - 1);
     }, 1000);
 
-    return () => clearInterval(id);
-  }, [session, isPlaying, refreshTracks]);
+    return () => clearTimeout(timeoutId);
+  }, [session, isPlaying, remainingSeconds]);
 
   const closeDetailsModal = () => setSelectedTrack(null);
 
   const handlePrimaryPress = (track: Track) => {
     if (track.status === 'locked') return;
+
+    if (track.status === 'completed') {
+      setShowCompletion(true);
+      return;
+    }
+
+    // Caso contrário, fluxo normal: abre modal de detalhes com botão "Iniciar Agora"
+    setDetailsShowStartButton(true);
     setSelectedTrack(track);
   };
 
   const handleDetailsPress = (track: Track) => {
     if (track.status === 'locked') return;
+    setDetailsShowStartButton(false);
     setSelectedTrack(track);
   };
 
@@ -278,21 +267,23 @@ export default function TrilhaScreen() {
         const dayData = trilha.days[dayIndex] ?? trilha.days[0];
 
         const minutes = getMinutesFromDay(trilha, dayIndex);
-        const totalSeconds = minutes * 60;
+        const safeMinutes =
+          Number.isFinite(minutes) && minutes > 0 ? minutes : 5;
+        const totalSeconds = safeMinutes * 60;
 
         const sessionData: Session = {
           trackId: trilha.key,
           dayLabel: `Dia ${safeDay}`,
           activityTitle: dayData?.microHabit ?? trilha.name,
-          minutes,
+          minutes: safeMinutes,
           description: dayData?.goal ?? '',
           activities: [
             {
               id: 'main',
               title: dayData?.microHabit ?? trilha.name,
-              subtitle: dayData?.durationLabel ?? `${minutes} min`,
+              subtitle: dayData?.durationLabel ?? `${safeMinutes} min`,
               description: dayData?.goal ?? '',
-              tips: [],
+              tips: dayData?.howTo ?? [],
             },
           ],
           totalSeconds,
@@ -302,28 +293,31 @@ export default function TrilhaScreen() {
         setSelectedActivity(null);
         setRemainingSeconds(sessionData.totalSeconds);
         setIsPlaying(true);
+        setHasFinished(false);
       })
       .catch(() => {
         const dayIndex = 0;
         const dayData = trilha.days[dayIndex];
         const minutes = getMinutesFromDay(trilha, dayIndex);
+        const safeMinutes =
+          Number.isFinite(minutes) && minutes > 0 ? minutes : 5;
 
         const sessionData: Session = {
           trackId: trilha.key,
           dayLabel: 'Dia 1',
           activityTitle: dayData?.microHabit ?? trilha.name,
-          minutes,
+          minutes: safeMinutes,
           description: dayData?.goal ?? '',
           activities: [
             {
               id: 'main',
               title: dayData?.microHabit ?? trilha.name,
-              subtitle: dayData?.durationLabel ?? `${minutes} min`,
+              subtitle: dayData?.durationLabel ?? `${safeMinutes} min`,
               description: dayData?.goal ?? '',
-              tips: [],
+              tips: dayData?.howTo ?? [],
             },
           ],
-          totalSeconds: minutes * 60,
+          totalSeconds: safeMinutes * 60,
         };
 
         setCurrentDay(1);
@@ -331,6 +325,7 @@ export default function TrilhaScreen() {
         setSelectedActivity(null);
         setRemainingSeconds(sessionData.totalSeconds);
         setIsPlaying(true);
+        setHasFinished(false);
       });
   };
 
@@ -339,6 +334,7 @@ export default function TrilhaScreen() {
     setIsPlaying(false);
     setRemainingSeconds(0);
     setSelectedActivity(null);
+    setHasFinished(false);
   };
 
   const handleCloseCompletion = () => {
@@ -346,6 +342,19 @@ export default function TrilhaScreen() {
     closeSessionModal();
   };
 
+  const handleCompleteActivity = async () => {
+    if (!session) return;
+
+    try {
+      const day = await advanceDay(session.trackId);
+      setCurrentDay(day);
+      await refreshTracks();
+    } catch {}
+
+    closeSessionModal();
+
+    setShowCompletion(true);
+  };
   const progress =
     session && session.totalSeconds > 0
       ? 1 - remainingSeconds / session.totalSeconds
@@ -370,7 +379,6 @@ export default function TrilhaScreen() {
         style={styles.bg}
       >
         <ScrollView contentContainerStyle={styles.content}>
-          {/* HEADER */}
           <View style={styles.header}>
             <TouchableOpacity
               style={styles.backButton}
@@ -386,7 +394,6 @@ export default function TrilhaScreen() {
             <Text style={styles.title}>Trilhas</Text>
           </View>
 
-          {/* LISTA DE TRILHAS */}
           {tracks.map(track => (
             <TrackCard
               key={track.id}
@@ -396,8 +403,7 @@ export default function TrilhaScreen() {
             />
           ))}
         </ScrollView>
-
-        {/* MODAL 1 – DETALHES DA TRILHA */}
+        <Navbar />
         <Modal
           transparent
           visible={!!selectedTrack}
@@ -405,12 +411,14 @@ export default function TrilhaScreen() {
           onRequestClose={closeDetailsModal}
         >
           <Pressable style={styles.infoBackdrop} onPress={closeDetailsModal} />
+
           {selectedTrack && (
             <View style={[styles.infoSheet, styles.modalCard]}>
               <View style={styles.modalTopRow}>
                 <Text style={styles.modalTrackTitle}>
                   {selectedTrack.title}
                 </Text>
+
                 <TouchableOpacity
                   onPress={closeDetailsModal}
                   hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
@@ -432,22 +440,24 @@ export default function TrilhaScreen() {
                   TRILHAS.find(t => t.key === selectedTrack.id) ??
                   DEFAULT_TRILHA;
 
-                // Pegamos o dia atual salvo no AsyncStorage
-                const currentDayIndex = Math.max(
+                const currentDayIndexForTrack = Math.max(
                   0,
                   Math.min(selectedTrack.completedSteps, trilha.days.length - 1)
                 );
 
-                // Pegamos os dados do dia atual
-                const currentDayData = trilha.days[currentDayIndex];
+                const currentDayDataForTrack =
+                  trilha.days[currentDayIndexForTrack];
 
                 const details: TrackDetails = {
-                  activityTitle: currentDayData?.microHabit ?? trilha.name,
+                  activityTitle:
+                    currentDayDataForTrack?.microHabit ?? trilha.name,
                   description:
-                    currentDayData?.goal ??
+                    currentDayDataForTrack?.goal ??
                     'Prática guiada para apoiar seu bem-estar nesta trilha.',
-                  benefits: currentDayData?.benefits ?? [],
+                  benefits: currentDayDataForTrack?.benefits ?? [],
                 };
+
+                const howToList = currentDayDataForTrack?.howTo ?? [];
 
                 return (
                   <>
@@ -475,37 +485,56 @@ export default function TrilhaScreen() {
                         ))}
                       </>
                     )}
+
+                    {!detailsShowStartButton && howToList.length > 0 && (
+                      <>
+                        <Text style={styles.modalBenefitsTitle}>
+                          Como realizar esta atividade:
+                        </Text>
+
+                        {howToList.map((step, index) => (
+                          <View
+                            key={`${step}-${index}`}
+                            style={styles.modalBenefitRow}
+                          >
+                            <Text style={styles.modalBenefitCheck}>•</Text>
+                            <Text style={styles.modalBenefitText}>{step}</Text>
+                          </View>
+                        ))}
+                      </>
+                    )}
                   </>
                 );
               })()}
 
-              <View style={styles.modalActionWrapper}>
-                <TouchableOpacity
-                  onPress={() => {
-                    if (!selectedTrack) return;
-                    const track = selectedTrack;
-                    closeDetailsModal();
-                    handleStartSession(track);
-                  }}
-                  activeOpacity={0.9}
-                >
-                  <LinearGradient
-                    colors={['#6C4FF6', '#9A4DFF']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={styles.modalActionButton}
+              {detailsShowStartButton && (
+                <View style={styles.modalActionWrapper}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (!selectedTrack) return;
+                      const track = selectedTrack;
+                      closeDetailsModal();
+                      handleStartSession(track);
+                    }}
+                    activeOpacity={0.9}
                   >
-                    <Text style={styles.modalActionButtonText}>
-                      Iniciar Agora
-                    </Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-              </View>
+                    <LinearGradient
+                      colors={['#6C4FF6', '#9A4DFF']}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                      style={styles.modalActionButton}
+                    >
+                      <Text style={styles.modalActionButtonText}>
+                        Iniciar Agora
+                      </Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
           )}
         </Modal>
 
-        {/* MODAL 2 – SESSÃO EM ANDAMENTO COM TIMER */}
         <Modal
           transparent
           visible={!!session}
@@ -513,6 +542,7 @@ export default function TrilhaScreen() {
           onRequestClose={closeSessionModal}
         >
           <Pressable style={styles.infoBackdrop} onPress={closeSessionModal} />
+
           {session && (
             <View style={[styles.infoSheet, styles.sessionModalCard]}>
               <View style={styles.sessionTopRow}>
@@ -583,7 +613,9 @@ export default function TrilhaScreen() {
 
               <View style={styles.sessionStatusRow}>
                 <Text style={styles.sessionStatusLabel}>
-                  Atividade em andamento
+                  {hasFinished
+                    ? 'Atividade concluída'
+                    : 'Atividade em andamento'}
                 </Text>
                 <Text style={styles.sessionStatusTime}>
                   {formatTime(remainingSeconds)}
@@ -602,7 +634,7 @@ export default function TrilhaScreen() {
               <View style={styles.sessionControlsRow}>
                 <TouchableOpacity
                   onPress={() => setIsPlaying(false)}
-                  disabled={!session || remainingSeconds === 0}
+                  disabled={!session || remainingSeconds === 0 || hasFinished}
                   activeOpacity={0.8}
                 >
                   <LinearGradient
@@ -622,11 +654,13 @@ export default function TrilhaScreen() {
                 <TouchableOpacity
                   onPress={() => {
                     if (!session) return;
+                    if (hasFinished) return;
                     if (remainingSeconds === 0) {
                       setRemainingSeconds(session.totalSeconds);
                     }
                     setIsPlaying(true);
                   }}
+                  disabled={hasFinished}
                   activeOpacity={0.8}
                 >
                   <LinearGradient
@@ -643,11 +677,29 @@ export default function TrilhaScreen() {
                   </LinearGradient>
                 </TouchableOpacity>
               </View>
+
+              {hasFinished && (
+                <View style={styles.sessionCompleteWrapper}>
+                  <TouchableOpacity
+                    onPress={handleCompleteActivity}
+                    activeOpacity={0.9}
+                  >
+                    <LinearGradient
+                      colors={['#10B981', '#059669']}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                      style={styles.sessionCompleteButton}
+                    >
+                      <Text style={styles.sessionCompleteButtonText}>
+                        Concluir atividade
+                      </Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
           )}
         </Modal>
-
-        {/* MODAL 3 – DETALHES DO EXERCÍCIO */}
         <Modal
           transparent
           visible={!!selectedActivity}
@@ -658,12 +710,14 @@ export default function TrilhaScreen() {
             style={styles.infoBackdrop}
             onPress={() => setSelectedActivity(null)}
           />
+
           {selectedActivity && (
             <View style={[styles.infoSheet, styles.activityModalCard]}>
               <View style={styles.activityModalTopRow}>
                 <Text style={styles.activityModalTitle}>
                   {selectedActivity.title}
                 </Text>
+
                 <TouchableOpacity
                   onPress={() => setSelectedActivity(null)}
                   hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
@@ -697,6 +751,7 @@ export default function TrilhaScreen() {
                   <Text style={styles.activityModalSectionTitle}>
                     Passo a passo:
                   </Text>
+
                   {selectedActivity.tips.map(tip => (
                     <View key={tip} style={styles.activityModalTipRow}>
                       <View style={styles.activityModalBullet} />
@@ -709,7 +764,6 @@ export default function TrilhaScreen() {
           )}
         </Modal>
 
-        {/* MODAL 4 – TELA DE CONCLUSÃO ("Parabéns!") */}
         <Modal
           transparent={false}
           visible={showCompletion}

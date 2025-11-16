@@ -456,7 +456,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-    // ===== MODAL 3 – DETALHES DO EXERCÍCIO =====
+  // ===== MODAL 3 – DETALHES DO EXERCÍCIO =====
   activityModalCard: {
     paddingHorizontal: 20,
     paddingVertical: 22,
@@ -515,7 +515,7 @@ export const styles = StyleSheet.create({
     fontSize: 13,
     color: '#4F4F70',
   },
-    // ===== MODAL 4 – TELA DE CONCLUSÃO =====
+  // ===== MODAL 4 – TELA DE CONCLUSÃO =====
   completionSafe: {
     flex: 1,
     backgroundColor: 'transparent',
@@ -566,5 +566,22 @@ export const styles = StyleSheet.create({
     color: '#FFFFFF',
     textAlign: 'center',
   },
+  sessionCompleteWrapper: {
+    marginTop: 16,
+    alignItems: 'center',
+  },
 
+  sessionCompleteButton: {
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 999,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  sessionCompleteButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });
