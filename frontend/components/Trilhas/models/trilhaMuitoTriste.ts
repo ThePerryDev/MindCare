@@ -1,4 +1,4 @@
-import { TrilhaModel } from "../types";
+import { TrilhaModel } from '../types';
 
 /**
  * Trilha 9 – Muito Triste
@@ -14,8 +14,7 @@ export const trilhaMuitoTriste: TrilhaModel = {
   days: [
     {
       day: 1,
-      microHabit:
-        'Respiração lenta com uma mão no coração e outra na barriga',
+      microHabit: 'Respiração lenta com uma mão no coração e outra na barriga',
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Gerar sensação de acolhimento interno',
@@ -59,9 +58,9 @@ export const trilhaMuitoTriste: TrilhaModel = {
       durationLabel: '10 min',
       goal: 'Reduzir a sensação de dor emocional bruta',
       benefits: [
-          'Oferece um espaço guiado para sentir sem se perder na dor',
-          'Ajuda a acalmar a mente com instruções simples',
-          'Promove sensação de ser amparada, mesmo sozinha',
+        'Oferece um espaço guiado para sentir sem se perder na dor',
+        'Ajuda a acalmar a mente com instruções simples',
+        'Promove sensação de ser amparada, mesmo sozinha',
       ],
       howTo: [
         'Procure uma meditação guiada curta com foco em acolhimento ou autocompaixão.',

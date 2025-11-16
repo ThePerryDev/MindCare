@@ -1,4 +1,4 @@
-import { TrilhaModel } from "../types";
+import { TrilhaModel } from '../types';
 
 /**
  * Trilha 5 – Muito Feliz
@@ -29,7 +29,7 @@ export const trilhaMuitoFeliz: TrilhaModel = {
         'Pense no seu dia e identifique 3 coisas pelas quais você se sente grato(a).',
         'Podem ser coisas simples, como uma conversa, uma refeição ou um momento de descanso.',
         'Escreva cada ponto em uma linha separada.',
-        'Leia o que escreveu e faça uma respiração profunda, reconhecendo essas coisas boas.'
+        'Leia o que escreveu e faça uma respiração profunda, reconhecendo essas coisas boas.',
       ],
     },
     {
@@ -48,7 +48,7 @@ export const trilhaMuitoFeliz: TrilhaModel = {
         'Abra o aplicativo de mensagens que você usa com essa pessoa.',
         'Escreva uma mensagem curta e positiva, como um agradecimento, elogio ou desejo de bom dia/noite.',
         'Envie a mensagem sem esperar uma resposta específica.',
-        'Perceba como você se sente após esse gesto de carinho.'
+        'Perceba como você se sente após esse gesto de carinho.',
       ],
     },
     {
@@ -67,7 +67,7 @@ export const trilhaMuitoFeliz: TrilhaModel = {
         'Inspire pelo nariz contando até 4, enchendo o abdômen de ar.',
         'Segure o ar por 1 ou 2 segundos, sem desconforto.',
         'Expire lentamente pela boca contando até 6.',
-        'Repita esse ciclo de forma contínua até completar o tempo, mantendo a atenção no ar entrando e saindo.'
+        'Repita esse ciclo de forma contínua até completar o tempo, mantendo a atenção no ar entrando e saindo.',
       ],
     },
     {
@@ -86,7 +86,7 @@ export const trilhaMuitoFeliz: TrilhaModel = {
         'Coloque fones de ouvido (se for seguro) e comece a caminhar em um ritmo confortável.',
         'Preste atenção nos sons, nas cores ao redor e na sensação dos pés tocando o chão.',
         'Permita-se acompanhar a música com o corpo, mexendo braços ou cabeça se sentir vontade.',
-        'Ao final da caminhada, faça uma respiração profunda e perceba como seu corpo e humor estão.'
+        'Ao final da caminhada, faça uma respiração profunda e perceba como seu corpo e humor estão.',
       ],
     },
     {
@@ -105,7 +105,7 @@ export const trilhaMuitoFeliz: TrilhaModel = {
         'Pense em um momento do dia que tenha sido especial ou prazeroso para você.',
         'Descreva o que aconteceu, onde você estava, quem estava junto e como se sentiu.',
         'Inclua detalhes sensoriais, como cores, sons ou cheiros, se lembrar.',
-        'Ao terminar, releia o que escreveu e permita-se reviver um pouco dessa sensação boa.'
+        'Ao terminar, releia o que escreveu e permita-se reviver um pouco dessa sensação boa.',
       ],
     },
     {
@@ -125,7 +125,7 @@ export const trilhaMuitoFeliz: TrilhaModel = {
         'Incline o tronco levemente para um lado e depois para o outro, sem forçar.',
         'Gire lentamente os ombros para frente e para trás.',
         'Faça alguns movimentos leves com o pescoço, inclinando a cabeça de um lado para o outro.',
-        'Respire devagar enquanto se alonga, prestando atenção nas sensações do corpo.'
+        'Respire devagar enquanto se alonga, prestando atenção nas sensações do corpo.',
       ],
     },
     {
@@ -144,7 +144,7 @@ export const trilhaMuitoFeliz: TrilhaModel = {
         'Dê play e permita-se cantar junto, mesmo que não se considere afinado(a).',
         'Concentre-se na letra, na melodia e em como o seu corpo responde à música.',
         'Se sentir vontade, mexa o corpo, dance ou feche os olhos para aproveitar mais.',
-        'Ao final, perceba como está seu humor em comparação ao início da música.'
+        'Ao final, perceba como está seu humor em comparação ao início da música.',
       ],
     },
   ],

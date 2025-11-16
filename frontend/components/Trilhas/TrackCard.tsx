@@ -2,7 +2,11 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from '@/app/screens/TrilhaScreen/styles';
 
-export type TrackStatus = 'completed' | 'in_progress' | 'not_started' | 'locked';
+export type TrackStatus =
+  | 'completed'
+  | 'in_progress'
+  | 'not_started'
+  | 'locked';
 
 export type Track = {
   id: string;
@@ -91,15 +95,15 @@ const TrackCard: React.FC<TrackCardProps> = ({
   const isCompleted = track.status === 'completed';
   const isLocked = track.status === 'locked';
 
-  const progressLabel =
-    isLocked ? 'Bloqueada' : isCompleted ? 'Trilha concluída' : 'Progresso';
+  const progressLabel = isLocked
+    ? 'Bloqueada'
+    : isCompleted
+      ? 'Trilha concluída'
+      : 'Progresso';
 
   return (
     <View
-      style={[
-        styles.trackCard,
-        { backgroundColor: track.backgroundColor },
-      ]}
+      style={[styles.trackCard, { backgroundColor: track.backgroundColor }]}
     >
       <View style={styles.trackHeader}>
         <View style={styles.trackIcon} />
@@ -116,9 +120,7 @@ const TrackCard: React.FC<TrackCardProps> = ({
 
       <View style={styles.progressRow}>
         <Text style={styles.progressLabel}>{progressLabel}</Text>
-        <Text style={styles.progressPercent}>
-          {track.progressPercent}%
-        </Text>
+        <Text style={styles.progressPercent}>{track.progressPercent}%</Text>
       </View>
 
       <View style={styles.stepsRow}>

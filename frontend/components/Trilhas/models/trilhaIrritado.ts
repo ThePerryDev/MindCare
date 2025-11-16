@@ -1,4 +1,4 @@
-import { TrilhaModel } from "../types";
+import { TrilhaModel } from '../types';
 
 /**
  * Trilha 8 – Irritado

@@ -1,4 +1,4 @@
-import { TrilhaModel } from "../types";
+import { TrilhaModel } from '../types';
 
 /**
  * Trilha 6 – Neutro
@@ -29,7 +29,7 @@ export const trilhaNeutro: TrilhaModel = {
         'Sente-se ou deite-se em uma posição confortável.',
         'Dê play no áudio e siga as instruções, mantendo atenção nas orientações do guia.',
         'Se a mente divagar, apenas volte a focar na voz ou na respiração.',
-        'Ao finalizar, faça uma respiração profunda e perceba como está seu corpo.'
+        'Ao finalizar, faça uma respiração profunda e perceba como está seu corpo.',
       ],
     },
     {
@@ -48,7 +48,7 @@ export const trilhaNeutro: TrilhaModel = {
         'Escreva um breve resumo de como foi o seu dia, em poucas linhas.',
         'Depois, destaque pelo menos 1 ou 2 pontos que foram positivos, mesmo que pequenos.',
         'Observe como esses pontos fizeram diferença na sua experiência.',
-        'Finalize com uma respiração profunda, reconhecendo o valor desses momentos.'
+        'Finalize com uma respiração profunda, reconhecendo o valor desses momentos.',
       ],
     },
     {
@@ -67,7 +67,7 @@ export const trilhaNeutro: TrilhaModel = {
         'Coloque para tocar em volume confortável.',
         'Se você toca algum instrumento, pode tocar uma melodia simples em vez de ouvir.',
         'Feche os olhos ou fixe o olhar em um ponto enquanto escuta.',
-        'Perceba como seu corpo e sua respiração respondem ao som.'
+        'Perceba como seu corpo e sua respiração respondem ao som.',
       ],
     },
     {
@@ -86,7 +86,7 @@ export const trilhaNeutro: TrilhaModel = {
         'Antes de beber, aproxime a xícara do nariz e perceba o aroma com calma.',
         'Dê um pequeno gole, prestando atenção na temperatura, no sabor e na sensação na boca.',
         'Evite mexer no celular durante esses minutos, focando apenas na experiência.',
-        'Respire devagar entre um gole e outro, mantendo a atenção nos sentidos.'
+        'Respire devagar entre um gole e outro, mantendo a atenção nos sentidos.',
       ],
     },
     {
@@ -106,7 +106,7 @@ export const trilhaNeutro: TrilhaModel = {
         'Segure o ar por 4 segundos.',
         'Expire pela boca por 4 segundos.',
         'Fique com os pulmões vazios por 4 segundos.',
-        'Repita esse ciclo várias vezes, como se estivesse desenhando um quadrado com a respiração.'
+        'Repita esse ciclo várias vezes, como se estivesse desenhando um quadrado com a respiração.',
       ],
     },
     {
@@ -125,7 +125,7 @@ export const trilhaNeutro: TrilhaModel = {
         'Comece andando em um ritmo mais lento do que o habitual.',
         'Observe cores, formas, sons e cheiros ao seu redor.',
         'Perceba a sensação dos pés tocando o chão e do corpo se movendo.',
-        'Sempre que a mente se perder em pensamentos, volte a atenção para o ambiente.'
+        'Sempre que a mente se perder em pensamentos, volte a atenção para o ambiente.',
       ],
     },
     {
@@ -144,7 +144,7 @@ export const trilhaNeutro: TrilhaModel = {
         'Pense em algo pequeno e concreto que você gostaria de realizar na próxima semana (por exemplo: caminhar 2 vezes, beber mais água, dormir um pouco mais cedo em 1 dia).',
         'Escreva essa meta em uma frase simples.',
         'Se quiser, adicione quando ou como pretende fazer isso.',
-        'Guarde a anotação em um lugar visível para lembrar ao longo da semana.'
+        'Guarde a anotação em um lugar visível para lembrar ao longo da semana.',
       ],
     },
   ],

@@ -1,4 +1,4 @@
-import { TrilhaModel } from "../types";
+import { TrilhaModel } from '../types';
 
 /**
  * Trilha 10 – Mindfulness Básico (Iniciante – 5 a 10 min)
@@ -72,8 +72,7 @@ export const trilhaMindfulnessBasico: TrilhaModel = {
     },
     {
       day: 4,
-      microHabit:
-        'Comer uma fruta lentamente, prestando atenção nos sentidos',
+      microHabit: 'Comer uma fruta lentamente, prestando atenção nos sentidos',
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Praticar atenção plena',

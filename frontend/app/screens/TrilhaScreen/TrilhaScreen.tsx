@@ -16,7 +16,7 @@ import { styles } from './styles';
 import { theme } from '@/styles/theme';
 import Navbar from '@/components/Navbar/Navbar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import Platypus from '../../../assets/images/Platypus.png';
 import TrackCard, { Track } from '@/components/Trilhas/TrackCard';
 
 import {
@@ -349,10 +349,11 @@ export default function TrilhaScreen() {
       const day = await advanceDay(session.trackId);
       setCurrentDay(day);
       await refreshTracks();
-    } catch {}
+    } catch {
+      // Erro ao salvar progresso da trilha - usuário pode tentar novamente depois
+    }
 
     closeSessionModal();
-
     setShowCompletion(true);
   };
   const progress =
@@ -783,10 +784,7 @@ export default function TrilhaScreen() {
                   Você completou a atividade com sucesso!
                 </Text>
 
-                <Image
-                  source={require('../../../assets/images/Platypus.png')}
-                  style={styles.completionImage}
-                />
+                <Image source={Platypus} style={styles.completionImage} />
 
                 <TouchableOpacity
                   style={styles.completionButton}

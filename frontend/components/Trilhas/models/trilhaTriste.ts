@@ -1,4 +1,4 @@
-import { TrilhaModel } from "../types";
+import { TrilhaModel } from '../types';
 
 /**
  * Trilha 7 – Triste
@@ -29,7 +29,7 @@ export const trilhaTriste: TrilhaModel = {
         'Comece a escrever sobre o que você está sentindo, sem se preocupar com regras ou organização.',
         'Não se censure nem tente “embelezar” o texto, apenas deixe fluir.',
         'Se quiser, você pode parar quando sentir que o principal já foi colocado no papel.',
-        'Ao terminar, respire fundo algumas vezes e feche o diário.'
+        'Ao terminar, respire fundo algumas vezes e feche o diário.',
       ],
     },
     {
@@ -49,7 +49,7 @@ export const trilhaTriste: TrilhaModel = {
         'Segure o ar nos pulmões por 7 segundos.',
         'Expire lentamente pela boca por 8 segundos.',
         'Repita o ciclo algumas vezes, mantendo a atenção no movimento da respiração.',
-        'Permita que o corpo vá relaxando aos poucos, sem forçar nenhuma sensação.'
+        'Permita que o corpo vá relaxando aos poucos, sem forçar nenhuma sensação.',
       ],
     },
     {
@@ -68,7 +68,7 @@ export const trilhaTriste: TrilhaModel = {
         'Coloque em um volume confortável, que não incomode.',
         'Sente-se ou deite-se e feche os olhos, se se sentir à vontade.',
         'Preste atenção na melodia, nos instrumentos e na voz (se houver).',
-        'Permita que as emoções venham, sem se julgar por sentir o que sente.'
+        'Permita que as emoções venham, sem se julgar por sentir o que sente.',
       ],
     },
     {
@@ -87,7 +87,7 @@ export const trilhaTriste: TrilhaModel = {
         'Pense em situações difíceis que você já viveu e conseguiu atravessar.',
         'Liste pelo menos 3 dessas situações, escrevendo brevemente o que aconteceu.',
         'Ao lado, anote algo que você aprendeu ou uma qualidade sua que ajudou na época.',
-        'Leia a lista e reconheça que você já teve coragem e força em outros momentos.'
+        'Leia a lista e reconheça que você já teve coragem e força em outros momentos.',
       ],
     },
     {
@@ -106,7 +106,7 @@ export const trilhaTriste: TrilhaModel = {
         'Leve os ombros para trás, abrindo o peito, e mantenha por alguns segundos.',
         'Cruze os dedos atrás das costas, se possível, e estenda os braços suavemente para baixo, abrindo ainda mais o peito.',
         'Incline a cabeça levemente para um lado e depois para o outro, alongando o pescoço.',
-        'Respire profundamente enquanto mantém esses alongamentos, sempre sem sentir dor.'
+        'Respire profundamente enquanto mantém esses alongamentos, sempre sem sentir dor.',
       ],
     },
     {
@@ -125,7 +125,7 @@ export const trilhaTriste: TrilhaModel = {
         'Abra o aplicativo de mensagens.',
         'Envie uma mensagem simples, que pode ser apenas um “Oi, tudo bem?” ou, se quiser, algo como “Tô meio triste hoje, queria conversar um pouco quando você puder”.',
         'Não se cobre por explicar tudo, apenas dê o primeiro passo de contato.',
-        'Perceba como você se sente só pelo fato de ter se aproximado de alguém.'
+        'Perceba como você se sente só pelo fato de ter se aproximado de alguém.',
       ],
     },
     {
@@ -144,7 +144,7 @@ export const trilhaTriste: TrilhaModel = {
         'Evite conteúdos pesados, de conflito ou notícias ruins.',
         'Assista com a intenção de apenas permitir um momento de leveza, sem obrigação de “ficar bem”.',
         'Note qualquer mudança, por menor que seja, na sua expressão ou no seu corpo.',
-        'Ao finalizar, reconheça o esforço que você fez em cuidar de si hoje.'
+        'Ao finalizar, reconheça o esforço que você fez em cuidar de si hoje.',
       ],
     },
   ],

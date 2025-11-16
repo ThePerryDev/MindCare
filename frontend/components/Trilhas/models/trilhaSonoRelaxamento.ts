@@ -7,7 +7,8 @@ export const trilhaSonoRelaxamento: TrilhaModel = {
   id: 3,
   key: 'trilha-sono-relaxamento',
   name: 'Trilha 3 – Sono e Relaxamento',
-  focus: 'Melhorar a qualidade do sono e favorecer um relaxamento profundo ao fim do dia.',
+  focus:
+    'Melhorar a qualidade do sono e favorecer um relaxamento profundo ao fim do dia.',
   level: 'Iniciante',
   minMinutes: 5,
   maxMinutes: 8,
@@ -29,7 +30,7 @@ export const trilhaSonoRelaxamento: TrilhaModel = {
         'Inspire silenciosamente pelo nariz por 4 segundos.',
         'Segure o ar por 7 segundos, sem forçar.',
         'Expire completamente pela boca por 8 segundos, fazendo um som suave.',
-        'Repita esse ciclo algumas vezes, sem se preocupar em contar perfeitamente, apenas mantendo o ritmo aproximado.'
+        'Repita esse ciclo algumas vezes, sem se preocupar em contar perfeitamente, apenas mantendo o ritmo aproximado.',
       ],
     },
     {
@@ -48,7 +49,7 @@ export const trilhaSonoRelaxamento: TrilhaModel = {
         'Trinta minutos antes desse horário, desligue ou afaste celular, computador e TV.',
         'Escolha uma atividade tranquila, como ler algo leve, tomar um banho morno ou ouvir música calma.',
         'Evite checar notificações durante esse tempo.',
-        'Mantenha o ambiente com iluminação mais baixa, preparando o corpo para o sono.'
+        'Mantenha o ambiente com iluminação mais baixa, preparando o corpo para o sono.',
       ],
     },
     {
@@ -68,7 +69,7 @@ export const trilhaSonoRelaxamento: TrilhaModel = {
         'Suba para as pernas, glúteos, abdômen, peito, braços, mãos, ombros, pescoço e rosto, repetindo o processo de tensionar e relaxar.',
         'Evite forçar a contração além do confortável.',
         'Perceba a diferença entre o músculo tenso e relaxado.',
-        'Ao final, faça algumas respirações profundas, sentindo o corpo mais solto.'
+        'Ao final, faça algumas respirações profundas, sentindo o corpo mais solto.',
       ],
     },
     {
@@ -87,7 +88,7 @@ export const trilhaSonoRelaxamento: TrilhaModel = {
         'Liste tudo o que estiver ocupando sua mente nesse momento, sem filtro.',
         'Ao lado de cada item, escreva algo como “ver amanhã” ou “não depende de mim agora”.',
         'Ao terminar, feche o caderno e mentalmente diga a si mesma que vai retomar isso em outro momento, não agora.',
-        'Siga para a cama com a intenção de apenas descansar, não resolver problemas.'
+        'Siga para a cama com a intenção de apenas descansar, não resolver problemas.',
       ],
     },
     {
@@ -106,7 +107,7 @@ export const trilhaSonoRelaxamento: TrilhaModel = {
         'Ajuste o volume para um nível confortável, que não incomode.',
         'Deite-se, feche os olhos e direcione sua atenção para os sons.',
         'Deixe pensamentos passarem como nuvens, voltando sempre aos sons da paisagem.',
-        'Mantenha a respiração lenta e profunda durante a escuta.'
+        'Mantenha a respiração lenta e profunda durante a escuta.',
       ],
     },
     {
@@ -126,7 +127,7 @@ export const trilhaSonoRelaxamento: TrilhaModel = {
         'Se sentir confortável, puxe os dois joelhos ao mesmo tempo em direção ao peito.',
         'Faça movimentos suaves de balanço para os lados, massageando a lombar.',
         'Evite movimentos bruscos e respeite os limites do seu corpo.',
-        'Finalize esticando as pernas novamente e respirando fundo.'
+        'Finalize esticando as pernas novamente e respirando fundo.',
       ],
     },
     {
@@ -145,7 +146,7 @@ export const trilhaSonoRelaxamento: TrilhaModel = {
         'Pense em como foram suas noites de sono ao longo da semana.',
         'Identifique quais dias dormiu melhor e o que fez de diferente nesses dias.',
         'Anote um hábito que você quer manter e outro que pretende ajustar.',
-        'Escolha um pequeno ajuste para testar na próxima semana, como horário, luz ou uso de telas.'
+        'Escolha um pequeno ajuste para testar na próxima semana, como horário, luz ou uso de telas.',
       ],
     },
   ],

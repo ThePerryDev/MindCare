@@ -14,7 +14,6 @@ import { trilhaNeutro } from './trilhaNeutro';
 import { trilhaSonoRelaxamento } from './trilhaSonoRelaxamento';
 import { trilhaTriste } from './trilhaTriste';
 
-
 export const allTrilhas: TrilhaModel[] = [
   trilhaAnsiedadeLeve,
   trilhaEstresseTrabalho,
@@ -30,5 +29,18 @@ export const allTrilhas: TrilhaModel[] = [
   trilhaGratidaoFelicidade,
   trilhaControleAnsiedade,
 ];
-export { trilhaAnsiedadeLeve, trilhaEstresseTrabalho, trilhaSonoRelaxamento, trilhaHumorPositivoMotivacao, trilhaMuitoFeliz, trilhaNeutro, trilhaTriste, trilhaIrritado, trilhaMuitoTriste, trilhaMindfulnessBasico, trilhaAlivioEstresse, trilhaGratidaoFelicidade, trilhaControleAnsiedade };
-
+export {
+  trilhaAnsiedadeLeve,
+  trilhaEstresseTrabalho,
+  trilhaSonoRelaxamento,
+  trilhaHumorPositivoMotivacao,
+  trilhaMuitoFeliz,
+  trilhaNeutro,
+  trilhaTriste,
+  trilhaIrritado,
+  trilhaMuitoTriste,
+  trilhaMindfulnessBasico,
+  trilhaAlivioEstresse,
+  trilhaGratidaoFelicidade,
+  trilhaControleAnsiedade,
+};

@@ -1,4 +1,4 @@
-import { TrilhaModel } from "../types";
+import { TrilhaModel } from '../types';
 
 /**
  * Trilha 13 – Controle da Ansiedade (Intermediário – 15 a 20 min)

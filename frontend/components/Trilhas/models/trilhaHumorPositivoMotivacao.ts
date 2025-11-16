@@ -1,4 +1,4 @@
-import { TrilhaModel } from "../types";
+import { TrilhaModel } from '../types';
 
 /**
  * Trilha 4 – Humor Positivo e Motivação
@@ -28,7 +28,7 @@ export const trilhaHumorPositivoMotivacao: TrilhaModel = {
         'Dê play e permita-se mexer o corpo: dançar, balançar os ombros, caminhar pelo ambiente.',
         'Não se preocupe com passos certos, apenas se mova como for confortável.',
         'Preste atenção em como o corpo responde à música.',
-        'Ao final, faça uma respiração profunda, mantendo a sensação de energia.'
+        'Ao final, faça uma respiração profunda, mantendo a sensação de energia.',
       ],
     },
     {
@@ -47,7 +47,7 @@ export const trilhaHumorPositivoMotivacao: TrilhaModel = {
         'Pense em algo que você realizou recentemente, mesmo que pareça pequeno.',
         'Escreva o que aconteceu, o que você fez e como contribuiu para esse resultado.',
         'Leia o que escreveu e reconheça o esforço envolvido.',
-        'Se quiser, finalize escrevendo uma frase de reconhecimento, como “eu consegui fazer isso”.'
+        'Se quiser, finalize escrevendo uma frase de reconhecimento, como “eu consegui fazer isso”.',
       ],
     },
     {
@@ -66,7 +66,7 @@ export const trilhaHumorPositivoMotivacao: TrilhaModel = {
         'Relaxe o rosto e, aos poucos, forme um leve sorriso, mesmo que no início pareça “forçado”.',
         'Mantenha esse sorriso por alguns instantes, respirando devagar.',
         'Perceba as sensações no rosto, na mandíbula e no peito.',
-        'Se quiser, pense em uma lembrança leve ou engraçada para reforçar o sorriso.'
+        'Se quiser, pense em uma lembrança leve ou engraçada para reforçar o sorriso.',
       ],
     },
     {
@@ -85,7 +85,7 @@ export const trilhaHumorPositivoMotivacao: TrilhaModel = {
         'Evite vídeos muito longos ou com conteúdos pesados.',
         'Assista com atenção, tentando não mexer em outras abas ou no celular ao mesmo tempo.',
         'Ao terminar, perceba qual frase, imagem ou parte mais te tocou.',
-        'Se quiser, anote essa parte para lembrar em outro momento.'
+        'Se quiser, anote essa parte para lembrar em outro momento.',
       ],
     },
     {
@@ -104,7 +104,7 @@ export const trilhaHumorPositivoMotivacao: TrilhaModel = {
         'Realize essa ação de forma sincera, sem esperar nada em troca.',
         'Depois, registre no app ou em um caderno o que você fez e para quem.',
         'Perceba como você se sente após esse ato de gentileza.',
-        'Se fizer sentido, repita essa prática em outros dias.'
+        'Se fizer sentido, repita essa prática em outros dias.',
       ],
     },
     {
@@ -123,7 +123,7 @@ export const trilhaHumorPositivoMotivacao: TrilhaModel = {
         'Feche os olhos e imagine uma versão sua no futuro, alguns meses ou anos à frente.',
         'Observe como essa versão se comporta, como cuida da saúde, do trabalho, dos relacionamentos.',
         'Perceba a postura, a expressão facial e o tom de voz do seu “eu ideal”.',
-        'Escolha uma característica dessa versão (por exemplo, mais calma, organizada, confiante) e pense em um pequeno passo que você pode dar hoje para se aproximar disso.'
+        'Escolha uma característica dessa versão (por exemplo, mais calma, organizada, confiante) e pense em um pequeno passo que você pode dar hoje para se aproximar disso.',
       ],
     },
     {
@@ -142,7 +142,7 @@ export const trilhaHumorPositivoMotivacao: TrilhaModel = {
         'Observe se percebe mudanças no seu humor e na sua motivação.',
         'Anote um aspecto positivo que você notou em si ao longo dos últimos dias.',
         'Decida se quer repetir essa trilha ou experimentar outra, de acordo com como você se sente agora.',
-        'Confirme mentalmente seu compromisso em continuar se cuidando nos próximos dias.'
+        'Confirme mentalmente seu compromisso em continuar se cuidando nos próximos dias.',
       ],
     },
   ],

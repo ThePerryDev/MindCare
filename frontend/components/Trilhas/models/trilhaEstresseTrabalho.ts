@@ -7,7 +7,8 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
   id: 2,
   key: 'trilha-estresse-trabalho',
   name: 'Trilha 2 – Estresse no Trabalho / Estudo',
-  focus: 'Organizar a mente e reduzir estresse relacionado a demandas de trabalho e estudo.',
+  focus:
+    'Organizar a mente e reduzir estresse relacionado a demandas de trabalho e estudo.',
   level: 'Iniciante',
   minMinutes: 5,
   maxMinutes: 8,
@@ -30,7 +31,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
         'Segure o ar por 4 segundos.',
         'Expire lentamente pela boca por 4 segundos.',
         'Fique 4 segundos com os pulmões vazios antes de inspirar novamente.',
-        'Repita esse ciclo de 4-4-4-4 até completar o tempo, observando como o corpo vai desacelerando.'
+        'Repita esse ciclo de 4-4-4-4 até completar o tempo, observando como o corpo vai desacelerando.',
       ],
     },
     {
@@ -50,7 +51,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
         'Marque com um símbolo (★) apenas 3 tarefas realmente essenciais.',
         'Tudo que não for essencial hoje pode ser reagendado ou deixado para depois.',
         'Destaque a primeira tarefa essencial e comprometa-se a começar por ela.',
-        'Guarde a lista em um lugar de fácil acesso para acompanhar ao longo do dia.'
+        'Guarde a lista em um lugar de fácil acesso para acompanhar ao longo do dia.',
       ],
     },
     {
@@ -70,7 +71,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
         'Mantenha alguns segundos e repita invertendo a mão.',
         'Gire os punhos em círculos, primeiro para um lado, depois para o outro.',
         'Entrelaçe os dedos, estenda os braços à frente e empurre as mãos para fora, alongando costas e ombros.',
-        'Incline o tronco levemente para frente, como se fosse alcançar o chão, respeitando seus limites e respirando devagar.'
+        'Incline o tronco levemente para frente, como se fosse alcançar o chão, respeitando seus limites e respirando devagar.',
       ],
     },
     {
@@ -90,7 +91,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
         'Recrie mentalmente o ambiente: onde você estava, quem estava lá, o que você dizia e fazia.',
         'Perceba como você se sentia nesse momento de sucesso.',
         'Agora imagine você lidando com uma situação atual de forma confiante e firme.',
-        'Respire fundo algumas vezes, mantendo essa imagem positiva por alguns instantes.'
+        'Respire fundo algumas vezes, mantendo essa imagem positiva por alguns instantes.',
       ],
     },
     {
@@ -109,7 +110,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
         'Escolha algumas frases curtas como: “Eu sou capaz”, “Eu aprendo com os desafios”, “Eu estou fazendo o meu melhor”.',
         'Repita cerca de 10 afirmações, podendo repetir as mesmas ou variar.',
         'Se quiser, fale em voz baixa ou apenas mentalmente, sentindo o efeito das palavras.',
-        'Ao final, respire fundo e note se a sua fala interna ficou um pouco mais suave.'
+        'Ao final, respire fundo e note se a sua fala interna ficou um pouco mais suave.',
       ],
     },
     {
@@ -128,7 +129,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
         'Pense nas últimas horas e identifique 3 coisas boas que aconteceram, mesmo que pequenas.',
         'Podem ser coisas simples, como um café gostoso, uma risada ou uma mensagem legal.',
         'Se quiser, anote essas 3 coisas em um caderno ou app de notas.',
-        'Leia o que escreveu e respire fundo, reconhecendo esses momentos positivos.'
+        'Leia o que escreveu e respire fundo, reconhecendo esses momentos positivos.',
       ],
     },
     {
@@ -147,7 +148,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
         'Pergunte a si mesma: “Em quais dias me senti mais sobrecarregada?”',
         'Observe quais práticas da trilha ajudaram mais nesses momentos.',
         'Anote um aprendizado ou algo que você quer manter para a próxima semana.',
-        'Com base nisso, escolha se deseja repetir esta trilha ou experimentar uma trilha diferente no app.'
+        'Com base nisso, escolha se deseja repetir esta trilha ou experimentar uma trilha diferente no app.',
       ],
     },
   ],

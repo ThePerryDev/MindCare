@@ -1,4 +1,4 @@
-import { TrilhaModel } from "../types";
+import { TrilhaModel } from '../types';
 
 /**
  * Trilha 12 – Gratidão e Felicidade (Iniciante – 5 a 10 min)
@@ -127,8 +127,7 @@ export const trilhaGratidaoFelicidade: TrilhaModel = {
     },
     {
       day: 7,
-      microHabit:
-        'Revisão da semana: escrever o maior motivo de gratidão',
+      microHabit: 'Revisão da semana: escrever o maior motivo de gratidão',
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Fechar ciclo com reflexão positiva',

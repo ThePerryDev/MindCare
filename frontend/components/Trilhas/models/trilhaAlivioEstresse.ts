@@ -1,4 +1,4 @@
-import { TrilhaModel } from "../types";
+import { TrilhaModel } from '../types';
 
 /**
  * Trilha 11 – Alívio do Estresse (Intermediário – 10 a 15 min)
@@ -29,7 +29,7 @@ export const trilhaAlivioEstresse: TrilhaModel = {
         'Inspire profundamente pelo nariz por 4 segundos.',
         'Expire lentamente pela boca por 6 segundos.',
         'Mantenha os ombros relaxados durante todo o exercício.',
-        'Repita o ciclo até completar o tempo.'
+        'Repita o ciclo até completar o tempo.',
       ],
     },
     {
@@ -49,7 +49,7 @@ export const trilhaAlivioEstresse: TrilhaModel = {
         'Eleve os ombros até perto das orelhas e solte devagar.',
         'Faça rotações lentas dos ombros para frente e para trás.',
         'Estique levemente a coluna inclinando o tronco para os lados.',
-        'Respire devagar durante todo o alongamento.'
+        'Respire devagar durante todo o alongamento.',
       ],
     },
     {
@@ -69,7 +69,7 @@ export const trilhaAlivioEstresse: TrilhaModel = {
         'Leia a lista e marque o que pode ser resolvido agora.',
         'Classifique o restante entre: “agendar” ou “soltar”.',
         'Tome uma ação simples relacionada a uma preocupação que pode ser resolvida.',
-        'Guarde as anotações e finalize respirando lentamente.'
+        'Guarde as anotações e finalize respirando lentamente.',
       ],
     },
     {
@@ -89,7 +89,7 @@ export const trilhaAlivioEstresse: TrilhaModel = {
         'Suba para as pernas, glúteos, barriga e peito repetindo o processo.',
         'Faça o mesmo com braços, mãos, ombros e rosto.',
         'Mantenha a respiração calma e profunda.',
-        'Sinta o corpo ficando mais leve conforme vai relaxando.'
+        'Sinta o corpo ficando mais leve conforme vai relaxando.',
       ],
     },
     {
@@ -109,7 +109,7 @@ export const trilhaAlivioEstresse: TrilhaModel = {
         'Observe mentalmente detalhes como luz, cores, texturas e sons.',
         'Perceba como seu corpo responde a essa imagem.',
         'Fique alguns instantes nesse lugar, respirando devagar.',
-        'Finalize trazendo essa sensação de segurança de volta ao momento presente.'
+        'Finalize trazendo essa sensação de segurança de volta ao momento presente.',
       ],
     },
     {
@@ -129,7 +129,7 @@ export const trilhaAlivioEstresse: TrilhaModel = {
         'Observe os pés tocando o chão e o movimento dos braços.',
         'Desvie a atenção gentilmente sempre que surgirem pensamentos.',
         'Mantenha foco na respiração e no ritmo da caminhada.',
-        'Finalize diminuindo o ritmo e respirando fundo.'
+        'Finalize diminuindo o ritmo e respirando fundo.',
       ],
     },
     {
@@ -149,7 +149,7 @@ export const trilhaAlivioEstresse: TrilhaModel = {
         'Observe como você reagiu em cada uma delas.',
         'Identifique estratégias que funcionaram bem para você.',
         'Anote algo que deseja melhorar ou repetir na próxima semana.',
-        'Respire fundo e reconheça sua evolução até aqui.'
+        'Respire fundo e reconheça sua evolução até aqui.',
       ],
     },
   ],

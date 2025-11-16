@@ -29,7 +29,7 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
         'Segure o ar nos pulmões por 7 segundos.',
         'Expire lentamente pela boca por 8 segundos.',
         'Mantenha os ombros relaxados durante todo o exercício.',
-        'Repita o ciclo até completar o tempo.'
+        'Repita o ciclo até completar o tempo.',
       ],
     },
     {
@@ -49,7 +49,7 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
         'Leia a lista e marque o que você pode agir hoje.',
         'Separe o restante entre: “posso agendar para depois” e “não depende de mim”.',
         'Escolha uma ação simples para fazer ainda hoje ou registrar na agenda.',
-        'Guarde a lista e encerre o exercício por agora.'
+        'Guarde a lista e encerre o exercício por agora.',
       ],
     },
     {
@@ -69,7 +69,7 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
         'Repita para o outro lado, sem forçar o limite.',
         'Gire os ombros lentamente para frente algumas vezes.',
         'Agora gire os ombros para trás, em movimentos amplos e suaves.',
-        'Mantenha a respiração lenta e profunda enquanto alonga.'
+        'Mantenha a respiração lenta e profunda enquanto alonga.',
       ],
     },
     {
@@ -89,7 +89,7 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
         'Leve a atenção para a respiração, sentindo o ar entrar e sair.',
         'Não tente controlar a respiração, apenas observe o fluxo natural.',
         'Se surgirem pensamentos, reconheça e volte gentilmente a atenção para a respiração.',
-        'Permaneça assim até o fim do tempo, encerrando com um suspiro profundo.'
+        'Permaneça assim até o fim do tempo, encerrando com um suspiro profundo.',
       ],
     },
     {
@@ -109,7 +109,7 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
         'Use palavras simples, sem se preocupar com gramática ou beleza do texto.',
         'Se quiser, adicione o motivo (ou possíveis motivos) desse sentimento.',
         'Não corrija nem julgue o que escreveu, apenas registre.',
-        'Ao terminar, respire fundo e feche o diário.'
+        'Ao terminar, respire fundo e feche o diário.',
       ],
     },
     {
@@ -129,7 +129,7 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
         'Inspire profundamente pelo nariz por 4 segundos.',
         'Expire devagar pela boca por cerca de 6 segundos.',
         'Mantenha a atenção na música e na sensação do ar entrando e saindo.',
-        'Se a mente se dispersar, retorne o foco para a respiração e o som.'
+        'Se a mente se dispersar, retorne o foco para a respiração e o som.',
       ],
     },
     {
@@ -149,7 +149,7 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
         'Observe se percebe alguma mudança na ansiedade, no corpo ou nos pensamentos.',
         'Anote uma pequena conquista da semana, mesmo que pareça simples.',
         'Diga mentalmente ou em voz alta: “Parabéns por ter cuidado de você essa semana.”',
-        'Respire fundo e escolha se deseja continuar essa trilha ou seguir para a próxima.'
+        'Respire fundo e escolha se deseja continuar essa trilha ou seguir para a próxima.',
       ],
     },
   ],
