@@ -19,54 +19,83 @@ export const trilhaControleAnsiedade: TrilhaModel = {
       durationMinutes: 15,
       durationLabel: '15 min',
       goal: 'Acalmar corpo e mente',
+      benefits: [
+        'Reduz sintomas físicos de ansiedade (taquicardia, falta de ar)',
+        'Ajuda a regular o sistema nervoso autônomo',
+        'Cria base de segurança interna',
+      ],
     },
     {
       day: 2,
-      microHabit:
-        'Meditação com atenção nos sons ao redor',
+      microHabit: 'Meditação focada nos sons ao redor',
       durationMinutes: 18,
       durationLabel: '18 min',
       goal: 'Aumentar foco sensorial',
+      benefits: [
+        'Desvia a atenção de pensamentos ansiosos para os sentidos',
+        'Ajuda a ancorar no presente',
+        'Reduz rumininação mental',
+      ],
     },
     {
       day: 3,
-      microHabit:
-        'Escrita de preocupações + plano de ação realista',
+      microHabit: 'Escrever preocupações + plano de ação realista',
       durationMinutes: 20,
       durationLabel: '20 min',
       goal: 'Organizar pensamentos',
+      benefits: [
+        'Transforma preocupação em ações concretas ou aceitação',
+        'Reduz sensação de descontrole',
+        'Melhora clareza sobre o que é possível fazer hoje',
+      ],
     },
     {
       day: 4,
-      microHabit:
-        'Exercício físico leve (yoga ou alongamento)',
+      microHabit: 'Exercício físico leve (yoga ou alongamento)',
       durationMinutes: 15,
       durationLabel: '15 min',
       goal: 'Reduzir tensão corporal',
+      benefits: [
+        'Libera hormônios de bem-estar',
+        'Diminui sensação de inquietação',
+        'Ajuda o corpo a “gastar” energia da ansiedade',
+      ],
     },
     {
       day: 5,
-      microHabit:
-        'Técnica 5-4-3-2-1 (identificar sentidos)',
+      microHabit: 'Técnica 5-4-3-2-1 (sentidos)',
       durationMinutes: 18,
       durationLabel: '18 min',
       goal: 'Trazer atenção para o presente',
+      benefits: [
+        'Ajuda em momentos de crise de ansiedade',
+        'Desconecta de pensamentos catastróficos',
+        'Fortalece senso de “estou aqui e agora, em segurança”',
+      ],
     },
     {
       day: 6,
-      microHabit:
-        'Caminhada consciente + foco na respiração',
+      microHabit: 'Caminhada consciente focando na respiração',
       durationMinutes: 15,
       durationLabel: '15 min',
       goal: 'Diminuir agitação',
+      benefits: [
+        'Une movimento físico com foco respiratório',
+        'Reduz inquietação psicomotora',
+        'Aumenta sensação de equilíbrio físico e mental',
+      ],
     },
     {
       day: 7,
-      microHabit:
-        'Revisão da semana: anotar gatilhos e avanços',
+      microHabit: 'Revisão da semana: gatilhos e avanços',
       durationMinutes: 15,
       durationLabel: '15 min',
       goal: 'Refletir sobre evolução',
+      benefits: [
+        'Ajuda a identificar padrões de ansiedade',
+        'Fortalece estratégias que funcionaram melhor',
+        'Cria senso de progresso no controle da ansiedade',
+      ],
     },
   ],
 };

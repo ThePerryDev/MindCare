@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -86,6 +86,26 @@ type Session = {
 };
 
 /**
+ * Define a cor de fundo do card de acordo com o status da trilha
+ */
+function getTrackBackgroundColor(status: Track['status']): string {
+  switch (status) {
+    case 'completed':
+      // #10B981 com ~20% de transparência
+      return 'rgba(16, 185, 129, 0.2)';
+    case 'in_progress':
+      // #F59E0B com ~20% de transparência
+      return 'rgba(245, 158, 11, 0.2)';
+    case 'not_started':
+      // #E5E7EB opaco
+      return '#E5E7EB';
+    case 'locked':
+    default:
+      return '#E5E7EB';
+  }
+}
+
+/**
  * Lista de trilhas vindas dos models
  */
 const TRILHAS: TrilhaModel[] = [
@@ -104,101 +124,27 @@ const TRILHAS: TrilhaModel[] = [
   trilhaControleAnsiedade,
 ];
 
-/**
- * Cores usadas para os cards (vai ciclando)
- */
-const CARD_COLORS = [
-  '#DFF4EE',
-  '#FFEDE1',
-  '#F3EEFF',
-  '#F1F4F7',
-  '#FFF6E5',
-  '#E6F4FF',
-];
+const DEFAULT_TRILHA = trilhaAnsiedadeLeve;
 
 /**
- * Gera os TRACKS (cards) a partir dos models de trilha
+ * Extrai minutos da label do dia ou usa minMinutes / fallback
  */
-const TRACKS: Track[] = TRILHAS.map((trilha, index) => {
-  let duration = '—';
-
-  if (trilha.minMinutes && trilha.maxMinutes) {
-    duration = `${trilha.minMinutes}–${trilha.maxMinutes} min`;
-  } else if (trilha.minMinutes && !trilha.maxMinutes) {
-    duration = `${trilha.minMinutes} min`;
+function getMinutesFromDay(trilha: TrilhaModel, dayIndex: number): number {
+  const day = trilha.days[dayIndex];
+  if (day?.durationLabel) {
+    const match = day.durationLabel.match(/(\d+)/);
+    if (match) {
+      const n = Number(match[1]);
+      if (Number.isFinite(n) && n > 0) return n;
+    }
   }
 
-  return {
-    id: trilha.key,
-    title: trilha.name,
-    level: trilha.level,
-    duration,
-    progressPercent: 0, // depois você pode ligar com AsyncStorage
-    totalSteps: trilha.days.length,
-    completedSteps: 0, // idem
-    status: 'not_started',
-    backgroundColor: CARD_COLORS[index % CARD_COLORS.length],
-  };
-});
+  if (trilha.minMinutes && Number.isFinite(trilha.minMinutes)) {
+    return trilha.minMinutes;
+  }
 
-/**
- * Usaremos a trilha de Ansiedade Leve como fallback
- * para o conteúdo dos detalhes/sessão por enquanto
- */
-const FALLBACK_SESSION_TRACK_KEY = trilhaAnsiedadeLeve.key;
-
-const TRACK_DETAILS: Record<string, TrackDetails> = {
-  [FALLBACK_SESSION_TRACK_KEY]: {
-    activityTitle: 'Respiração Consciente',
-    description:
-      'Pratique respiração profunda por alguns minutos para acalmar a mente e reduzir o estresse.',
-    benefits: [
-      'Reduz ansiedade e estresse',
-      'Melhora o foco e concentração',
-      'Promove relaxamento',
-    ],
-  },
-};
-
-const SESSION_DETAILS: Record<string, Session> = {
-  [FALLBACK_SESSION_TRACK_KEY]: {
-    trackId: FALLBACK_SESSION_TRACK_KEY,
-    dayLabel: 'Dia 1',
-    activityTitle: 'Respiração Consciente',
-    minutes: 5,
-    description:
-      'Aprenda a técnica básica de respiração consciente para acalmar a mente.',
-    activities: [
-      {
-        id: 'breathing',
-        title: 'Exercício de Respiração',
-        subtitle: '3 minutos de respiração 4–7–8',
-        description:
-          'Sente-se em uma posição confortável, com a coluna ereta, e foque na sua respiração seguindo o padrão 4–7–8.',
-        tips: [
-          'Inspire profundamente pelo nariz contando até 4.',
-          'Segure o ar nos pulmões contando até 7.',
-          'Expire lentamente pela boca contando até 8.',
-          'Repita o ciclo por alguns minutos de forma suave, sem forçar.',
-        ],
-      },
-      {
-        id: 'reflection',
-        title: 'Reflexão',
-        subtitle: 'Como você se sente?',
-        description:
-          'Após o exercício de respiração, observe como seu corpo e sua mente se sentem neste momento.',
-        tips: [
-          'Feche os olhos por alguns instantes.',
-          'Perceba seu ritmo cardíaco e sua respiração.',
-          'Identifique emoções presentes sem julgá-las.',
-          'Se quiser, anote em poucas palavras como está se sentindo.',
-        ],
-      },
-    ],
-    totalSeconds: 5 * 60,
-  },
-};
+  return 5; // fallback
+}
 
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
@@ -207,14 +153,10 @@ function formatTime(seconds: number): string {
 }
 
 export default function TrilhaScreen() {
-  const [currentDay, setCurrentDay] = useState(1);
-
-  // por enquanto, o progresso está amarrado só à trilha de Ansiedade Leve
-  useEffect(() => {
-    getCurrentDay(trilhaAnsiedadeLeve.key).then(setCurrentDay);
-  }, []);
-
   const router = useRouter();
+
+  const [tracks, setTracks] = useState<Track[]>([]);
+  const [currentDay, setCurrentDay] = useState(1);
 
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
   const [session, setSession] = useState<Session | null>(null);
@@ -223,25 +165,82 @@ export default function TrilhaScreen() {
 
   const [remainingSeconds, setRemainingSeconds] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-
-  // NOVO: controla exibição da tela de "Parabéns!"
   const [showCompletion, setShowCompletion] = useState(false);
 
+  /**
+   * Recalcula os TRACKS lendo o currentDay de cada trilha no AsyncStorage
+   */
+  const refreshTracks = useCallback(async () => {
+    const newTracks: Track[] = [];
+
+    for (const trilha of TRILHAS) {
+      const totalSteps = trilha.days.length || 1;
+      let day = 1;
+      try {
+        day = await getCurrentDay(trilha.key);
+      } catch {
+        day = 1;
+      }
+
+      const currentStep = Math.max(1, Math.min(day, totalSteps));
+      const completedSteps = currentStep - 1;
+
+      let status: Track['status'];
+      if (completedSteps <= 0) {
+        status = 'not_started';
+      } else if (completedSteps >= totalSteps) {
+        status = 'completed';
+      } else {
+        status = 'in_progress';
+      }
+
+      const progressPercent =
+        totalSteps > 0 ? Math.round((completedSteps / totalSteps) * 100) : 0;
+
+      let duration = '—';
+      if (trilha.minMinutes && trilha.maxMinutes) {
+        duration = `${trilha.minMinutes}–${trilha.maxMinutes} min`;
+      } else if (trilha.minMinutes && !trilha.maxMinutes) {
+        duration = `${trilha.minMinutes} min`;
+      }
+
+      newTracks.push({
+        id: trilha.key,
+        title: trilha.name,
+        level: trilha.level,
+        duration,
+        progressPercent,
+        totalSteps,
+        completedSteps,
+        status,
+        backgroundColor: getTrackBackgroundColor(status),
+      });
+    }
+
+    setTracks(newTracks);
+  }, []);
+
   useEffect(() => {
-    if (!session || !isPlaying || remainingSeconds <= 0) return;
+    refreshTracks();
+  }, [refreshTracks]);
+
+  useEffect(() => {
+    if (!session || !isPlaying) return;
 
     const id = setInterval(() => {
       setRemainingSeconds(prev => {
         if (prev <= 1) {
           clearInterval(id);
 
-          if (session.trackId === FALLBACK_SESSION_TRACK_KEY) {
-            advanceDay(trilhaAnsiedadeLeve.key)
-              .then(setCurrentDay)
+          if (session.trackId) {
+            advanceDay(session.trackId)
+              .then(day => {
+                setCurrentDay(day);
+                refreshTracks(); // atualiza cards depois de avançar o dia
+              })
               .catch(() => {});
           }
 
-          // terminou a atividade
           setIsPlaying(false);
           setShowCompletion(true);
 
@@ -253,7 +252,7 @@ export default function TrilhaScreen() {
     }, 1000);
 
     return () => clearInterval(id);
-  }, [session, isPlaying, remainingSeconds]);
+  }, [session, isPlaying, refreshTracks]);
 
   const closeDetailsModal = () => setSelectedTrack(null);
 
@@ -264,27 +263,75 @@ export default function TrilhaScreen() {
 
   const handleDetailsPress = (track: Track) => {
     if (track.status === 'locked') return;
-
-    const sessionData =
-      SESSION_DETAILS[track.id] ?? SESSION_DETAILS[FALLBACK_SESSION_TRACK_KEY];
-
-    const firstActivity = sessionData.activities[0];
-
-    if (firstActivity) {
-      setSelectedActivity(firstActivity);
-    } else {
-      setSelectedTrack(track);
-    }
+    setSelectedTrack(track);
   };
 
   const handleStartSession = (track: Track) => {
-    const sessionData =
-      SESSION_DETAILS[track.id] ?? SESSION_DETAILS[FALLBACK_SESSION_TRACK_KEY];
+    const trilha = TRILHAS.find(t => t.key === track.id) ?? DEFAULT_TRILHA;
 
-    setSession(sessionData);
-    setSelectedActivity(null);
-    setRemainingSeconds(sessionData.totalSeconds);
-    setIsPlaying(true);
+    getCurrentDay(trilha.key)
+      .then(day => {
+        const safeDay = Math.max(1, Math.min(day, trilha.days.length || 1));
+        setCurrentDay(safeDay);
+
+        const dayIndex = safeDay - 1;
+        const dayData = trilha.days[dayIndex] ?? trilha.days[0];
+
+        const minutes = getMinutesFromDay(trilha, dayIndex);
+        const totalSeconds = minutes * 60;
+
+        const sessionData: Session = {
+          trackId: trilha.key,
+          dayLabel: `Dia ${safeDay}`,
+          activityTitle: dayData?.microHabit ?? trilha.name,
+          minutes,
+          description: dayData?.goal ?? '',
+          activities: [
+            {
+              id: 'main',
+              title: dayData?.microHabit ?? trilha.name,
+              subtitle: dayData?.durationLabel ?? `${minutes} min`,
+              description: dayData?.goal ?? '',
+              tips: [],
+            },
+          ],
+          totalSeconds,
+        };
+
+        setSession(sessionData);
+        setSelectedActivity(null);
+        setRemainingSeconds(sessionData.totalSeconds);
+        setIsPlaying(true);
+      })
+      .catch(() => {
+        const dayIndex = 0;
+        const dayData = trilha.days[dayIndex];
+        const minutes = getMinutesFromDay(trilha, dayIndex);
+
+        const sessionData: Session = {
+          trackId: trilha.key,
+          dayLabel: 'Dia 1',
+          activityTitle: dayData?.microHabit ?? trilha.name,
+          minutes,
+          description: dayData?.goal ?? '',
+          activities: [
+            {
+              id: 'main',
+              title: dayData?.microHabit ?? trilha.name,
+              subtitle: dayData?.durationLabel ?? `${minutes} min`,
+              description: dayData?.goal ?? '',
+              tips: [],
+            },
+          ],
+          totalSeconds: minutes * 60,
+        };
+
+        setCurrentDay(1);
+        setSession(sessionData);
+        setSelectedActivity(null);
+        setRemainingSeconds(sessionData.totalSeconds);
+        setIsPlaying(true);
+      });
   };
 
   const closeSessionModal = () => {
@@ -294,7 +341,6 @@ export default function TrilhaScreen() {
     setSelectedActivity(null);
   };
 
-  // quando fecha a tela de "Parabéns", também fechamos a sessão
   const handleCloseCompletion = () => {
     setShowCompletion(false);
     closeSessionModal();
@@ -305,12 +351,15 @@ export default function TrilhaScreen() {
       ? 1 - remainingSeconds / session.totalSeconds
       : 0;
 
-  // ainda usando só a trilha de Ansiedade Leve no modal de sessão
+  const activeTrilha =
+    TRILHAS.find(t => t.key === session?.trackId) ?? DEFAULT_TRILHA;
+
+  const activeDays = activeTrilha.days;
   const currentDayIndex = Math.max(
     0,
-    Math.min(currentDay - 1, trilhaAnsiedadeLeve.days.length - 1)
+    Math.min(currentDay - 1, activeDays.length - 1)
   );
-  const currentDayData = trilhaAnsiedadeLeve.days[currentDayIndex];
+  const currentDayData = activeDays[currentDayIndex] ?? activeDays[0];
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -329,16 +378,16 @@ export default function TrilhaScreen() {
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
               <MaterialCommunityIcons
-                name="chevron-left"
+                name='chevron-left'
                 size={28}
-                color="#4C46B6"
+                color='#4C46B6'
               />
             </TouchableOpacity>
             <Text style={styles.title}>Trilhas</Text>
           </View>
 
           {/* LISTA DE TRILHAS */}
-          {TRACKS.map(track => (
+          {tracks.map(track => (
             <TrackCard
               key={track.id}
               track={track}
@@ -348,11 +397,11 @@ export default function TrilhaScreen() {
           ))}
         </ScrollView>
 
-        {/* MODAL 1 – DETALHES DA ATIVIDADE */}
+        {/* MODAL 1 – DETALHES DA TRILHA */}
         <Modal
           transparent
           visible={!!selectedTrack}
-          animationType="fade"
+          animationType='fade'
           onRequestClose={closeDetailsModal}
         >
           <Pressable style={styles.infoBackdrop} onPress={closeDetailsModal} />
@@ -368,9 +417,9 @@ export default function TrilhaScreen() {
                 >
                   <View style={styles.modalCloseIcon}>
                     <MaterialCommunityIcons
-                      name="close"
+                      name='close'
                       size={18}
-                      color="#7B6AFB"
+                      color='#7B6AFB'
                     />
                   </View>
                 </TouchableOpacity>
@@ -379,9 +428,26 @@ export default function TrilhaScreen() {
               <View style={styles.modalDivider} />
 
               {(() => {
-                const details =
-                  TRACK_DETAILS[selectedTrack.id] ??
-                  TRACK_DETAILS[FALLBACK_SESSION_TRACK_KEY];
+                const trilha =
+                  TRILHAS.find(t => t.key === selectedTrack.id) ??
+                  DEFAULT_TRILHA;
+
+                // Pegamos o dia atual salvo no AsyncStorage
+                const currentDayIndex = Math.max(
+                  0,
+                  Math.min(selectedTrack.completedSteps, trilha.days.length - 1)
+                );
+
+                // Pegamos os dados do dia atual
+                const currentDayData = trilha.days[currentDayIndex];
+
+                const details: TrackDetails = {
+                  activityTitle: currentDayData?.microHabit ?? trilha.name,
+                  description:
+                    currentDayData?.goal ??
+                    'Prática guiada para apoiar seu bem-estar nesta trilha.',
+                  benefits: currentDayData?.benefits ?? [],
+                };
 
                 return (
                   <>
@@ -393,16 +459,22 @@ export default function TrilhaScreen() {
                       {details.description}
                     </Text>
 
-                    <Text style={styles.modalBenefitsTitle}>
-                      Benefícios desta atividade:
-                    </Text>
+                    {details.benefits.length > 0 && (
+                      <>
+                        <Text style={styles.modalBenefitsTitle}>
+                          Benefícios desta trilha:
+                        </Text>
 
-                    {details.benefits.map(benefit => (
-                      <View key={benefit} style={styles.modalBenefitRow}>
-                        <Text style={styles.modalBenefitCheck}>✓</Text>
-                        <Text style={styles.modalBenefitText}>{benefit}</Text>
-                      </View>
-                    ))}
+                        {details.benefits.map(benefit => (
+                          <View key={benefit} style={styles.modalBenefitRow}>
+                            <Text style={styles.modalBenefitCheck}>✓</Text>
+                            <Text style={styles.modalBenefitText}>
+                              {benefit}
+                            </Text>
+                          </View>
+                        ))}
+                      </>
+                    )}
                   </>
                 );
               })()}
@@ -437,7 +509,7 @@ export default function TrilhaScreen() {
         <Modal
           transparent
           visible={!!session}
-          animationType="fade"
+          animationType='fade'
           onRequestClose={closeSessionModal}
         >
           <Pressable style={styles.infoBackdrop} onPress={closeSessionModal} />
@@ -452,9 +524,9 @@ export default function TrilhaScreen() {
                 >
                   <View style={styles.modalCloseIcon}>
                     <MaterialCommunityIcons
-                      name="close"
+                      name='close'
                       size={18}
-                      color="#7B6AFB"
+                      color='#7B6AFB'
                     />
                   </View>
                 </TouchableOpacity>
@@ -540,9 +612,9 @@ export default function TrilhaScreen() {
                     style={styles.sessionControlButton}
                   >
                     <MaterialCommunityIcons
-                      name="pause"
+                      name='pause'
                       size={22}
-                      color="#6C4FF6"
+                      color='#6C4FF6'
                     />
                   </LinearGradient>
                 </TouchableOpacity>
@@ -564,9 +636,9 @@ export default function TrilhaScreen() {
                     style={styles.sessionControlButton}
                   >
                     <MaterialCommunityIcons
-                      name="play"
+                      name='play'
                       size={22}
-                      color="#FFFFFF"
+                      color='#FFFFFF'
                     />
                   </LinearGradient>
                 </TouchableOpacity>
@@ -579,7 +651,7 @@ export default function TrilhaScreen() {
         <Modal
           transparent
           visible={!!selectedActivity}
-          animationType="fade"
+          animationType='fade'
           onRequestClose={() => setSelectedActivity(null)}
         >
           <Pressable
@@ -598,9 +670,9 @@ export default function TrilhaScreen() {
                 >
                   <View style={styles.modalCloseIcon}>
                     <MaterialCommunityIcons
-                      name="close"
+                      name='close'
                       size={18}
-                      color="#7B6AFB"
+                      color='#7B6AFB'
                     />
                   </View>
                 </TouchableOpacity>
@@ -641,7 +713,7 @@ export default function TrilhaScreen() {
         <Modal
           transparent={false}
           visible={showCompletion}
-          animationType="fade"
+          animationType='fade'
           onRequestClose={handleCloseCompletion}
         >
           <SafeAreaView style={styles.completionSafe}>
@@ -658,8 +730,7 @@ export default function TrilhaScreen() {
                 </Text>
 
                 <Image
-                  // 🔽 AJUSTE o caminho desse require para o asset real do ornitorrinco
-                  source={require('@/assets/ornitorrinco-doutor.png')}
+                  source={require('../../../assets/images/Platypus.png')}
                   style={styles.completionImage}
                 />
 
