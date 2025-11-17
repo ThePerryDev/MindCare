@@ -1,0 +1,151 @@
+import { TrilhaModel } from '../types';
+
+/**
+ * Trilha 7 – Triste
+ */
+export const trilhaTriste: TrilhaModel = {
+  id: 7,
+  key: 'trilha-triste',
+  name: 'Trilha 7 – Triste',
+  focus: 'Acolher a emoção e estimular autocompaixão.',
+  level: 'Iniciante',
+  minMinutes: 5,
+  maxMinutes: 8,
+  days: [
+    {
+      day: 1,
+      microHabit: 'Escrever livremente sobre o que sente',
+      durationMinutes: 7,
+      durationLabel: '7 min',
+      goal: 'Expressar emoções',
+      benefits: [
+        'Ajuda a tirar do peito o que está incomodando',
+        'Diminui a sensação de confusão emocional',
+        'Promove um espaço seguro de desabafo consigo mesma',
+      ],
+      howTo: [
+        'Encontre um lugar minimamente tranquilo.',
+        'Pegue um caderno ou abra um aplicativo de notas.',
+        'Comece a escrever sobre o que você está sentindo, sem se preocupar com regras ou organização.',
+        'Não se censure nem tente “embelezar” o texto, apenas deixe fluir.',
+        'Se quiser, você pode parar quando sentir que o principal já foi colocado no papel.',
+        'Ao terminar, respire fundo algumas vezes e feche o diário.',
+      ],
+    },
+    {
+      day: 2,
+      microHabit: 'Fazer respiração 4-7-8',
+      durationMinutes: 5,
+      durationLabel: '5 min',
+      goal: 'Reduzir intensidade da tristeza no corpo',
+      benefits: [
+        'Ajuda a acalmar o sistema nervoso',
+        'Diminui a sensação de aperto no peito',
+        'Cria uma pausa entre a emoção e a reação',
+      ],
+      howTo: [
+        'Sente-se ou deite-se em uma posição confortável.',
+        'Inspire pelo nariz por 4 segundos.',
+        'Segure o ar nos pulmões por 7 segundos.',
+        'Expire lentamente pela boca por 8 segundos.',
+        'Repita o ciclo algumas vezes, mantendo a atenção no movimento da respiração.',
+        'Permita que o corpo vá relaxando aos poucos, sem forçar nenhuma sensação.',
+      ],
+    },
+    {
+      day: 3,
+      microHabit: 'Ouvir música calma e relaxante',
+      durationMinutes: 6,
+      durationLabel: '6 min',
+      goal: 'Acalmar a mente',
+      benefits: [
+        'Cria um ambiente emocional mais acolhedor',
+        'Ajuda a suavizar a sensação de peso interno',
+        'Oferece um espaço para sentir, sem pressão para “melhorar rápido”',
+      ],
+      howTo: [
+        'Escolha uma música ou playlist com sons suaves e tranquilos.',
+        'Coloque em um volume confortável, que não incomode.',
+        'Sente-se ou deite-se e feche os olhos, se se sentir à vontade.',
+        'Preste atenção na melodia, nos instrumentos e na voz (se houver).',
+        'Permita que as emoções venham, sem se julgar por sentir o que sente.',
+      ],
+    },
+    {
+      day: 4,
+      microHabit: 'Fazer uma lista de coisas que já superou no passado',
+      durationMinutes: 7,
+      durationLabel: '7 min',
+      goal: 'Resgatar forças internas',
+      benefits: [
+        'Lembra que você já enfrentou momentos difíceis antes',
+        'Fortalece a percepção de que você tem recursos internos',
+        'Ajuda a ver a tristeza atual dentro de uma história maior',
+      ],
+      howTo: [
+        'Pegue um papel ou bloco de notas.',
+        'Pense em situações difíceis que você já viveu e conseguiu atravessar.',
+        'Liste pelo menos 3 dessas situações, escrevendo brevemente o que aconteceu.',
+        'Ao lado, anote algo que você aprendeu ou uma qualidade sua que ajudou na época.',
+        'Leia a lista e reconheça que você já teve coragem e força em outros momentos.',
+      ],
+    },
+    {
+      day: 5,
+      microHabit: 'Alongamento com foco em ombros e peito',
+      durationMinutes: 6,
+      durationLabel: '6 min',
+      goal: 'Liberar tensão emocional do corpo',
+      benefits: [
+        'Ajuda a aliviar a sensação de peso nos ombros',
+        'Abre a região do peito, que tende a ficar encolhida em momentos de tristeza',
+        'Facilita respirações mais profundas e completas',
+      ],
+      howTo: [
+        'Fique em pé ou sente-se com a coluna ereta.',
+        'Leve os ombros para trás, abrindo o peito, e mantenha por alguns segundos.',
+        'Cruze os dedos atrás das costas, se possível, e estenda os braços suavemente para baixo, abrindo ainda mais o peito.',
+        'Incline a cabeça levemente para um lado e depois para o outro, alongando o pescoço.',
+        'Respire profundamente enquanto mantém esses alongamentos, sempre sem sentir dor.',
+      ],
+    },
+    {
+      day: 6,
+      microHabit: 'Enviar uma mensagem para alguém de confiança',
+      durationMinutes: 5,
+      durationLabel: '5 min',
+      goal: 'Buscar conexão',
+      benefits: [
+        'Reduz a sensação de isolamento emocional',
+        'Permite compartilhar um pouco do que está sentindo com alguém seguro',
+        'Fortalece vínculos afetivos importantes',
+      ],
+      howTo: [
+        'Pense em uma pessoa com quem você se sente relativamente confortável em falar.',
+        'Abra o aplicativo de mensagens.',
+        'Envie uma mensagem simples, que pode ser apenas um “Oi, tudo bem?” ou, se quiser, algo como “Tô meio triste hoje, queria conversar um pouco quando você puder”.',
+        'Não se cobre por explicar tudo, apenas dê o primeiro passo de contato.',
+        'Perceba como você se sente só pelo fato de ter se aproximado de alguém.',
+      ],
+    },
+    {
+      day: 7,
+      microHabit: 'Assistir a um vídeo curto engraçado ou inspirador',
+      durationMinutes: 5,
+      durationLabel: '5 min',
+      goal: 'Tocar a tristeza com leveza',
+      benefits: [
+        'Oferece um pequeno respiro emocional',
+        'Ajuda a lembrar que ainda existem momentos leves possíveis',
+        'Pode estimular um sorriso ou sensação de esperança, mesmo discreta',
+      ],
+      howTo: [
+        'Escolha um vídeo curto que você sabe que costuma te fazer rir ou te inspirar (pode ser de humor, animação, animais, ou algo motivacional leve).',
+        'Evite conteúdos pesados, de conflito ou notícias ruins.',
+        'Assista com a intenção de apenas permitir um momento de leveza, sem obrigação de “ficar bem”.',
+        'Note qualquer mudança, por menor que seja, na sua expressão ou no seu corpo.',
+        'Ao finalizar, reconheça o esforço que você fez em cuidar de si hoje.',
+      ],
+    },
+  ],
+};
