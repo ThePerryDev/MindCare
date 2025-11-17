@@ -19,6 +19,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { styles, INPUT_HEIGHT, CHIPS_HEIGHT, INPUT_BOTTOM_GAP } from './styles';
 import robsonImg from '../../../assets/images/robson.png';
+import { classifyEmotion } from '../../../services/emotionService'
+
+
 
 // ------------------
 // Tipagens
@@ -28,7 +31,14 @@ interface Message {
   text: string;
   sender: 'bot' | 'user';
   timestamp: Date;
+
+  // Metadados opcionais (preenchidos só pro bot)
+  emotion?: string;
+  emotionConfidence?: number;
+  isCrisis?: boolean;
+  crisisConfidence?: number;
 }
+
 
 type MoodLabel =
   | 'Muito Feliz'
@@ -131,28 +141,53 @@ export default function ChatBotScreen() {
   }, [mood, emoji]);
 
   // Envio de mensagens manuais
-  const handleSend = useCallback((): void => {
-    if (!inputText.trim()) return;
+const handleSend = useCallback(async (): Promise<void> => {
+  const trimmed = inputText.trim();
+  if (!trimmed) return;
 
-    const userMsg: Message = {
-      id: Date.now().toString(),
-      text: inputText.trim(),
-      sender: 'user',
+  // 1) Mensagem do usuário
+  const userMsg: Message = {
+    id: Date.now().toString(),
+    text: trimmed,
+    sender: 'user',
+    timestamp: new Date(),
+  };
+
+  append(userMsg);
+  setInputText('');
+
+  try {
+    // 2) Chama a API de classificação
+    const res = await classifyEmotion(trimmed);
+
+    // 3) Monte a mensagem do bot com texto + metadados
+    const botMsg: Message = {
+      id: (Date.now() + 1).toString(),
+      text: res.mensagem_para_usuario,
+      sender: 'bot',
       timestamp: new Date(),
+      emotion: res.emocao,
+      emotionConfidence: res.confianca_emocao,
+      isCrisis: res.risco_crise,
+      crisisConfidence: res.confianca_crise,
     };
 
-    append(userMsg);
-    setInputText('');
+    append(botMsg);
+  } catch (error) {
+    console.error('Erro ao chamar a API de emoções:', error);
+    // fallback amigável em caso de erro na API
+    append({
+      id: (Date.now() + 2).toString(),
+      text:
+        'Desculpe, tive um problema para analisar sua mensagem agora. ' +
+        'Você pode tentar novamente em instantes?',
+      sender: 'bot',
+      timestamp: new Date(),
+    });
+  }
+}, [inputText, append]);
 
-    setTimeout(() => {
-      append({
-        id: (Date.now() + 1).toString(),
-        text: 'Posso te sugerir uma trilha breve agora mesmo. Quer ver?',
-        sender: 'bot',
-        timestamp: new Date(),
-      });
-    }, 600);
-  }, [inputText, append]);
+
 
   // Padding inferior dinâmico
   const contentBottomPad = isKeyboardVisible
@@ -167,12 +202,13 @@ export default function ChatBotScreen() {
       {/* HEADER */}
       <View style={styles.header}>
         <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.back()}
-          activeOpacity={0.7}
+          style={styles.sendButton}
+          onPress={handleSend}
+          activeOpacity={0.9}
         >
-          <Ionicons name='chevron-back' size={24} color='#4C46B6' />
+          <Text style={styles.sendButtonIcon}>➤</Text>
         </TouchableOpacity>
+
 
         <View style={styles.headerCenter}>
           <Text style={styles.headerTitle}>MindBot</Text>
@@ -226,16 +262,26 @@ export default function ChatBotScreen() {
                       />
                     </View>
                   )}
-                  <View
-                    style={[
-                      styles.bubble,
-                      isUser ? styles.userBubble : styles.botBubble,
-                    ]}
-                  >
-                    <Text style={isUser ? styles.userText : styles.botText}>
-                      {message.text}
-                    </Text>
-                  </View>
+                    <View
+                      style={[
+                        styles.bubble,
+                        isUser ? styles.userBubble : styles.botBubble,
+                      ]}
+                    >
+                      <Text style={isUser ? styles.userText : styles.botText}>
+                        {message.text}
+                      </Text>
+
+                      {/* Metadados só para mensagens do bot */}
+                      {!isUser && (message.emotion || message.isCrisis !== undefined) && (
+                        <Text style={{ fontSize: 10, marginTop: 4, color: '#6B7280' }}>
+                          {`[emoção: ${message.emotion ?? 'n/a'} | crise: ${
+                            message.isCrisis ? 'SIM' : 'não'
+                          }]`}
+                        </Text>
+                      )}
+                    </View>
+
                   {isUser && (
                     <View style={styles.userAvatarSmall}>
                       <Text style={styles.userAvatarSmallIcon}>R</Text>
