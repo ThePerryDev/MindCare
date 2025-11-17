@@ -2,12 +2,22 @@ name: CI
 
 on:
   push:
+<<<<<<< HEAD
+    branches: ['develop', 'SP-002/daniel/backend-pipeline']
+  pull_request:
+    branches: ['develop', 'SP-002/daniel/backend-pipeline']
+
+jobs:
+  # 🔹 LINT / FORMAT / TEST FRONTEND
+  lint-format-test-frontend:
+=======
     branches: ['develop', 'SP-001/daniel/docker-pipeline']
   pull_request:
     branches: ['develop', 'SP-001/daniel/docker-pipeline']
 
 jobs:
   lint-format-test:
+>>>>>>> 89fbd3b9cb5788ac8e705b6e09d6cffbe03595a8
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +33,60 @@ jobs:
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
 
+<<<<<<< HEAD
+      # 3️⃣ Instalar dependências do frontend
+      - name: Install dependencies (frontend)
+        working-directory: frontend
+        run: npm install
+
+      # 4️⃣ Rodar ESLint no frontend
+      - name: Run ESLint (frontend)
+        working-directory: frontend
+        run: npm run lint -- --max-warnings=10
+
+      # 5️⃣ Rodar Prettier check no frontend
+      - name: Run Prettier (frontend)
+        working-directory: frontend
+        run: npm run format:check
+
+  # 🔹 LINT / FORMAT / TEST BACKEND
+  lint-format-test-backend:
+    runs-on: ubuntu-latest
+    needs: lint-format-test-frontend
+
+    steps:
+      # 1️⃣ Checkout novamente
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Setup Node.js e cache npm
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+
+      # 3️⃣ Instalar dependências do backend
+      - name: Install dependencies (backend)
+        working-directory: backend
+        run: npm install
+
+      # 4️⃣ Rodar ESLint no backend
+      - name: Run ESLint (backend)
+        working-directory: backend
+        run: npm run lint
+
+      # 5️⃣ Rodar Prettier check no backend
+      - name: Run Prettier (backend)
+        working-directory: backend
+        run: npm run format:check
+
+  # 🔹 TYPE CHECK (FRONTEND)
+  ts-expo-check:
+    runs-on: ubuntu-latest
+    needs: lint-format-test-frontend
+=======
       # 3️⃣ Instalar dependências
       - name: Install dependencies
         working-directory: frontend
@@ -41,6 +105,7 @@ jobs:
   ts-expo-check:
     runs-on: ubuntu-latest
     needs: lint-format-test
+>>>>>>> 89fbd3b9cb5788ac8e705b6e09d6cffbe03595a8
 
     steps:
       # 1️⃣ Checkout novamente
@@ -70,9 +135,43 @@ jobs:
         working-directory: frontend
         run: npx expo prebuild --no-install
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 89fbd3b9cb5788ac8e705b6e09d6cffbe03595a8
       # 6️⃣ (Opcional) Export Web
       - name: Export Expo Web (optional)
         working-directory: frontend
         run: |
           CI=true npx expo export --platform web
+<<<<<<< HEAD
+
+  # 🔹 TYPE CHECK (BACKEND)
+  ts-backend-check:
+    runs-on: ubuntu-latest
+    needs: lint-format-test-backend
+
+    steps:
+      # 1️⃣ Checkout novamente
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Setup Node.js e cache npm
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+
+      # 3️⃣ Instalar dependências
+      - name: Install dependencies
+        working-directory: backend
+        run: npm install
+
+      # 4️⃣ Checar TypeScript
+      - name: Check TypeScript (backend)
+        working-directory: backend
+        run: npx tsc --noEmit
+=======
+>>>>>>> 89fbd3b9cb5788ac8e705b6e09d6cffbe03595a8

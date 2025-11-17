@@ -1,12 +1,7 @@
-// frontend/app/index.tsx
+// app/index.tsx
 import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import LoginScreen from './screens/LoginScreen/LoginScreen';
+import RootNavigator from './navigation/RootNavigator';
 
 export default function App() {
-  return (
-    <SafeAreaProvider>
-      <LoginScreen />
-    </SafeAreaProvider>
-  );
+  return <RootNavigator />;
 }
