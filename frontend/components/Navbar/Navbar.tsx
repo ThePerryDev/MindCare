@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from './styles';
@@ -25,10 +25,26 @@ const NAV_ITEMS: NavItem[] = [
 export default function Navbar() {
   const pathname = usePathname();
 
-  const isActive = (route: NavRoute) => pathname === route;
+  // Estado para controlar o ícone ativo
+  const [activeRoute, setActiveRoute] = useState<NavRoute>('/home');
+
+  // Atualiza automaticamente quando a rota do app muda
+  // (garante consistência mesmo se o usuário navegar fora da Navbar)
+  useEffect(() => {
+    if (
+      pathname === '/home' ||
+      pathname === '/trails' ||
+      pathname === '/chat' ||
+      pathname === '/profile' ||
+      pathname === '/settings'
+    ) {
+      setActiveRoute(pathname as NavRoute);
+    }
+  }, [pathname]);
 
   const go = (route: NavRoute) => () => {
-    if (pathname !== route) {
+    if (route !== activeRoute) {
+      setActiveRoute(route);
       router.push(route as Parameters<typeof router.push>[0]);
     }
   };
@@ -40,7 +56,7 @@ export default function Navbar() {
           <Ionicons
             name={icon}
             size={size}
-            color={isActive(route) ? '#8E54E9' : '#B5B5B5'}
+            color={activeRoute === route ? '#8E54E9' : '#B5B5B5'}
           />
         </Pressable>
       ))}

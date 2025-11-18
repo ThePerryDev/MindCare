@@ -213,7 +213,7 @@ export default function CadastroDadosPessoaisScreen() {
       weight: String(w), // kg
     });
 
-    router.push(
+    router.replace(
       '/screens/CadastroScreen/CadastroSegurancaScreen/CadastroSegurancaScreen'
     );
   };

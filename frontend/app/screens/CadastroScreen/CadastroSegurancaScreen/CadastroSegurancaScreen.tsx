@@ -79,7 +79,7 @@ export default function CadastroSegurancaScreen() {
     // Persiste a etapa 2 no contexto
     setStep2({ password, confirmPassword: confirmpassword });
 
-    router.push(
+    router.replace(
       '/screens/CadastroScreen/CadastroConfirmacaoScreen/CadastroConfirmacaoScreen'
     );
   };
