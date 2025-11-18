@@ -137,7 +137,7 @@ export default function LoginScreen() {
               <Text style={styles.textRegister}>Não tem uma conta? </Text>
               <Pressable
                 onPress={() =>
-                  router.push(
+                  router.replace(
                     '/screens/CadastroScreen/CadastroDadosPessoaisScreen/CadastroDadosPessoaisScreen'
                   )
                 }
