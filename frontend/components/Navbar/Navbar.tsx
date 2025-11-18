@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from './styles';
@@ -25,26 +25,27 @@ const NAV_ITEMS: NavItem[] = [
 export default function Navbar() {
   const pathname = usePathname();
 
-  // 🚀 Sempre iniciar no /home quando o app abrir
+  // Estado para controlar o ícone ativo
   const [activeRoute, setActiveRoute] = useState<NavRoute>('/home');
 
-  // 🔄 Atualiza activeRoute caso o usuário navegue por outro jeito (ex: router.replace, botões externos)
+  // Atualiza automaticamente quando a rota do app muda
+  // (garante consistência mesmo se o usuário navegar fora da Navbar)
   useEffect(() => {
-    if (pathname && pathname !== activeRoute) {
-      if (
-        ['/home', '/trails', '/chat', '/profile', '/settings'].includes(
-          pathname
-        )
-      ) {
-        setActiveRoute(pathname as NavRoute);
-      }
+    if (
+      pathname === '/home' ||
+      pathname === '/trails' ||
+      pathname === '/chat' ||
+      pathname === '/profile' ||
+      pathname === '/settings'
+    ) {
+      setActiveRoute(pathname as NavRoute);
     }
   }, [pathname]);
 
   const go = (route: NavRoute) => () => {
-    if (activeRoute !== route) {
+    if (route !== activeRoute) {
       setActiveRoute(route);
-      router.push(route as any); // <= evita erro TS
+      router.push(route as Parameters<typeof router.push>[0]);
     }
   };
 
