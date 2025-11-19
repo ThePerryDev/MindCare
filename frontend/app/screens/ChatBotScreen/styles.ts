@@ -136,6 +136,12 @@ export const styles = StyleSheet.create({
     paddingTop: 10,
   },
 
+  metaInfoText: {
+    color: '#6B7280',
+    fontSize: 10,
+    marginTop: 4,
+  },
+
   quickRepliesContent: {
     alignItems: 'center',
     gap: 8,

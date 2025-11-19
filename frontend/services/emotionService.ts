@@ -13,9 +13,7 @@ export interface EmotionResponse {
   mensagem_para_usuario: string;
 }
 
-export async function classifyEmotion(
-  text: string
-): Promise<EmotionResponse> {
+export async function classifyEmotion(text: string): Promise<EmotionResponse> {
   const payload: EmotionRequest = { text };
 
   const { data } = await nlpApi.post<EmotionResponse>(
