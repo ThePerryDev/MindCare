@@ -8,7 +8,6 @@ import {
   Keyboard,
   Platform,
   Alert,
-  View,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import Input from '@/components/Input/Input';
@@ -17,6 +16,7 @@ import ReturnButton from '@/components/Return_Button/Return_Button';
 import { api } from '@/services/api';
 import { AxiosError } from 'axios';
 import styles from './styles';
+import ForgotPasswordCodeIntro from '@/components/ForgotPasswordCodeIntro/ForgotPasswordCodeIntro';
 
 /* -------------------- VALIDATORS -------------------- */
 
@@ -61,7 +61,9 @@ export default function ForgotPasswordCodeScreen() {
         ? 'height'
         : undefined;
 
-  const handleNext = async () => {
+  /* -------------------- Solicitar Código -------------------- */
+
+  const handleRequestCode = async () => {
     const emailNorm = email.trim().toLowerCase();
 
     if (!emailNorm) {
@@ -74,40 +76,62 @@ export default function ForgotPasswordCodeScreen() {
       return;
     }
 
-    // Primeiro clique: solicita o envio do código via SMS
-    if (!codeRequested) {
-      try {
-        await api.post('/auth/forgot-password/request-code', {
-          email: emailNorm,
-        });
-        setCodeRequested(true);
-        Alert.alert(
-          'Código enviado',
-          'Enviamos um código de verificação por SMS para o número cadastrado. Digite o código abaixo e toque em "Próximo" novamente.'
-        );
-      } catch (error: unknown) {
-        console.log('[EsqueceuSenha] erro ao solicitar código:', error);
-        let msg = '[EsqueceuSenha] erro ao solicitar código:';
-        if (error instanceof AxiosError) {
-          msg =
-            error?.response?.data?.message ||
-            error?.response?.data?.error ||
-            error.message ||
-            msg;
-        } else if (error instanceof Error) {
-          msg = error.message;
-        }
+    try {
+      await api.post('/auth/forgot-password/request-code', {
+        email: emailNorm,
+      });
 
-        Alert.alert('Erro', msg);
+      setCodeRequested(true);
+
+      Alert.alert(
+        'Código enviado',
+        'Enviamos um código de verificação para o número cadastrado. Digite o código abaixo e toque em "Próximo".'
+      );
+    } catch (error: unknown) {
+      console.log('[EsqueceuSenha] erro ao solicitar código:', error);
+      let msg = 'Erro ao solicitar código de verificação.';
+
+      if (error instanceof AxiosError) {
+        msg =
+          error?.response?.data?.message ||
+          error?.response?.data?.error ||
+          error.message ||
+          msg;
+      } else if (error instanceof Error) {
+        msg = error.message;
       }
+
+      Alert.alert('Erro', msg);
+    }
+  };
+
+  /* -------------------- Validar Código -------------------- */
+
+  const handleVerifyCode = async () => {
+    const emailNorm = email.trim().toLowerCase();
+
+    if (!emailNorm) {
+      Alert.alert('Atenção', 'Preencha o e-mail.');
       return;
     }
 
-    // Depois que o código já foi solicitado, o botão passa a validar o código
+    if (!isValidEmail(emailNorm)) {
+      Alert.alert('Atenção', 'E-mail inválido.');
+      return;
+    }
+
+    if (!codeRequested) {
+      Alert.alert(
+        'Atenção',
+        'Primeiro solicite o código de verificação antes de prosseguir.'
+      );
+      return;
+    }
+
     if (!code.trim()) {
       Alert.alert(
         'Atenção',
-        'Digite o código de verificação que você recebeu por SMS.'
+        'Digite o código de verificação que você recebeu.'
       );
       return;
     }
@@ -115,7 +139,7 @@ export default function ForgotPasswordCodeScreen() {
     if (!isValidCode(code.trim())) {
       Alert.alert(
         'Atenção',
-        'Código inválido. Digite os 6 dígitos numéricos recebidos por SMS.'
+        'Código inválido. Digite os 6 dígitos numéricos enviados.'
       );
       return;
     }
@@ -126,15 +150,15 @@ export default function ForgotPasswordCodeScreen() {
         code: code.trim(),
       });
 
-      // Se deu certo, navega para a tela de nova senha
-      router.push({
-        pathname:
-          '/screens/EsqueceuSenhaScreen/EsqueceuSenhaNovaSenhaScreen/EsqueceuSenhaNovaSenhaScreen',
-        params: { email: emailNorm, code: code.trim() },
-      });
+      // Envia email e code para a tela de nova senha
+      router.replace(
+        `/screens/ForgotPasswordSteps/ForgotPasswordScreen/NewPasswordScreen?email=${encodeURIComponent(
+          emailNorm
+        )}&code=${encodeURIComponent(code.trim())}`
+      );
     } catch (error: unknown) {
       console.log('[EsqueceuSenha] erro ao verificar código:', error);
-      let msg = '[EsqueceuSenha] erro ao verificar código:';
+      let msg = 'Erro ao verificar código de verificação.';
 
       if (error instanceof AxiosError) {
         msg =
@@ -169,14 +193,7 @@ export default function ForgotPasswordCodeScreen() {
             keyboardShouldPersistTaps='handled'
             showsVerticalScrollIndicator={false}
           >
-            {/* Header da tela */}
-            <View style={styles.header}>
-              <Text style={styles.title}>Esqueceu sua senha?</Text>
-              <Text style={styles.subtitle}>
-                Para definir sua nova senha será necessário que digite seu
-                e-mail e confirme seu código de verificação.
-              </Text>
-            </View>
+            <ForgotPasswordCodeIntro />
 
             <Input
               label='E-mail'
@@ -188,6 +205,10 @@ export default function ForgotPasswordCodeScreen() {
               returnKeyType='next'
             />
 
+            <Button onPress={handleRequestCode}>
+              <Text>Solicitar Código</Text>
+            </Button>
+
             <Input
               label='Código de Verificação'
               placeholder='Digite seu código de verificação'
@@ -198,11 +219,11 @@ export default function ForgotPasswordCodeScreen() {
               returnKeyType='done'
             />
 
-            <ReturnButton onPress={() => router.back()}>
+            <ReturnButton onPress={() => router.push('/')}>
               <Text>Voltar</Text>
             </ReturnButton>
 
-            <Button onPress={handleNext}>
+            <Button onPress={handleVerifyCode}>
               <Text>Próximo</Text>
             </Button>
           </ScrollView>

@@ -12,7 +12,6 @@ import {
   Platform,
   InteractionManager,
   Alert,
-  View,
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 
@@ -20,10 +19,11 @@ import Button from '@/components/Button/Button';
 import ReturnButton from '@/components/Return_Button/Return_Button';
 import PasswordRequirements from '@/components/PasswordRequirements/PasswordRequirements';
 import PasswordInput from '@/components/PasswordInput/PasswordInput';
-import { api } from '@/services/api';
+import ForgotPasswordIntro from '@/components/ForgotPasswordIntro/ForgotPasswordIntro';
 
-import styles from './styles';
+import { api } from '@/services/api';
 import { AxiosError } from 'axios';
+import styles from './styles';
 
 /* -------------------- VALIDAÇÃO DE SENHA -------------------- */
 /**
@@ -45,7 +45,7 @@ function validatePassword(pwd: string) {
 
 /* -------------------- COMPONENT -------------------- */
 
-export default function NewForgotPasswordScreen() {
+export default function NewPasswordScreen() {
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
 
@@ -124,7 +124,7 @@ export default function NewForgotPasswordScreen() {
       ]);
     } catch (error: unknown) {
       console.log('[EsqueceuSenha] erro ao redefinir senha:', error);
-      let msg = '[EsqueceuSenha] erro ao redefinir senha:';
+      let msg = 'Erro ao redefinir senha.';
 
       if (error instanceof AxiosError) {
         msg =
@@ -159,11 +159,7 @@ export default function NewForgotPasswordScreen() {
             automaticallyAdjustKeyboardInsets
             showsVerticalScrollIndicator={false}
           >
-            {/* Header da tela */}
-            <View style={styles.header}>
-              <Text style={styles.title}>Esqueceu sua senha?</Text>
-              <Text style={styles.subtitle}>Digite sua nova senha</Text>
-            </View>
+            <ForgotPasswordIntro />
 
             <PasswordInput
               label='Senha'
@@ -184,7 +180,13 @@ export default function NewForgotPasswordScreen() {
               returnKeyType='done'
             />
 
-            <ReturnButton onPress={() => router.back()}>
+            <ReturnButton
+              onPress={() =>
+                router.push(
+                  '/screens/ForgotPasswordSteps/ForgotPasswordCodeScreen/ForgotPasswordCodeScreen'
+                )
+              }
+            >
               <Text>Voltar</Text>
             </ReturnButton>
 

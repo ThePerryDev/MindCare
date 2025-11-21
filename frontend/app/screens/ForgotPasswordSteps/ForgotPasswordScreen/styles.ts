@@ -1,13 +1,9 @@
 // frontend/app/screens/EsqueceuSenhaScreen/EsqueceuSenhaNovaSenhaScreen/styles.ts
 import { StyleSheet } from 'react-native';
-import { theme } from '@/styles/theme';
 
 const styles = StyleSheet.create({
   contentBase: {
     paddingHorizontal: 35,
-  },
-  header: {
-    marginBottom: 24,
   },
   kav: {
     flex: 1,
@@ -19,19 +15,6 @@ const styles = StyleSheet.create({
 
   scroll: {
     flex: 1,
-  },
-  subtitle: {
-    color: '#555',
-    fontFamily: theme.fonts.regular,
-    fontSize: 14,
-    textAlign: 'center',
-  },
-  title: {
-    color: '#8F4FE7',
-    fontFamily: theme.fonts.semi,
-    fontSize: 24,
-    marginBottom: 8,
-    textAlign: 'center',
   },
 });
 
