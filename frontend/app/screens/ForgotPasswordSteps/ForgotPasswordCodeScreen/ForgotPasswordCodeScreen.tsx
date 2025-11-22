@@ -1,3 +1,4 @@
+// frontend/app/screens/ForgotPasswordSteps/ForgotPasswordCodeScreen/ForgotPasswordCodeScreen.tsx
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -17,6 +18,7 @@ import { api } from '@/services/api';
 import { AxiosError } from 'axios';
 import styles from './styles';
 import ForgotPasswordCodeIntro from '@/components/ForgotPasswordCodeIntro/ForgotPasswordCodeIntro';
+import * as Notifications from 'expo-notifications';
 
 /* -------------------- VALIDATORS -------------------- */
 
@@ -77,16 +79,38 @@ export default function ForgotPasswordCodeScreen() {
     }
 
     try {
-      await api.post('/auth/forgot-password/request-code', {
+      const response = await api.post('/auth/forgot-password/request-code', {
         email: emailNorm,
       });
 
       setCodeRequested(true);
 
-      Alert.alert(
-        'Código enviado',
-        'Enviamos um código de verificação para o número cadastrado. Digite o código abaixo e toque em "Próximo".'
-      );
+      const data = response.data as {
+        message?: string;
+        code?: string;
+      };
+
+      // Se o backend devolveu o código, usamos ele na notificação
+      if (data.code) {
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: 'Código de verificação MindCare',
+            body: `Seu código é: ${data.code}`,
+          },
+          trigger: null, // dispara imediatamente
+        });
+
+        Alert.alert(
+          'Código enviado',
+          'Enviamos uma notificação no seu dispositivo com o código de verificação. Verifique e digite o código abaixo.'
+        );
+      } else {
+        // fallback: sem code no body (não deve acontecer com o backend atual)
+        Alert.alert(
+          'Código enviado',
+          'Se o e-mail estiver cadastrado, um código de verificação foi gerado. Digite o código que você recebeu.'
+        );
+      }
     } catch (error: unknown) {
       console.log('[EsqueceuSenha] erro ao solicitar código:', error);
       let msg = 'Erro ao solicitar código de verificação.';
@@ -150,7 +174,7 @@ export default function ForgotPasswordCodeScreen() {
         code: code.trim(),
       });
 
-      // Envia email e code para a tela de nova senha
+      // Navega para a tela de nova senha com email + code na URL
       router.replace(
         `/screens/ForgotPasswordSteps/ForgotPasswordScreen/NewPasswordScreen?email=${encodeURIComponent(
           emailNorm

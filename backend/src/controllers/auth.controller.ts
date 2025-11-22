@@ -214,7 +214,7 @@ export const requestPasswordResetCode = async (req: Request, res: Response) => {
 
     const user = await UserModel.findOne({ email });
     if (!user) {
-      // Não revela se existe ou não (evita enumeration)
+      // não revela se o e-mail existe ou não
       return res.status(200).json({
         message:
           'Se o e-mail estiver cadastrado, enviaremos um código de verificação.',
@@ -228,13 +228,16 @@ export const requestPasswordResetCode = async (req: Request, res: Response) => {
     user.resetPasswordExpires = expires;
     await user.save();
 
-    // Envia SMS (stub loga no console)
     const message = `Seu código de verificação MindCare é: ${code}. Ele expira em 15 minutos.`;
+
+    // SMS fictício / log (método do "admin")
     await sendSms(user.phone, message);
 
+    // Ajuste: agora também devolvemos o code para o app poder mostrar na notificação
     return res.status(200).json({
       message:
         'Se o e-mail estiver cadastrado, enviaremos um código de verificação.',
+      code,
     });
   } catch (err: any) {
     console.error('[AUTH] erro em requestPasswordResetCode:', err);
