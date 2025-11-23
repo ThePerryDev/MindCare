@@ -6,8 +6,30 @@ import { View, StyleSheet } from 'react-native';
 import { theme } from '../styles/theme';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { RegisterFlowProvider } from '@/contexts/RegisterFlowContext';
+import * as Notifications from 'expo-notifications';
+import { useEffect } from 'react';
+
+// Define como as notificações serão exibidas
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+    shouldShowBanner: true,
+    shouldShowList: true,
+  }),
+});
 
 export default function RootLayout() {
+  useEffect(() => {
+    (async () => {
+      const { status } = await Notifications.getPermissionsAsync();
+      if (status !== 'granted') {
+        await Notifications.requestPermissionsAsync();
+      }
+    })();
+  }, []);
+
   return (
     <SafeAreaProvider>
       <View style={styles.container}>

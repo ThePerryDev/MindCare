@@ -6,6 +6,8 @@ import { ensureDefaultTrails } from './database/seedTrails';
 
 const PORT = Number(process.env.PORT || 3000);
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/mindcare';
+const BACKEND_LOCAL_API_URL =
+  process.env.BACKEND_LOCAL_API_URL || 'http://192.168.18.20:';
 
 async function start() {
   try {
@@ -18,7 +20,7 @@ async function start() {
 
     // 3. Sobe a API igual antes
     app.listen(PORT, '0.0.0.0', () =>
-      console.log(`Server ouvindo em http://192.168.1.79:${PORT}`)
+      console.log(`Server ouvindo em ${BACKEND_LOCAL_API_URL}${PORT}`)
     );
   } catch (e) {
     console.error('Falha ao iniciar', e);
