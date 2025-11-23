@@ -39,7 +39,7 @@ import type { TrilhaModel } from '@/components/Trilhas/types';
 
 const PROGRESS_PREFIX = '@mindcare/trilha-progress/';
 
-async function getCurrentDay(trackKey: string): Promise<number> {
+export async function getCurrentDay(trackKey: string): Promise<number> {
   try {
     const raw = await AsyncStorage.getItem(PROGRESS_PREFIX + trackKey);
     const n = Number(raw);
@@ -49,25 +49,25 @@ async function getCurrentDay(trackKey: string): Promise<number> {
   }
 }
 
-async function setCurrentDay(trackKey: string, day: number): Promise<void> {
+export async function setCurrentDay(trackKey: string, day: number): Promise<void> {
   const safeDay = Math.max(1, Math.min(8, day));
   await AsyncStorage.setItem(PROGRESS_PREFIX + trackKey, String(safeDay));
 }
 
-async function advanceDay(trackKey: string): Promise<number> {
+export async function advanceDay(trackKey: string): Promise<number> {
   const current = await getCurrentDay(trackKey);
   const next = current + 1;
   await setCurrentDay(trackKey, next);
   return next;
 }
 
-type TrackDetails = {
+export type TrackDetails = {
   activityTitle: string;
   description: string;
   benefits: string[];
 };
 
-type SessionActivity = {
+export type SessionActivity = {
   id: string;
   title: string;
   subtitle: string;
@@ -75,7 +75,7 @@ type SessionActivity = {
   tips?: string[];
 };
 
-type Session = {
+export type Session = {
   trackId: string;
   dayLabel: string;
   activityTitle: string;

@@ -10,6 +10,8 @@ import {
   Keyboard,
   Platform,
   KeyboardAvoidingView,
+  Modal,
+  Pressable,
 } from 'react-native';
 import {
   SafeAreaView,
@@ -19,6 +21,9 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { styles, INPUT_HEIGHT, CHIPS_HEIGHT, INPUT_BOTTOM_GAP } from './styles';
 import robsonImg from '../../../assets/images/robson.png';
 import { classifyEmotion } from '../../../services/emotionService';
+import Button from '@/components/Button/Button';
+import { LinearGradient } from 'expo-linear-gradient';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // ------------------
 // Tipagens
@@ -188,6 +193,9 @@ export default function ChatBotScreen() {
     ? INPUT_HEIGHT + 16
     : INPUT_HEIGHT + CHIPS_HEIGHT + 32 + INPUT_BOTTOM_GAP;
 
+  const [showEmotionCard, setShowEmotionCard] = useState(false);
+  const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
+
   // ------------------
   // Render
   // ------------------
@@ -255,6 +263,7 @@ export default function ChatBotScreen() {
                       />
                     </View>
                   )}
+
                   <View
                     style={[
                       styles.bubble,
@@ -274,6 +283,24 @@ export default function ChatBotScreen() {
                           }]`}
                         </Text>
                       )}
+
+                    {/* NOVO: Botão para mensagens do bot com emoção detectada */}
+                    {!isUser &&
+                      [
+                        'felicidade',
+                        'tristeza',
+                        'ansiedade',
+                        'estresse',
+                      ].includes(message.emotion ?? '') && (
+                        <Button
+                          onPress={() => {
+                            setSelectedEmotion(message.emotion ?? null);
+                            setShowEmotionCard(true);
+                          }}
+                        >
+                          <Text>Trilha Sugerida</Text>
+                        </Button>
+                      )}
                   </View>
 
                   {isUser && (
@@ -285,6 +312,81 @@ export default function ChatBotScreen() {
               );
             })}
           </ScrollView>
+
+          {/* Card */}
+          {showEmotionCard && (
+            <Modal
+              transparent
+              visible={showEmotionCard}
+              animationType='fade'
+              onRequestClose={() => setShowEmotionCard(false)}
+            >
+              {/* Área de fundo para fechar o modal ao tocar */}
+              <Pressable
+                style={styles.infoBackdrop}
+                onPress={() => setShowEmotionCard(false)}
+              />
+
+              <View style={[styles.infoSheet, styles.sessionModalCard]}>
+                <View style={styles.sessionTopRow}>
+                  <Text style={styles.sessionDayText}>Emoção detectada</Text>
+
+                  <TouchableOpacity
+                    onPress={() => setShowEmotionCard(false)}
+                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                  >
+                    <View style={styles.modalCloseIcon}>
+                      <MaterialCommunityIcons
+                        name='close'
+                        size={18}
+                        color='#7B6AFB'
+                      />
+                    </View>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.sessionDivider} />
+
+                <View style={styles.sessionHeaderCenter}>
+                  <LinearGradient
+                    colors={['#6C4FF6', '#9A4DFF']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.sessionIconCircle}
+                  >
+                    <Text style={styles.sessionIconText}>
+                      {selectedEmotion?.charAt(0).toUpperCase()}
+                    </Text>
+                  </LinearGradient>
+
+                  <Text style={styles.sessionTitle}>{selectedEmotion}</Text>
+
+                  <Text style={styles.sessionDescription}>
+                    Em breve iremos sugerir trilhas com base em como você está
+                    se sentindo 💜
+                  </Text> 
+                </View>
+
+                <View style={{ marginTop: 20 }}>
+                  <TouchableOpacity
+                    onPress={() => setShowEmotionCard(false)}
+                    activeOpacity={0.9}
+                  >
+                    <LinearGradient
+                      colors={['#10B981', '#059669']}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                      style={styles.sessionCompleteButton}
+                    >
+                      <Text style={styles.sessionCompleteButtonText}>
+                        Fechar
+                      </Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+          )}
 
           {/* CHIPS */}
           {!isKeyboardVisible && (

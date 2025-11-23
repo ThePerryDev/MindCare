@@ -18,7 +18,7 @@ async function start() {
 
     // 3. Sobe a API igual antes
     app.listen(PORT, '0.0.0.0', () =>
-      console.log(`Server ouvindo em http://192.168.1.79:${PORT}`)
+      console.log(`Server ouvindo em http://192.168.1.75:${PORT}`)
     );
   } catch (e) {
     console.error('Falha ao iniciar', e);
