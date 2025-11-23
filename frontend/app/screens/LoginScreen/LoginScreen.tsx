@@ -129,7 +129,13 @@ export default function LoginScreen() {
               {isSubmitting ? <ActivityIndicator /> : <Text>Login</Text>}
             </Button>
 
-            <Pressable onPress={() => router.push('/')}>
+            <Pressable
+              onPress={() =>
+                router.push(
+                  '/screens/ForgotPasswordSteps/ForgotPasswordCodeScreen/ForgotPasswordCodeScreen'
+                )
+              }
+            >
               <Text style={styles.linkForgot}>Esqueceu sua senha?</Text>
             </Pressable>
 
@@ -137,7 +143,7 @@ export default function LoginScreen() {
               <Text style={styles.textRegister}>Não tem uma conta? </Text>
               <Pressable
                 onPress={() =>
-                  router.push(
+                  router.replace(
                     '/screens/CadastroScreen/CadastroDadosPessoaisScreen/CadastroDadosPessoaisScreen'
                   )
                 }

@@ -1,34 +1,31 @@
-<<<<<<< HEAD
 // backend/src/server.ts
-=======
-// src/server.ts
->>>>>>> 89fbd3b9cb5788ac8e705b6e09d6cffbe03595a8
 import 'dotenv/config';
 import app from './app';
 import { connect } from './database/connection';
+import { ensureDefaultTrails } from './database/seedTrails';
 
 const PORT = Number(process.env.PORT || 3000);
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/mindcare';
+const BACKEND_LOCAL_API_URL =
+  process.env.BACKEND_LOCAL_API_URL || 'http://192.168.18.20:';
 
 async function start() {
   try {
+    // 1. Conecta no Mongo usando a mesma lógica que já funcionava antes
     await connect(MONGO_URI);
-<<<<<<< HEAD
-    // força bind na LAN tb
+
+    // 2. Garante que as trilhas sejam criadas/atualizadas
+    await ensureDefaultTrails();
+    console.log('[trails] trilhas padrão criadas/atualizadas com sucesso');
+
+    // 3. Sobe a API igual antes
     app.listen(PORT, '0.0.0.0', () =>
-      console.log(`Server ouvindo em http://192.168.18.20:${PORT}`)
-=======
-    app.listen(PORT, () =>
-      console.log(`Server ouvindo em http://localhost:${PORT}`)
->>>>>>> 89fbd3b9cb5788ac8e705b6e09d6cffbe03595a8
+      console.log(`Server ouvindo em ${BACKEND_LOCAL_API_URL}${PORT}`)
     );
   } catch (e) {
     console.error('Falha ao iniciar', e);
     process.exit(1);
   }
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> 89fbd3b9cb5788ac8e705b6e09d6cffbe03595a8
 start();

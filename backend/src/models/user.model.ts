@@ -10,6 +10,8 @@ export interface IUser extends Document {
   weight: number; // Peso em kg
   password: string; // Senha (hash)
   // OBS: confirmação de senha é validada na camada de serviço/DTO e não é persistida
+  resetPasswordCode?: string | null;
+  resetPasswordExpires?: Date | null;
 }
 
 // Regras de validação
@@ -90,6 +92,17 @@ const UserSchema = new Schema<IUser>(
       validate: passwordPolicy, // 8+, 1 maiús, 1 minús, 1 número
       select: false, // nunca retorna por padrão
     },
+    //Campos para Reset de Senha
+    resetPasswordCode: {
+      type: String,
+      select: false,
+      default: null,
+    },
+    resetPasswordExpires: {
+      type: Date,
+      select: false,
+      default: null,
+    },
   },
   {
     timestamps: true,
@@ -99,6 +112,8 @@ const UserSchema = new Schema<IUser>(
         delete ret._id;
         delete ret.__v;
         delete ret.password; // garante que não vaze mesmo se select:true
+        delete ret.resetPasswordCode;
+        delete ret.resetPasswordExpires;
       },
     },
   }
