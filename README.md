@@ -9,7 +9,7 @@
 | **Claudia**   | XXX-094        | XXX-101        | XXX-108        | XXX-115        | XXX-122        |
 | **Willian**   | XXX-095        | XXX-102        | XXX-109        | XXX-116        | XXX-123        |
 | **Bianca**    | XXX-096        | XXX-103        | XXX-110        | XXX-117        | XXX-124        |
-| **Daniel**    | XXX-097        | XXX-104        | XXX-111        | XXX-118        | XXX-125        |
+| **Daniel**    | LDM-097        | QT-104         | QT -111        | QT -118        | QT -125        |
 | **Heclair**   | XXX-098        | XXX-105        | XXX-112        | XXX-119        | XXX-126        |
 
 
@@ -61,11 +61,11 @@
 
 | **Daniel** | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **06/11/2025** | XXX-097 |  |
-| **10/11/2025** | XXX-104 |  |
-| **12/11/2025** | XXX-111 |  |
-| **14/11/2025** | XXX-118 |  |
-| **18/11/2025** | XXX-125 |  |
+| **06/11/2025** | LDM-097 | Reunião de atividades, preparar tasks e dificuldades |
+| **10/11/2025** | QT -104 | Container do backend, mongo (incompleto) |
+| **12/11/2025** | QT -111 | Container do backend, mongo (desistência) |
+| **14/11/2025** | QT -118 | Container do chatbot Incompleto |
+| **18/11/2025** | QT -125 | Container do chatbot |
 
 
 | **Heclair** | **Nome da tarefa** | **Descrição** |
