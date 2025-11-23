@@ -7,7 +7,7 @@ on:
     branches: ['develop', 'SP3-01/Daniel/Container-chatbot']
 env:
   # Variáveis de ambiente para o novo job de Docker
-  NLP_DOCKERFILE_PATH: MindCare/mindcare-nlp
+  NLP_DOCKERFILE_PATH: ./mindcare-nlp
   NLP_IMAGE_NAME: mindcare-nlp-api
 
 jobs:
