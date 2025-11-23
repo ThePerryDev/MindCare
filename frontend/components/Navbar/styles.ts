@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const NAVBAR_HEIGHT = 60;
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
@@ -24,5 +24,3 @@ const styles = StyleSheet.create({
     zIndex: 50,
   },
 });
-
-export default styles;
