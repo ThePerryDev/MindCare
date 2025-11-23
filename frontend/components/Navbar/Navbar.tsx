@@ -14,14 +14,14 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import styles from './styles';
-import Input from '../../../components/Input/Input';
-import Button from '../../../components/Button/Button';
+import Input from '../../components/Input/Input';
+import Button from '../../components/Button/Button';
 import logoMindcare from '../../../assets/images/logo_mindcare.png';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/hooks/useAuth';
 import type { AxiosError } from 'axios';
 import PasswordInput from '@/components/PasswordInput/PasswordInput';
+import styles from './styles';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
