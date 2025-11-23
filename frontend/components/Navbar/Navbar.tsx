@@ -1,65 +1,159 @@
-import React, { useEffect, useState } from 'react';
-import { View, Pressable } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { styles } from './styles';
-import { router, usePathname } from 'expo-router';
+// frontend/app/screens/LoginScreen/LoginScreen.tsx
+import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  Text,
+  Image,
+  Pressable,
+  View,
+  KeyboardAvoidingView,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Platform,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
+import styles from './styles';
+import Input from '../../../components/Input/Input';
+import Button from '../../../components/Button/Button';
+import logoMindcare from '../../../assets/images/logo_mindcare.png';
+import { useRouter } from 'expo-router';
+import { useAuth } from '@/hooks/useAuth';
+import type { AxiosError } from 'axios';
+import PasswordInput from '@/components/PasswordInput/PasswordInput';
 
-export { NAVBAR_HEIGHT } from './styles';
+export default function LoginScreen() {
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-type NavRoute = '/home' | '/trails' | '/chat' | '/profile' | '/settings';
+  const { login } = useAuth();
+  const router = useRouter();
+  const scrollRef = useRef<ScrollView>(null);
 
-type NavItem = {
-  route: NavRoute;
-  icon: keyof typeof Ionicons.glyphMap;
-  size?: number;
-};
-
-const NAV_ITEMS: NavItem[] = [
-  { route: '/home', icon: 'home', size: 24 },
-  { route: '/trails', icon: 'book-outline', size: 24 },
-  { route: '/chat', icon: 'chatbubble-outline', size: 26 },
-  { route: '/profile', icon: 'person-outline', size: 24 },
-  { route: '/settings', icon: 'settings-outline', size: 24 },
-];
-
-export default function Navbar() {
-  const pathname = usePathname();
-
-  // Estado para controlar o ícone ativo
-  const [activeRoute, setActiveRoute] = useState<NavRoute>('/home');
-
-  // Atualiza automaticamente quando a rota do app muda
-  // (garante consistência mesmo se o usuário navegar fora da Navbar)
   useEffect(() => {
-    if (
-      pathname === '/home' ||
-      pathname === '/trails' ||
-      pathname === '/chat' ||
-      pathname === '/profile' ||
-      pathname === '/settings'
-    ) {
-      setActiveRoute(pathname as NavRoute);
-    }
-  }, [pathname]);
+    const showSub = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+    const hideSub = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+      setIsPasswordFocused(false);
+    });
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
 
-  const go = (route: NavRoute) => () => {
-    if (route !== activeRoute) {
-      setActiveRoute(route);
-      router.push(route as Parameters<typeof router.push>[0]);
+  const kavBehavior =
+    Platform.OS === 'ios'
+      ? keyboardVisible
+        ? 'padding'
+        : undefined
+      : keyboardVisible
+        ? 'height'
+        : undefined;
+
+  const showLogo = !(keyboardVisible && isPasswordFocused);
+
+  async function handleLogin() {
+    if (!email || !senha) {
+      Alert.alert('Atenção', 'Preencha e-mail e senha.');
+      return;
     }
-  };
+
+    try {
+      setIsSubmitting(true);
+      await login(email, senha);
+      router.replace('/screens/HomeScreen/HomeScreen');
+    } catch (err: unknown) {
+      const axiosError = err as AxiosError<{ error?: string }>;
+      const message =
+        axiosError.response?.data?.error ||
+        axiosError.message ||
+        'Não foi possível fazer login';
+      Alert.alert('Erro', message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
-    <View style={styles.container}>
-      {NAV_ITEMS.map(({ route, icon, size = 24 }) => (
-        <Pressable key={route} onPress={go(route)}>
-          <Ionicons
-            name={icon}
-            size={size}
-            color={activeRoute === route ? '#8E54E9' : '#B5B5B5'}
-          />
-        </Pressable>
-      ))}
-    </View>
+    <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
+      <KeyboardAvoidingView
+        style={styles.kav}
+        behavior={kavBehavior}
+        keyboardVerticalOffset={0}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <ScrollView
+            ref={scrollRef}
+            style={styles.scroll}
+            contentContainerStyle={[
+              styles.contentBase,
+              keyboardVisible ? styles.contentTop : styles.contentCenter,
+              keyboardVisible ? styles.padSmall : styles.padLarge,
+            ]}
+            keyboardShouldPersistTaps='handled'
+            showsVerticalScrollIndicator={false}
+          >
+            {showLogo && (
+              <Image
+                source={logoMindcare}
+                style={[styles.image, keyboardVisible && styles.imageSmall]}
+              />
+            )}
+
+            <Input
+              label='E-mail'
+              placeholder='Digite seu e-mail'
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize='none'
+              keyboardType='email-address'
+            />
+
+            <PasswordInput
+              label='Senha'
+              placeholder='Digite sua senha'
+              value={senha}
+              onChangeText={setSenha}
+              onFocus={() => setIsPasswordFocused(true)}
+              onBlur={() => setIsPasswordFocused(false)}
+            />
+
+            <Button onPress={handleLogin} disabled={isSubmitting}>
+              {isSubmitting ? <ActivityIndicator /> : <Text>Login</Text>}
+            </Button>
+
+            <Pressable
+              onPress={() =>
+                router.push(
+                  '/screens/ForgotPasswordSteps/ForgotPasswordCodeScreen/ForgotPasswordCodeScreen'
+                )
+              }
+            >
+              <Text style={styles.linkForgot}>Esqueceu sua senha?</Text>
+            </Pressable>
+
+            <View style={styles.registerContainer}>
+              <Text style={styles.textRegister}>Não tem uma conta? </Text>
+              <Pressable
+                onPress={() =>
+                  router.replace(
+                    '/screens/CadastroScreen/CadastroDadosPessoaisScreen/CadastroDadosPessoaisScreen'
+                  )
+                }
+              >
+                <Text style={styles.linkRegister}>Cadastre-se</Text>
+              </Pressable>
+            </View>
+          </ScrollView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
