@@ -9,7 +9,8 @@ WORKDIR /app
 
 # 4. Copia e instala as dependências
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu && \
+    pip install --no-cache-dir -r requirements.txt
 
 # 5. Copia o restante do código da aplicação
 # Isso inclui a pasta 'app' e a pasta 'nlp' com os modelos
