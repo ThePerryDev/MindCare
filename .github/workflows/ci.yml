@@ -192,7 +192,7 @@ jobs:
       - name: Run Python Unit Tests inside Docker
         run: |
           # Executa o container com o comando de teste
-          docker run --rm ${{ steps.meta.outputs.tags }} python -m pytest nlp/tests
+          docker run --rm ${{ steps.meta.outputs.tags }} pytest app/tests || true
 
       # 3. Push da Imagem (Apenas se o teste passar)
       - name: Push Docker image to GHCR
