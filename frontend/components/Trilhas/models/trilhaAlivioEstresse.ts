@@ -1,3 +1,5 @@
+// frontend/components/Trilhas/models/trilhaAlivioEstresse.ts
+
 import { TrilhaModel } from '../types';
 
 /**

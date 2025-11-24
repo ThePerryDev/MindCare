@@ -1,5 +1,7 @@
 // frontend/interfaces/trail.interface.ts
 
+import { MoodLabel } from './feeling.interface';
+
 export interface ITrailStep {
   ordem: number; // 1..7
   titulo: string;
@@ -74,4 +76,9 @@ export interface INextExerciseResponse {
     step: ITrailStep;
   };
   message?: string;
+}
+
+export interface IRecommendedTrailsResponse {
+  feeling: MoodLabel | string;
+  recommended: ITrail[];
 }

@@ -1,3 +1,5 @@
+// frontend/components/CloseButton/CloseButton.tsx
+
 import React from 'react';
 import { Pressable, GestureResponderEvent } from 'react-native';
 import { styles } from './styles';

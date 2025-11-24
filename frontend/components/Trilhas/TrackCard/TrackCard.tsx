@@ -1,7 +1,7 @@
-// frontend/components/Trilhas/TrackCard.tsx
+// frontend/components/Trilhas/TrackCard/TrackCard.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { styles } from '@/app/screens/TrilhaScreen/styles';
+import { styles } from './styles';
 
 export type TrackStatus =
   | 'completed'
@@ -139,6 +139,7 @@ const TrackCard: React.FC<TrackCardProps> = ({
           ]}
           disabled={isPrimaryButtonDisabled}
           onPress={onPrimaryPress}
+          activeOpacity={0.9}
         >
           <Text
             style={[
@@ -157,6 +158,7 @@ const TrackCard: React.FC<TrackCardProps> = ({
           ]}
           disabled={isLocked}
           onPress={onDetailsPress}
+          activeOpacity={0.9}
         >
           <Text
             style={[

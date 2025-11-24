@@ -1,13 +1,15 @@
+// frontend/components/Trilhas/models/trilhaMuitoFeliz.ts
+
 import { TrilhaModel } from '../types';
 
 /**
- * Trilha 5 – Muito Feliz
+ * Trilha 3 – Muito Feliz
  * (Objetivo da trilha aplicado como foco; como não há duração, usei null/“—”)
  */
 export const trilhaMuitoFeliz: TrilhaModel = {
-  id: 5,
+  id: 3,
   key: 'trilha-muito-feliz',
-  name: 'Trilha 5 – Muito Feliz',
+  name: 'Trilha 3 – Muito Feliz',
   focus: 'Manter o bem-estar e reforçar emoções positivas.',
   level: 'Iniciante',
   minMinutes: 5,

@@ -1,3 +1,5 @@
+// frontend/components/Checkbox/Checkbox.tsx
+
 import React from 'react';
 import { Pressable, View, AccessibilityRole } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
