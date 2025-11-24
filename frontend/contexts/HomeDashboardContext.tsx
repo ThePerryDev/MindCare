@@ -9,7 +9,8 @@ import {
   fetchNextExercise,
   fetchTrailStats,
   TrailStatsPeriod,
-} from '@/services/trail';
+} from '@/services/trailStats';
+
 import { useAuth } from '@/hooks/useAuth';
 
 export interface IHomeDashboardContext {

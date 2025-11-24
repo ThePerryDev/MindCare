@@ -12,7 +12,7 @@ Configure os seguintes secrets no seu repositório:
 
 | Nome | Descrição | Exemplo |
 |------|-----------|---------|
-| `MONGODB_URI` | URI do MongoDB para testes | `mongodb://admin:password123@localhost:27017/mindcare_test` |
+| `MONGODB_URI` | URI do MongoDB para testes | `mongodb://admin:password123@192.168.0.112:27017/mindcare_test` |
 | `JWT_SECRET` | Chave secreta para JWT | `sua-chave-jwt-super-secreta` |
 | `DOCKER_USERNAME` | Usuário Docker Hub (opcional) | `seu-usuario-docker` |
 | `DOCKER_PASSWORD` | Senha Docker Hub (opcional) | `sua-senha-docker` |

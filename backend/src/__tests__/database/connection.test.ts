@@ -38,7 +38,7 @@ describe('Database Connection', () => {
   // ================================================================
   describe('Função connect', () => {
     it('deve conectar ao MongoDB com sucesso', async () => {
-      const uri = 'mongodb://localhost:27017/test';
+      const uri = 'mongodb://192.168.0.112:27017/test';
       await connect(uri);
 
       expect(mongoose.connect).toHaveBeenCalledWith(uri, {
@@ -49,7 +49,7 @@ describe('Database Connection', () => {
     });
 
     it('deve configurar todos os event handlers da conexão', async () => {
-      const uri = 'mongodb://localhost:27017/test';
+      const uri = 'mongodb://192.168.0.112:27017/test';
       await connect(uri);
 
       const expectedEvents = [
@@ -71,7 +71,7 @@ describe('Database Connection', () => {
     });
 
     it('deve configurar handler para SIGINT', async () => {
-      const uri = 'mongodb://localhost:27017/test';
+      const uri = 'mongodb://192.168.0.112:27017/test';
       await connect(uri);
 
       expect(process.on).toHaveBeenCalledWith('SIGINT', expect.any(Function));
@@ -87,7 +87,7 @@ describe('Database Connection', () => {
 
     it('deve aceitar diferentes URIs', async () => {
       const uris = [
-        'mongodb://localhost:27017/db1',
+        'mongodb://192.168.0.112:27017/db1',
         'mongodb://user:pass@remote:27017/db2',
         'mongodb+srv://cluster.mongodb.net/db3',
       ];
@@ -110,7 +110,7 @@ describe('Database Connection', () => {
         }
       );
 
-      await connect('mongodb://localhost:27017/test');
+      await connect('mongodb://192.168.0.112:27017/test');
     });
 
     it('deve logar quando conectado', () => {
@@ -162,7 +162,7 @@ describe('Database Connection', () => {
         }
       );
 
-      await connect('mongodb://localhost:27017/test');
+      await connect('mongodb://192.168.0.112:27017/test');
     });
 
     it('deve fechar conexão graciosamente no SIGINT', async () => {
@@ -200,7 +200,7 @@ describe('Database Connection', () => {
   // ================================================================
   describe('Configurações de Conexão', () => {
     it('deve usar configurações corretas por padrão', async () => {
-      const uri = 'mongodb://localhost:27017/test';
+      const uri = 'mongodb://192.168.0.112:27017/test';
       await connect(uri);
 
       expect(mongoose.connect).toHaveBeenCalledWith(uri, {
@@ -211,8 +211,8 @@ describe('Database Connection', () => {
 
     it('deve conectar com diferentes configurações de URI', async () => {
       const testCases = [
-        'mongodb://localhost:27017/local',
-        'mongodb://user:pass@localhost:27017/auth',
+        'mongodb://192.168.0.112:27017/local',
+        'mongodb://user:pass@192.168.0.112:27017/auth',
         'mongodb+srv://cluster.mongodb.net/cloud',
       ];
 
@@ -229,14 +229,14 @@ describe('Database Connection', () => {
   // ================================================================
   describe('Logs e Monitoramento', () => {
     it('deve registrar mensagem de sucesso na conexão', async () => {
-      const uri = 'mongodb://localhost:27017/test';
+      const uri = 'mongodb://192.168.0.112:27017/test';
       await connect(uri);
 
       expect(console.log).toHaveBeenCalledWith('[mongo] Conectado ao MongoDB');
     });
 
     it('deve configurar observabilidade completa', async () => {
-      const uri = 'mongodb://localhost:27017/test';
+      const uri = 'mongodb://192.168.0.112:27017/test';
       await connect(uri);
 
       const observabilityEvents = [
@@ -261,7 +261,7 @@ describe('Database Connection', () => {
   // ================================================================
   describe('Encerramento Gracioso', () => {
     it('deve configurar encerramento gracioso apenas uma vez', async () => {
-      const uri = 'mongodb://localhost:27017/test';
+      const uri = 'mongodb://192.168.0.112:27017/test';
       await connect(uri);
       await connect(uri);
       await connect(uri);
@@ -270,8 +270,8 @@ describe('Database Connection', () => {
     });
 
     it('deve preservar funcionalidade mesmo com múltiplas conexões', async () => {
-      const uri1 = 'mongodb://localhost:27017/db1';
-      const uri2 = 'mongodb://localhost:27017/db2';
+      const uri1 = 'mongodb://192.168.0.112:27017/db1';
+      const uri2 = 'mongodb://192.168.0.112:27017/db2';
 
       await connect(uri1);
       await connect(uri2);

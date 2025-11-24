@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Platform } from 'react-native';
 
 // IP da MÁQUINA onde o FastAPI está rodando
-const LAN = '192.168.18.46';
+const LAN = '192.168.0.112';
 
 // Se estiver usando EMULADOR ANDROID AVD, pode trocar por '10.0.2.2'
 const ANDROID_HOST =
