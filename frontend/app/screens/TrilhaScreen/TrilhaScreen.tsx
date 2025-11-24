@@ -1,3 +1,4 @@
+// frontend/app/screens/TrilhaScreen/TrilhaScreen.tsx
 import React, { useEffect, useState, useCallback } from 'react';
 import {
   View,
@@ -49,7 +50,10 @@ export async function getCurrentDay(trackKey: string): Promise<number> {
   }
 }
 
-export async function setCurrentDay(trackKey: string, day: number): Promise<void> {
+export async function setCurrentDay(
+  trackKey: string,
+  day: number
+): Promise<void> {
   const safeDay = Math.max(1, Math.min(8, day));
   await AsyncStorage.setItem(PROGRESS_PREFIX + trackKey, String(safeDay));
 }

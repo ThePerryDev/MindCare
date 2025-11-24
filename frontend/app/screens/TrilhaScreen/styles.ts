@@ -1,3 +1,4 @@
+// frontend/app/screens/TrilhaScreen/styles.ts
 import { StyleSheet } from 'react-native';
 import { theme } from '@/styles/theme';
 

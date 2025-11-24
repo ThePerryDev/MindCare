@@ -22,8 +22,9 @@ const TRAILS_SEED: SeedTrail[] = [
   {
     trailId: 1,
     code: 'TRILHA_ANSIEDADE_LEVE',
-    nome: 'Trilha 1 - Ansiedade Leve / Foco no Presente',
-    sentimentosRecomendados: ['Irritado', 'Neutro', 'Triste', 'Muito Triste'],
+    nome: 'Ansiedade Leve',
+    // Recomendada principalmente para Ansiedade, mas também para Estresse/Tristeza leve
+    sentimentosRecomendados: ['Ansiedade'],
     dias: [
       {
         ordem: 1,
@@ -73,8 +74,9 @@ const TRAILS_SEED: SeedTrail[] = [
   {
     trailId: 2,
     code: 'TRILHA_ESTRESSE_TRABALHO',
-    nome: 'Trilha 2 - Estresse no Trabalho / Estudo',
-    sentimentosRecomendados: ['Irritado', 'Triste', 'Muito Triste', 'Neutro'],
+    nome: 'Estresse no Trabalho/Escola',
+    // Recomendada principalmente para Estresse, mas também para Ansiedade e Tristeza
+    sentimentosRecomendados: ['Estresse'],
     dias: [
       {
         ordem: 1,
@@ -122,9 +124,57 @@ const TRAILS_SEED: SeedTrail[] = [
   },
   {
     trailId: 3,
+    code: 'TRILHA_MUITO_FELIZ',
+    nome: 'Muito Feliz',
+    // Agora ligada diretamente ao rótulo "Felicidade"
+    sentimentosRecomendados: ['Felicidade'],
+    dias: [
+      { ordem: 1, titulo: 'Escrever 3 coisas pelas quais é grato' },
+      { ordem: 2, titulo: 'Compartilhar uma mensagem positiva com alguém' },
+      { ordem: 3, titulo: 'Respiração profunda consciente', duracaoMinutos: 5 },
+      { ordem: 4, titulo: 'Caminhar ao ar livre ouvindo música animada' },
+      { ordem: 5, titulo: 'Registrar em diário um momento marcante do dia' },
+      { ordem: 6, titulo: 'Alongamento leve' },
+      { ordem: 7, titulo: 'Ouvir música favorita e cantar junto' },
+    ],
+  },
+  {
+    trailId: 4,
+    code: 'TRILHA_MUITO_TRISTE',
+    nome: 'Muito Triste',
+    // Agora ligada diretamente ao rótulo "Tristeza"
+    sentimentosRecomendados: ['Tristeza'],
+    dias: [
+      { ordem: 1, titulo: 'Respiração lenta com mão no coração e na barriga' },
+      {
+        ordem: 2,
+        titulo:
+          'Escrever carta de autocompaixão (como se falasse com um amigo)',
+      },
+      {
+        ordem: 3,
+        titulo: 'Ouvir meditação guiada sobre acolhimento emocional',
+      },
+      { ordem: 4, titulo: 'Exercício leve (yoga suave ou alongamento)' },
+      { ordem: 5, titulo: 'Relembrar memória boa olhando fotos/vídeos' },
+      { ordem: 6, titulo: 'Tomar um pouco de sol e observar o ambiente' },
+      { ordem: 7, titulo: 'Conectar-se com alguém (ligação ou mensagem)' },
+    ],
+  },
+];
+
+/**
+ * Trilhas antigas (desativadas por enquanto, mantidas aqui como referência)
+ *
+ * OBS: Estão comentadas exatamente como estavam antes da migração
+ * para as 4 emoções (Felicidade, Tristeza, Ansiedade, Estresse).
+ */
+/*
+  {
+    trailId: 5,
     code: 'TRILHA_SONO_RELAX',
-    nome: 'Trilha 3 - Sono e Relaxamento',
-    sentimentosRecomendados: ['Triste', 'Muito Triste', 'Neutro'],
+    nome: 'Trilha 5 - Sono e Relaxamento',
+    sentimentosRecomendados: ['Tristeza'],
     dias: [
       {
         ordem: 1,
@@ -170,10 +220,10 @@ const TRAILS_SEED: SeedTrail[] = [
     ],
   },
   {
-    trailId: 4,
+    trailId: 6,
     code: 'TRILHA_HUMOR_POSITIVO',
-    nome: 'Trilha 4 - Humor Positivo e Motivação',
-    sentimentosRecomendados: ['Muito Feliz', 'Neutro'],
+    nome: 'Trilha 6 - Humor Positivo e Motivação',
+    sentimentosRecomendados: ['Felicidade'],
     dias: [
       {
         ordem: 1,
@@ -219,25 +269,10 @@ const TRAILS_SEED: SeedTrail[] = [
     ],
   },
   {
-    trailId: 5,
-    code: 'TRILHA_MUITO_FELIZ',
-    nome: 'Trilha 5 - Muito Feliz',
-    sentimentosRecomendados: ['Muito Feliz'],
-    dias: [
-      { ordem: 1, titulo: 'Escrever 3 coisas pelas quais é grato' },
-      { ordem: 2, titulo: 'Compartilhar uma mensagem positiva com alguém' },
-      { ordem: 3, titulo: 'Respiração profunda consciente', duracaoMinutos: 5 },
-      { ordem: 4, titulo: 'Caminhar ao ar livre ouvindo música animada' },
-      { ordem: 5, titulo: 'Registrar em diário um momento marcante do dia' },
-      { ordem: 6, titulo: 'Alongamento leve' },
-      { ordem: 7, titulo: 'Ouvir música favorita e cantar junto' },
-    ],
-  },
-  {
-    trailId: 6,
+    trailId: 7,
     code: 'TRILHA_NEUTRO',
-    nome: 'Trilha 6 - Neutro',
-    sentimentosRecomendados: ['Neutro'],
+    nome: 'Trilha 7 - Neutro',
+    sentimentosRecomendados: ['Triste', 'Estresse', 'Ansiedade'],
     dias: [
       { ordem: 1, titulo: 'Meditação guiada', duracaoMinutos: 5 },
       { ordem: 2, titulo: 'Escrever como foi o dia e pontos bons' },
@@ -249,10 +284,10 @@ const TRAILS_SEED: SeedTrail[] = [
     ],
   },
   {
-    trailId: 7,
+    trailId: 8,
     code: 'TRILHA_TRISTE',
-    nome: 'Trilha 7 - Triste',
-    sentimentosRecomendados: ['Triste'],
+    nome: 'Trilha 8 - Triste',
+    sentimentosRecomendados: ['Tristeza'],
     dias: [
       { ordem: 1, titulo: 'Escrita livre sobre o que sente (sem julgamentos)' },
       { ordem: 2, titulo: 'Respiração 4-7-8' },
@@ -264,10 +299,10 @@ const TRAILS_SEED: SeedTrail[] = [
     ],
   },
   {
-    trailId: 8,
+    trailId: 9,
     code: 'TRILHA_IRRITADO',
-    nome: 'Trilha 8 - Irritado',
-    sentimentosRecomendados: ['Irritado'],
+    nome: 'Trilha 9 - Irritado',
+    sentimentosRecomendados: ['Estresse'],
     dias: [
       {
         ordem: 1,
@@ -292,29 +327,7 @@ const TRAILS_SEED: SeedTrail[] = [
       },
     ],
   },
-  {
-    trailId: 9,
-    code: 'TRILHA_MUITO_TRISTE',
-    nome: 'Trilha 9 - Muito Triste',
-    sentimentosRecomendados: ['Muito Triste'],
-    dias: [
-      { ordem: 1, titulo: 'Respiração lenta com mão no coração e na barriga' },
-      {
-        ordem: 2,
-        titulo:
-          'Escrever carta de autocompaixão (como se falasse com um amigo)',
-      },
-      {
-        ordem: 3,
-        titulo: 'Ouvir meditação guiada sobre acolhimento emocional',
-      },
-      { ordem: 4, titulo: 'Exercício leve (yoga suave ou alongamento)' },
-      { ordem: 5, titulo: 'Relembrar memória boa olhando fotos/vídeos' },
-      { ordem: 6, titulo: 'Tomar um pouco de sol e observar o ambiente' },
-      { ordem: 7, titulo: 'Conectar-se com alguém (ligação ou mensagem)' },
-    ],
-  },
-];
+*/
 
 export async function ensureDefaultTrails() {
   for (const trail of TRAILS_SEED) {

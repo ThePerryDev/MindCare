@@ -1,12 +1,13 @@
+// src/models/feeling.model.ts
+
 import mongoose, { Schema, Document, Types } from 'mongoose';
 
-// Sentimentos fixos do dropdown
+// Sentimentos fixos do dropdown (alinhados com o chatbot)
 export const FEELINGS = [
-  'Muito Feliz',
-  'Irritado',
-  'Neutro',
-  'Triste',
-  'Muito Triste',
+  'Felicidade',
+  'Tristeza',
+  'Ansiedade',
+  'Estresse',
 ] as const;
 
 export type FeelingValue = (typeof FEELINGS)[number];

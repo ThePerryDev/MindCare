@@ -8,6 +8,74 @@ export const CHIPS_HEIGHT = 44;
 export const INPUT_BOTTOM_GAP = 40;
 
 export const styles = StyleSheet.create({
+  activityModalBullet: {
+    backgroundColor: '#6C4FF6',
+    borderRadius: 3,
+    height: 6,
+    marginRight: 8,
+    marginTop: 6,
+    width: 6,
+  },
+
+  activityModalCard: {
+    paddingHorizontal: 20,
+    paddingVertical: 22,
+  },
+
+  activityModalDescription: {
+    color: '#6C6A8A',
+    fontFamily: theme.fonts.regular,
+    fontSize: 14,
+    marginBottom: 8,
+  },
+
+  activityModalDivider: {
+    backgroundColor: '#EEE9FF',
+    height: 1,
+    marginBottom: 12,
+  },
+
+  activityModalSectionTitle: {
+    color: '#4C46B6',
+    fontFamily: theme.fonts.semi,
+    fontSize: 14,
+    marginBottom: 6,
+    marginTop: 6,
+  },
+
+  activityModalSubtitle: {
+    color: '#8C8CA3',
+    fontFamily: theme.fonts.regular,
+    fontSize: 13,
+    marginBottom: 10,
+  },
+
+  activityModalTipRow: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    marginBottom: 4,
+  },
+
+  activityModalTipText: {
+    color: '#4F4F70',
+    flex: 1,
+    fontFamily: theme.fonts.regular,
+    fontSize: 13,
+  },
+
+  activityModalTitle: {
+    color: '#2C2C4E',
+    fontFamily: theme.fonts.semi,
+    fontSize: 17,
+  },
+
+  activityModalTopRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 4,
+  },
+
   backButton: {
     alignItems: 'center',
     height: 36,
@@ -19,6 +87,8 @@ export const styles = StyleSheet.create({
     backgroundColor: '#F4EFFF',
     flex: 1,
   },
+
+  bg: { flex: 1 },
 
   botAvatarSmall: {
     alignItems: 'center',
@@ -62,7 +132,78 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
 
+  completionButton: {
+    backgroundColor: '#6C4FF6',
+    borderRadius: 999,
+    marginTop: 8,
+    paddingHorizontal: 32,
+    paddingVertical: 10,
+  },
+
+  completionButtonText: {
+    color: '#FFFFFF',
+    fontFamily: theme.fonts.semi,
+    fontSize: 15,
+    textAlign: 'center',
+  },
+
+  completionContent: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
+
+  completionGradient: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'space-between',
+    paddingBottom: 72,
+    paddingHorizontal: 24,
+  },
+
+  completionImage: {
+    height: 220,
+    marginBottom: 32,
+    resizeMode: 'contain',
+    width: 220,
+  },
+
+  completionSafe: {
+    backgroundColor: 'transparent',
+    flex: 1,
+  },
+
+  completionSubtitle: {
+    color: '#7A5DF5',
+    fontFamily: theme.fonts.semi,
+    fontSize: 16,
+    marginBottom: 24,
+    marginHorizontal: 16,
+    textAlign: 'center',
+  },
+
+  completionTitle: {
+    color: '#7745D8',
+    fontFamily: theme.fonts.bold,
+    fontSize: 24,
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+
+  content: {
+    padding: 20,
+    paddingBottom: 70,
+  },
+
+  durationText: {
+    color: '#8C8CA3',
+    fontFamily: theme.fonts.regular,
+    fontSize: 12,
+  },
+
   flex: { flex: 1 },
+
+  footer: { marginTop: 14 },
 
   header: {
     alignItems: 'center',
@@ -80,257 +221,22 @@ export const styles = StyleSheet.create({
   },
 
   headerCenter: { alignItems: 'center' },
-
   headerRight: {
     borderRadius: 18,
     height: 36,
     overflow: 'hidden',
     width: 36,
   },
-
   headerStatus: {
     color: '#6C63FF',
     fontSize: 12,
     fontWeight: '500',
   },
-
   headerTitle: {
     color: '#4C46B6',
     fontSize: 18,
     fontWeight: '700',
   },
-
-  input: {
-    color: '#0F172A',
-    fontSize: 14.5,
-    maxHeight: 110,
-  },
-
-  inputRow: {
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-    gap: 10,
-    marginBottom: INPUT_BOTTOM_GAP, // ✅ agora vem antes de paddingTop
-    paddingHorizontal: 12,
-    paddingTop: 8,
-  },
-
-  inputWrapper: {
-    backgroundColor: '#FFF',
-    borderColor: '#E2E8F0',
-    borderRadius: 24,
-    borderWidth: 1,
-    flex: 1,
-    justifyContent: 'center',
-    minHeight: INPUT_HEIGHT,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-
-  messagesContainer: {
-    flex: 1,
-    paddingHorizontal: 20,
-  },
-
-  messagesContent: {
-    gap: 10,
-    paddingTop: 10,
-  },
-
-  metaInfoText: {
-    color: '#6B7280',
-    fontSize: 10,
-    marginTop: 4,
-  },
-
-  quickRepliesContent: {
-    alignItems: 'center',
-    gap: 8,
-    paddingHorizontal: 4,
-  },
-
-  quickReply: {
-    backgroundColor: '#D6F0F0',
-    borderRadius: 18,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-  },
-
-  quickReplyText: {
-    color: '#4C46B6',
-    fontSize: 13,
-    fontWeight: '600',
-  },
-
-  row: {
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-  },
-
-  rowLeft: { justifyContent: 'flex-start' },
-
-  rowRight: { justifyContent: 'flex-end' },
-
-  sendButton: {
-    alignItems: 'center',
-    backgroundColor: '#4C46B6',
-    borderRadius: 24,
-    height: 48,
-    justifyContent: 'center',
-    width: 48,
-  },
-
-  sendButtonIcon: {
-    color: '#FFF',
-    fontSize: 18,
-    fontWeight: '800',
-  },
-
-  userAvatarSmall: {
-    alignItems: 'center',
-    backgroundColor: '#4C46B6',
-    borderRadius: 16,
-    height: 32,
-    justifyContent: 'center',
-    marginLeft: 8,
-    width: 32,
-  },
-
-  userAvatarSmallIcon: {
-    color: '#FFF',
-    fontWeight: '700',
-  },
-
-  userBubble: {
-    backgroundColor: '#4C46B6',
-    borderTopRightRadius: 4,
-  },
-
-  userText: {
-    color: '#FFF',
-    fontSize: 14.5,
-    lineHeight: 20,
-  },
-
-  activityModalBullet: {
-    backgroundColor: '#6C4FF6',
-    borderRadius: 3,
-    height: 6,
-    marginRight: 8,
-    marginTop: 6,
-    width: 6,
-  },
-  activityModalCard: {
-    paddingHorizontal: 20,
-    paddingVertical: 22,
-  },
-  activityModalDescription: {
-    color: '#6C6A8A',
-    fontFamily: theme.fonts.regular,
-    fontSize: 14,
-    marginBottom: 8,
-  },
-  activityModalDivider: {
-    backgroundColor: '#EEE9FF',
-    height: 1,
-    marginBottom: 12,
-  },
-  activityModalSectionTitle: {
-    color: '#4C46B6',
-    fontFamily: theme.fonts.semi,
-    fontSize: 14,
-    marginBottom: 6,
-    marginTop: 6,
-  },
-  activityModalSubtitle: {
-    color: '#8C8CA3',
-    fontFamily: theme.fonts.regular,
-    fontSize: 13,
-    marginBottom: 10,
-  },
-  activityModalTipRow: {
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    marginBottom: 4,
-  },
-  activityModalTipText: {
-    color: '#4F4F70',
-    flex: 1,
-    fontFamily: theme.fonts.regular,
-    fontSize: 13,
-  },
-  activityModalTitle: {
-    color: '#2C2C4E',
-    fontFamily: theme.fonts.semi,
-    fontSize: 17,
-  },
-  activityModalTopRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 4,
-  },
-  bg: { flex: 1 },
-  completionButton: {
-    backgroundColor: '#6C4FF6',
-    borderRadius: 999,
-    marginTop: 8,
-    paddingHorizontal: 32,
-    paddingVertical: 10,
-  },
-  completionButtonText: {
-    color: '#FFFFFF',
-    fontFamily: theme.fonts.semi,
-    fontSize: 15,
-    textAlign: 'center',
-  },
-  completionContent: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  completionGradient: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingBottom: 72,
-    paddingHorizontal: 24,
-  },
-  completionImage: {
-    height: 220,
-    marginBottom: 32,
-    resizeMode: 'contain',
-    width: 220,
-  },
-  completionSafe: {
-    backgroundColor: 'transparent',
-    flex: 1,
-  },
-  completionSubtitle: {
-    color: '#7A5DF5',
-    fontFamily: theme.fonts.semi,
-    fontSize: 16,
-    marginBottom: 24,
-    marginHorizontal: 16,
-    textAlign: 'center',
-  },
-  completionTitle: {
-    color: '#7745D8',
-    fontFamily: theme.fonts.bold,
-    fontSize: 24,
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  content: {
-    padding: 20,
-    paddingBottom: 70,
-  },
-  durationText: {
-    color: '#8C8CA3',
-    fontFamily: theme.fonts.regular,
-    fontSize: 12,
-  },
-  footer: { marginTop: 14 },
   infoBackdrop: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0,0,0,0.35)',
@@ -361,6 +267,30 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
   },
+  input: {
+    color: '#0F172A',
+    fontSize: 14.5,
+    maxHeight: 110,
+  },
+  inputRow: {
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    gap: 10,
+    marginBottom: INPUT_BOTTOM_GAP, // ✅ agora vem antes de paddingTop
+    paddingHorizontal: 12,
+    paddingTop: 8,
+  },
+  inputWrapper: {
+    backgroundColor: '#FFF',
+    borderColor: '#E2E8F0',
+    borderRadius: 24,
+    borderWidth: 1,
+    flex: 1,
+    justifyContent: 'center',
+    minHeight: INPUT_HEIGHT,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
   levelBadge: {
     backgroundColor: '#E0F8EA',
     borderRadius: 999,
@@ -371,6 +301,19 @@ export const styles = StyleSheet.create({
     color: '#22A35B',
     fontFamily: theme.fonts.semi,
     fontSize: 11,
+  },
+  messagesContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+  },
+  messagesContent: {
+    gap: 10,
+    paddingTop: 10,
+  },
+  metaInfoText: {
+    color: '#6B7280',
+    fontSize: 10,
+    marginTop: 4,
   },
   modalActionButton: {
     alignItems: 'center',
@@ -499,6 +442,28 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 4,
   },
+  quickRepliesContent: {
+    alignItems: 'center',
+    gap: 8,
+    paddingHorizontal: 4,
+  },
+  quickReply: {
+    backgroundColor: '#D6F0F0',
+    borderRadius: 18,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+  },
+  quickReplyText: {
+    color: '#4C46B6',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  row: {
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+  },
+  rowLeft: { justifyContent: 'flex-start' },
+  rowRight: { justifyContent: 'flex-end' },
   safe: {
     backgroundColor: 'transparent',
     flex: 1,
@@ -527,6 +492,19 @@ export const styles = StyleSheet.create({
   },
   secondaryButtonTextDisabled: {
     color: '#B0B4C5',
+  },
+  sendButton: {
+    alignItems: 'center',
+    backgroundColor: '#4C46B6',
+    borderRadius: 24,
+    height: 48,
+    justifyContent: 'center',
+    width: 48,
+  },
+  sendButtonIcon: {
+    color: '#FFF',
+    fontSize: 18,
+    fontWeight: '800',
   },
   sessionActivityCard: {
     backgroundColor: '#F7F5FF',
@@ -759,6 +737,28 @@ export const styles = StyleSheet.create({
     fontFamily: theme.fonts.semi,
     fontSize: 16,
     marginBottom: 4,
+  },
+  userAvatarSmall: {
+    alignItems: 'center',
+    backgroundColor: '#4C46B6',
+    borderRadius: 16,
+    height: 32,
+    justifyContent: 'center',
+    marginLeft: 8,
+    width: 32,
+  },
+  userAvatarSmallIcon: {
+    color: '#FFF',
+    fontWeight: '700',
+  },
+  userBubble: {
+    backgroundColor: '#4C46B6',
+    borderTopRightRadius: 4,
+  },
+  userText: {
+    color: '#FFF',
+    fontSize: 14.5,
+    lineHeight: 20,
   },
 });
 

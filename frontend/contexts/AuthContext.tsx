@@ -1,3 +1,5 @@
+// frontend/contexts/AuthContext.tsx
+
 import React, { createContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
@@ -63,12 +65,14 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({
       password,
     });
     await persistSession(data.user, data.accessToken);
+    console.log('🟦 [AUTH CONTEXT] login() -> user carregado:', data.user);
   }
 
   // REGISTER
   async function register(payload: IRegisterData) {
     const { data } = await api.post<ILoginResponse>('/auth/register', payload);
     await persistSession(data.user, data.accessToken);
+    console.log('🟦 [AUTH CONTEXT] register() -> user criado:', data.user);
   }
 
   // LOGOUT
@@ -142,6 +146,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({
         setUser(me);
         setAccessToken(token);
         await AsyncStorage.setItem(USER_KEY, JSON.stringify(me));
+        console.log('🟦 [AUTH CONTEXT] Sessão restaurada com user:', me);
       } catch {
         await clearSession();
       } finally {

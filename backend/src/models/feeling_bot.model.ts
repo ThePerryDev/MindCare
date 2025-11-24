@@ -1,3 +1,5 @@
+// src/models/feeling_bot.model.ts
+
 import mongoose, { Schema, Document, Types } from 'mongoose';
 
 /**

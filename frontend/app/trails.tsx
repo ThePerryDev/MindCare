@@ -1,4 +1,4 @@
-import TrilhaScreen from "./screens/TrilhaScreen/TrilhaScreen";
+import TrilhaScreen from './screens/TrilhaScreen/TrilhaScreen';
 
 export default function Trails() {
   return <TrilhaScreen />;

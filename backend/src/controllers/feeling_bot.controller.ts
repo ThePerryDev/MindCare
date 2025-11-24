@@ -1,3 +1,5 @@
+// src/controllers/feeling_bot.controller.ts
+
 import { Response } from 'express';
 import FeelingBotModel from '../models/feeling_bot.model';
 import { AuthRequest } from '../security/auth.middleware';

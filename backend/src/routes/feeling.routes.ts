@@ -1,3 +1,5 @@
+// src/routes/feeling.routes.ts
+
 import { Router } from 'express';
 import { authGuard } from '../security/auth.middleware';
 import FeelingController from '../controllers/feeling.controller';

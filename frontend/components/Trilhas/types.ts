@@ -1,4 +1,4 @@
-// components/model/trilha/types.ts
+// frontend/components/Trilhas/types.ts
 
 export type TrilhaDay = {
   /** Dia da trilha (1 a 7) */

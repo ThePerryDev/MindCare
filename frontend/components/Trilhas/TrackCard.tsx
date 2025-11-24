@@ -1,3 +1,4 @@
+// frontend/components/Trilhas/TrackCard.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from '@/app/screens/TrilhaScreen/styles';

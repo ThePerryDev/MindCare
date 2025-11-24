@@ -1,4 +1,5 @@
-// components/Trilhas/models/index.ts
+// frontend/components/Trilhas/models/index.ts
+
 import { TrilhaModel } from '../types';
 import { trilhaAlivioEstresse } from './trilhaAlivioEstresse';
 import { trilhaAnsiedadeLeve } from './trilhaAnsiedadeLeve';

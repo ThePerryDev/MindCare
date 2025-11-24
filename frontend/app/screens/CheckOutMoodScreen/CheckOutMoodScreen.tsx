@@ -1,4 +1,5 @@
-// frontend/app/screens/MoodScreen/MoodScreen.tsx
+// frontend/app/screens/CheckOutMoodScreen/CheckOutMoodScreen.tsx
+
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -6,16 +7,15 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import dayjs from 'dayjs';
 import { router } from 'expo-router';
-
 import { styles } from './styles';
 import Card from '@/components/Card/Card';
 import { theme } from '@/styles/theme';
 import Navbar from '@/components/Navbar/Navbar';
 import {
   MoodLabel,
-  IFeelingEntradaPayload,
+  IFeelingSaidaPayload,
 } from '@/interfaces/feeling.interface';
-import { registrarSentimentoEntrada } from '@/services/feeling';
+import { registrarSentimentoSaida } from '@/services/feeling';
 
 type Mood = {
   emoji: string;
@@ -29,7 +29,7 @@ const MOODS: Mood[] = [
   { emoji: '😭', label: 'Tristeza' },
 ];
 
-export default function MoodScreen() {
+export default function CheckOutMoodScreen() {
   const [selected, setSelected] = useState<Mood | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -56,7 +56,7 @@ export default function MoodScreen() {
 
     const today = dayjs().format('YYYY-MM-DD');
 
-    console.log('🟣 [MoodScreen] Humor selecionado:', {
+    console.log('🟣 [CheckOutMoodScreen] Humor de saída selecionado:', {
       label: mood.label,
       day: today,
     });
@@ -65,30 +65,27 @@ export default function MoodScreen() {
 
     pendingTimeoutRef.current = setTimeout(async () => {
       try {
-        const payload: IFeelingEntradaPayload = {
+        const payload: IFeelingSaidaPayload = {
           day: today,
-          sentimento_de_entrada: mood.label,
+          sentimento_de_saida: mood.label,
         };
 
         console.log(
-          '🟣 [MoodScreen] Enviando sentimento de entrada para o backend...',
+          '🟣 [CheckOutMoodScreen] Enviando sentimento de saída para o backend...',
           payload
         );
 
-        await registrarSentimentoEntrada(payload);
+        await registrarSentimentoSaida(payload);
 
         console.log(
-          '🟢 [MoodScreen] Sentimento de entrada enviado com sucesso.'
+          '🟢 [CheckOutMoodScreen] Sentimento de saída enviado com sucesso.'
         );
 
-        // navega para o chat levando o humor selecionado
-        router.push({
-          pathname: '/chat',
-          params: { mood: mood.label, emoji: mood.emoji },
-        });
+        // após registrar o sentimento de saída, volta pra Home
+        router.replace('/home');
       } catch (err) {
         console.error(
-          '🔴 [MoodScreen] Erro ao registrar sentimento de entrada:',
+          '🔴 [CheckOutMoodScreen] Erro ao registrar sentimento de saída:',
           err
         );
       } finally {
@@ -99,7 +96,7 @@ export default function MoodScreen() {
   };
 
   const feelingText = selected
-    ? `Você está se sentindo ${selected.label.replace('Muito ', '')}!`
+    ? `Você está saindo se sentindo ${selected.label.replace('Muito ', '')}!`
     : '';
 
   return (
@@ -121,7 +118,7 @@ export default function MoodScreen() {
             <Text style={styles.backArrow}>‹</Text>
           </TouchableOpacity>
 
-          <Text style={styles.pageTitle}>Como está se sentindo hoje?</Text>
+          <Text style={styles.pageTitle}>Como você está saindo hoje?</Text>
           <View style={localStyles.headerSpacer} />
         </View>
 

@@ -1,5 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-
 import {
   View,
   Text,
@@ -18,12 +18,14 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { styles, INPUT_HEIGHT, CHIPS_HEIGHT, INPUT_BOTTOM_GAP } from './styles';
-import robsonImg from '../../../assets/images/robson.png';
-import { classifyEmotion } from '../../../services/emotionService';
-import Button from '@/components/Button/Button';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+import robsonImg from '../../../assets/images/robson.png';
+import { styles, INPUT_HEIGHT, CHIPS_HEIGHT, INPUT_BOTTOM_GAP } from './styles';
+import { classifyEmotion } from '@/services/emotionService';
+import Button from '@/components/Button/Button';
+import { MoodLabel } from '@/interfaces/feeling.interface';
 
 // ------------------
 // Tipagens
@@ -41,27 +43,18 @@ interface Message {
   crisisConfidence?: number;
 }
 
-type MoodLabel =
-  | 'Muito Feliz'
-  | 'Irritado'
-  | 'Neutro'
-  | 'Triste'
-  | 'Muito Triste';
-
 // ------------------
-// Mapa de empatia
+// Mapa de empatia (usando os 4 sentimentos atuais)
 // ------------------
 const EMPATHY_TEXT_BY_MOOD: Record<MoodLabel, string> = {
-  'Muito Feliz':
-    'Que bom saber que você está se sentindo feliz! Vamos aproveitar essa energia positiva hoje! 💫',
-  Irritado:
-    'Entendo que você esteja irritado. Respira fundo comigo — posso te ajudar com algo para aliviar isso?',
-  Neutro:
-    'Tudo bem, um dia neutro também é um bom dia. Que tal explorar algo leve para melhorar seu humor?',
-  Triste:
-    'Sinto muito que esteja se sentindo triste. Estou aqui pra te ajudar a aliviar isso um pouquinho. 💙',
-  'Muito Triste':
-    'Sei que é difícil se sentir assim. Você não está sozinha. Vamos dar um pequeno passo juntos agora. ❤️',
+  Ansiedade:
+    'Entendo que você esteja se sentindo ansioso(a). Vamos com calma, estou aqui pra te ajudar a organizar esses pensamentos. Você consegue me contar um pouco do que está deixando você assim? 💜',
+  Estresse:
+    'Puxa, parece que você está bem sobrecarregado(a). Respira fundo comigo. Me conta um pouco do que anda tirando sua paz, para vermos como posso te ajudar. 💙',
+  Felicidade:
+    'Que bom saber que você está se sentindo feliz! 😄 Quero te ajudar a cuidar desse bem-estar também. Me conta: o que deixou seu dia melhor hoje?',
+  Tristeza:
+    'Sinto muito que você esteja se sentindo triste. Não é fácil passar por isso, mas você não está sozinho(a). Se puder, me conta um pouco do que aconteceu. 💙',
 };
 
 // ------------------
@@ -71,7 +64,7 @@ export default function ChatBotScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
-  // Captura o humor vindo da tela anterior (MoodScreen)
+  // Captura o humor vindo da tela anterior (MoodScreen / CheckOutMoodScreen)
   const { mood, emoji } = useLocalSearchParams<{
     mood?: MoodLabel;
     emoji?: string;
@@ -81,6 +74,9 @@ export default function ChatBotScreen() {
   const [inputText, setInputText] = useState('');
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const scrollRef = useRef<ScrollView | null>(null);
+
+  const [showEmotionCard, setShowEmotionCard] = useState(false);
+  const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
 
   // Scroll automático para o final
   const scrollToEnd = useCallback(() => {
@@ -111,9 +107,9 @@ export default function ChatBotScreen() {
     [scrollToEnd]
   );
 
-  // Mensagens iniciais — reage ao humor recebido
+  // Mensagens iniciais — reage ao humor recebido (entrada ou saída)
   useEffect(() => {
-    const initialMessages: Message[] = [
+    const base: Message[] = [
       {
         id: '1',
         text: 'Olá! Sou o MindBot, seu assistente de bem-estar. 💬',
@@ -123,25 +119,33 @@ export default function ChatBotScreen() {
     ];
 
     if (mood) {
-      initialMessages.push({
+      const lowerMood = mood.toLowerCase();
+
+      // 2) Bot reconhece o sentimento informado
+      base.push({
         id: '2',
-        text: `${emoji ?? ''} Entendi, você está se sentindo ${mood.toLowerCase()}.`,
-        sender: 'user',
+        text: `${emoji ?? ''} Entendi, você está se sentindo ${lowerMood}.`,
+        sender: 'bot',
         timestamp: new Date(),
       });
 
-      initialMessages.push({
+      // 3) Mensagem empática + convite pra explicar melhor
+      const empathy =
+        EMPATHY_TEXT_BY_MOOD[mood] ||
+        'Obrigado por compartilhar como você está se sentindo. Se puder, me conta um pouco mais sobre o que está acontecendo.';
+
+      base.push({
         id: '3',
-        text: EMPATHY_TEXT_BY_MOOD[mood],
+        text: empathy,
         sender: 'bot',
         timestamp: new Date(),
       });
     }
 
-    setMessages(initialMessages);
+    setMessages(base);
   }, [mood, emoji]);
 
-  // Envio de mensagens manuais
+  // Envio de mensagens manuais (primeira mensagem livre vai para a API)
   const handleSend = useCallback(async (): Promise<void> => {
     const trimmed = inputText.trim();
     if (!trimmed) return;
@@ -158,7 +162,7 @@ export default function ChatBotScreen() {
     setInputText('');
 
     try {
-      // 2) Chama a API de classificação
+      // 2) Chama a API de classificação de emoções (FastAPI)
       const res = await classifyEmotion(trimmed);
 
       // 3) Monte a mensagem do bot com texto + metadados
@@ -193,9 +197,6 @@ export default function ChatBotScreen() {
     ? INPUT_HEIGHT + 16
     : INPUT_HEIGHT + CHIPS_HEIGHT + 32 + INPUT_BOTTOM_GAP;
 
-  const [showEmotionCard, setShowEmotionCard] = useState(false);
-  const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
-
   // ------------------
   // Render
   // ------------------
@@ -203,6 +204,7 @@ export default function ChatBotScreen() {
     <SafeAreaView style={styles.background} edges={['top']}>
       {/* HEADER */}
       <View style={styles.header}>
+        {/* (pode virar botão de voltar futuramente, por enquanto só está aí) */}
         <TouchableOpacity
           style={styles.sendButton}
           onPress={handleSend}
@@ -284,7 +286,7 @@ export default function ChatBotScreen() {
                         </Text>
                       )}
 
-                    {/* NOVO: Botão para mensagens do bot com emoção detectada */}
+                    {/* Botão de "Trilha Sugerida" para emoções conhecidas */}
                     {!isUser &&
                       [
                         'felicidade',
@@ -313,7 +315,7 @@ export default function ChatBotScreen() {
             })}
           </ScrollView>
 
-          {/* Card */}
+          {/* Modal com emoção detectada (futuro: sugerir trilha específica) */}
           {showEmotionCard && (
             <Modal
               transparent
@@ -364,7 +366,7 @@ export default function ChatBotScreen() {
                   <Text style={styles.sessionDescription}>
                     Em breve iremos sugerir trilhas com base em como você está
                     se sentindo 💜
-                  </Text> 
+                  </Text>
                 </View>
 
                 <View style={{ marginTop: 20 }}>

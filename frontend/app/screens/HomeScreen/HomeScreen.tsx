@@ -1,3 +1,5 @@
+// frontend/app/HomeScreen/HomeScreen.tsx
+
 import React, { useMemo } from 'react';
 import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,10 +11,14 @@ import WeeklyResults from '@/components/WeeklyResults/WeeklyResults';
 import ContinueImproving from '@/components/ContinueImproving/ContinueImproving';
 import Navbar from '@/components/Navbar/Navbar';
 import { useAuth } from '@/hooks/useAuth';
+import { useHomeDashboard } from '../../../contexts/useHomeDashboard';
 
 export default function HomeScreen() {
   const router = useRouter();
   const { user } = useAuth();
+  const { error } = useHomeDashboard();
+
+  console.log('🏠 [HomeScreen] user completo:', user);
 
   // Primeiro nome
   const firstName = useMemo(() => {
@@ -46,8 +52,18 @@ export default function HomeScreen() {
           </Button>
         </View>
 
+        {error ? (
+          // eslint-disable-next-line react-native/no-inline-styles
+          <Text style={{ color: 'red', marginBottom: 12 }}>{error}</Text>
+        ) : null}
+
         <WeeklyResults />
         <ContinueImproving />
+        <View style={styles.buttonWrapper}>
+          <Button onPress={() => router.push('/checkoutmood')}>
+            <Text>Sentimento de Saida (Excluir Depois)</Text>
+          </Button>
+        </View>
         <Navbar />
       </SafeAreaView>
     </LinearGradient>

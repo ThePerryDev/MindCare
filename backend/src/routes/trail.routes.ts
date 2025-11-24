@@ -8,6 +8,7 @@ import {
   getTrailByObjectId,
   registrarExercicio,
   stats,
+  getNextExercise,
 } from '../controllers/trail.controller';
 
 const router = Router();
@@ -19,5 +20,6 @@ router.get('/id/:trailId', getTrailById);
 router.get('/obj/:id', getTrailByObjectId);
 router.post('/registro', registrarExercicio);
 router.get('/stats', stats);
+router.get('/next', getNextExercise);
 
 export default router;

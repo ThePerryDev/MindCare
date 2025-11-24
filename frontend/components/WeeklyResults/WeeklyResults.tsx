@@ -1,14 +1,36 @@
+/* eslint-disable react-native/no-inline-styles */
+// frontend/components/WeeklyResults/WeeklyResults.tsx
+
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
 import Card from '@/components/Card/Card';
 import { styles } from './styles';
+import { useHomeDashboard } from '../../contexts/useHomeDashboard';
 
 export default function WeeklyResults() {
+  const { stats, loading } = useHomeDashboard();
+
+  if (loading && !stats) {
+    return (
+      <Card style={styles.card}>
+        <Text style={styles.title}>Resultado Semanal</Text>
+        <ActivityIndicator style={{ marginTop: 12 }} />
+      </Card>
+    );
+  }
+
+  const diasAtivos = stats?.diasAtivos ?? 0;
+  const humorMedio =
+    typeof stats?.humorMedio === 'number' ? stats.humorMedio.toFixed(1) : '--';
+
+  const totalAtividades = stats?.totalExercicios ?? 0;
+  const trilhasFeitas = stats?.totalTrilhas ?? 0;
+
   const results = [
-    { label: 'Dias Ativos', value: '0/7' },
-    { label: 'Humor Médio', value: '0.0' },
-    { label: 'Atividades Feitas', value: '0/7' },
-    { label: 'Trilhas Feitas', value: '0/10' },
+    { label: 'Dias Ativos', value: `${diasAtivos}/7` },
+    { label: 'Humor Médio', value: humorMedio },
+    { label: 'Atividades Feitas', value: `${totalAtividades}` },
+    { label: 'Trilhas Feitas', value: `${trilhasFeitas}` },
   ];
 
   return (
