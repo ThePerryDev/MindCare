@@ -1,3 +1,5 @@
+// frontend/app/screens/SettingsScreen/SettingsScreen.tsx
+
 import React, { useMemo, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
@@ -10,7 +12,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-// import { useRouter } from 'expo-router'; // ❌ removido: não é usado
 import SectionCard from '@/components/SectionCard/SectionCard';
 import RowItem from '@/components/RowItem/RowItem';
 import Button from '@/components/Button/Button';

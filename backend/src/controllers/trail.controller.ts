@@ -545,3 +545,45 @@ export async function getNextExercise(req: AuthRequest, res: Response) {
     });
   }
 }
+
+// GET /api/v1/trails/recommendations?feeling=Ansiedade
+export async function recommendTrails(req: AuthRequest, res: Response) {
+  try {
+    const feelingRaw = (req.query.feeling as string | undefined)?.trim();
+
+    if (!feelingRaw) {
+      return res.status(400).json({
+        error: 'parâmetro "feeling" é obrigatório',
+        allowed: FEELINGS,
+      });
+    }
+
+    // Normaliza para um dos FEELINGS do backend
+    const feelingNormalized =
+      FEELINGS.find(f => f.toLowerCase() === feelingRaw.toLowerCase()) ?? null;
+
+    if (!feelingNormalized) {
+      return res.status(400).json({
+        error: 'feeling inválido',
+        received: feelingRaw,
+        allowed: FEELINGS,
+      });
+    }
+
+    const trails = await TrailModel.find({
+      sentimentosRecomendados: feelingNormalized,
+    }).sort({ trailId: 1 });
+
+    return res.status(200).json({
+      feeling: feelingNormalized,
+      recommended: trails.map(t => t.toJSON()),
+    });
+  } catch (err) {
+    const message =
+      err instanceof Error
+        ? err.message
+        : 'erro ao recomendar trilhas por sentimento';
+    console.error('[recommendTrails] erro', message);
+    return res.status(500).json({ error: message });
+  }
+}

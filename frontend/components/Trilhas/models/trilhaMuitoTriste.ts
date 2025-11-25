@@ -1,12 +1,14 @@
+// frontend/components/Trilhas/models/trilhaMuitoTriste.ts
+
 import { TrilhaModel } from '../types';
 
 /**
- * Trilha 9 – Muito Triste
+ * Trilha 4 – Muito Triste
  */
 export const trilhaMuitoTriste: TrilhaModel = {
-  id: 9,
+  id: 4,
   key: 'trilha-muito-triste',
-  name: 'Trilha 9 – Muito Triste',
+  name: 'Trilha 4 – Muito Triste',
   focus: 'Criar segurança emocional e, aos poucos, elevar o humor.',
   level: 'Iniciante',
   minMinutes: 5,

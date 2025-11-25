@@ -623,6 +623,18 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
     width: '100%',
   },
+  sessionSecondaryButton: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    borderRadius: 999,
+    marginTop: 12,
+    paddingVertical: 12,
+  },
+  sessionSecondaryButtonText: {
+    color: '#6C4FF6',
+    fontSize: 15,
+    fontWeight: '600',
+  },
   sessionSectionTitle: {
     color: '#2C2C4E',
     fontFamily: theme.fonts.semi,
@@ -751,10 +763,12 @@ export const styles = StyleSheet.create({
     color: '#FFF',
     fontWeight: '700',
   },
+
   userBubble: {
     backgroundColor: '#4C46B6',
     borderTopRightRadius: 4,
   },
+
   userText: {
     color: '#FFF',
     fontSize: 14.5,

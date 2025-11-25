@@ -9,10 +9,9 @@ const router = Router();
 // Todas as rotas exigem JWT de acesso
 router.use(authGuard);
 
+router.post('/', FeelingBotController.upsertDay); // salvar/atualizar sentimento do bot para um dia
 router.get('/', FeelingBotController.list);
-
 router.delete('/:day', FeelingBotController.deleteByDay);
-
 router.delete('/', FeelingBotController.deleteAll);
 
 export default router;

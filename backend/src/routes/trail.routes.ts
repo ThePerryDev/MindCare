@@ -9,6 +9,7 @@ import {
   registrarExercicio,
   stats,
   getNextExercise,
+  recommendTrails,
 } from '../controllers/trail.controller';
 
 const router = Router();
@@ -21,5 +22,6 @@ router.get('/obj/:id', getTrailByObjectId);
 router.post('/registro', registrarExercicio);
 router.get('/stats', stats);
 router.get('/next', getNextExercise);
+router.get('/recommendations', recommendTrails);
 
 export default router;

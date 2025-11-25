@@ -1,3 +1,5 @@
+// frontend/components/SectionCard/SectionCard.tsx
+
 import React from 'react';
 import { View, Text, ViewProps } from 'react-native';
 import { styles, getTone } from './styles';

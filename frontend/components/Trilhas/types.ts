@@ -1,5 +1,7 @@
 // frontend/components/Trilhas/types.ts
 
+export type TrilhaDayMode = 'timer' | 'checklist';
+
 export type TrilhaDay = {
   /** Dia da trilha (1 a 7) */
   day: number;
@@ -11,14 +13,23 @@ export type TrilhaDay = {
   durationLabel: string;
   /** Objetivo daquele micro-hábito */
   goal: string;
-  benefits: [string, string, string];
-  howTo: string[];
+  /** Benefícios principais (livre) */
+  benefits?: string[];
+  /** Passo a passo da atividade */
+  howTo?: string[];
+  /**
+   * Modo da atividade:
+   * - 'timer' -> foco em tempo (respiração, meditação, etc.)
+   * - 'checklist' -> foco em marcar passos (escrever, caminhar, etc.)
+   * Se não informado, assume 'timer' por padrão na UI.
+   */
+  mode?: TrilhaDayMode;
 };
 
 export type TrilhaModel = {
   /** ID numérico interno da trilha (pra você se organizar) */
   id: number;
-  /** Chave única, usada em rotas / ids / map */
+  /** Chave única, usada em rotas / ids / map / AsyncStorage */
   key: string;
   /** Nome exibido da trilha */
   name: string;

@@ -1,3 +1,4 @@
+// frontend/app/ChatBotScreen/index.tsx
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import {
@@ -20,12 +21,19 @@ import {
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import dayjs from 'dayjs';
 
 import robsonImg from '../../../assets/images/robson.png';
 import { styles, INPUT_HEIGHT, CHIPS_HEIGHT, INPUT_BOTTOM_GAP } from './styles';
 import { classifyEmotion } from '@/services/emotionService';
 import Button from '@/components/Button/Button';
 import { MoodLabel } from '@/interfaces/feeling.interface';
+import {
+  ITrail,
+  IRecommendedTrailsResponse,
+} from '@/interfaces/trail.interface';
+import { fetchRecommendedTrailsByFeeling } from '@/services/trail';
+import { registrarSentimentoBot } from '@/services/feelingBot';
 
 // ------------------
 // Tipagens
@@ -58,6 +66,20 @@ const EMPATHY_TEXT_BY_MOOD: Record<MoodLabel, string> = {
 };
 
 // ------------------
+// Mapa emoção (API) -> MoodLabel / FeelingValue
+// A API costuma mandar em minúsculas: 'ansiedade', 'tristeza', 'felicidade', 'estresse'
+// ------------------
+const EMOTION_TO_MOOD_LABEL: Record<string, MoodLabel> = {
+  ansiedade: 'Ansiedade',
+  estresse: 'Estresse',
+  stress: 'Estresse',
+  felicidade: 'Felicidade',
+  alegria: 'Felicidade',
+  tristeza: 'Tristeza',
+  triste: 'Tristeza',
+};
+
+// ------------------
 // Componente principal
 // ------------------
 export default function ChatBotScreen() {
@@ -75,8 +97,15 @@ export default function ChatBotScreen() {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const scrollRef = useRef<ScrollView | null>(null);
 
+  // Estado do modal de recomendação de trilhas
   const [showEmotionCard, setShowEmotionCard] = useState(false);
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
+  const [mappedFeeling, setMappedFeeling] = useState<MoodLabel | null>(null);
+  const [recommendedTrails, setRecommendedTrails] = useState<ITrail[]>([]);
+  const [loadingRecommendation, setLoadingRecommendation] = useState(false);
+  const [recommendationError, setRecommendationError] = useState<string | null>(
+    null
+  );
 
   // Scroll automático para o final
   const scrollToEnd = useCallback(() => {
@@ -121,7 +150,7 @@ export default function ChatBotScreen() {
     if (mood) {
       const lowerMood = mood.toLowerCase();
 
-      // 2) Bot reconhece o sentimento informado
+      // Bot reconhece o sentimento informado
       base.push({
         id: '2',
         text: `${emoji ?? ''} Entendi, você está se sentindo ${lowerMood}.`,
@@ -129,7 +158,7 @@ export default function ChatBotScreen() {
         timestamp: new Date(),
       });
 
-      // 3) Mensagem empática + convite pra explicar melhor
+      // Mensagem empática + convite pra explicar melhor
       const empathy =
         EMPATHY_TEXT_BY_MOOD[mood] ||
         'Obrigado por compartilhar como você está se sentindo. Se puder, me conta um pouco mais sobre o que está acontecendo.';
@@ -165,6 +194,23 @@ export default function ChatBotScreen() {
       // 2) Chama a API de classificação de emoções (FastAPI)
       const res = await classifyEmotion(trimmed);
 
+      // 2.1) Registra o sentimento do BOT no backend (FeelingBotModel)
+      try {
+        const today = dayjs().format('YYYY-MM-DD');
+
+        await registrarSentimentoBot({
+          day: today,
+          sentimento: res.emocao,
+          // opcional, só para exibição amigável futura
+          label: dayjs().format('DD/MM/YYYY'),
+        });
+      } catch (err) {
+        console.error(
+          '⚠️ [ChatBot] Falha ao registrar sentimento do bot:',
+          err
+        );
+      }
+
       // 3) Monte a mensagem do bot com texto + metadados
       const botMsg: Message = {
         id: (Date.now() + 1).toString(),
@@ -192,6 +238,52 @@ export default function ChatBotScreen() {
     }
   }, [inputText, append]);
 
+  // Abre o modal e carrega trilhas recomendadas a partir da emoção detectada
+  const handleOpenRecommendation = useCallback(
+    async (emotionRaw?: string | null) => {
+      if (!emotionRaw) return;
+
+      const key = emotionRaw.toLowerCase();
+      const feeling = EMOTION_TO_MOOD_LABEL[key] ?? null;
+
+      console.log('🟣 [ChatBot] Abrindo recomendação para emoção:', {
+        emotionRaw,
+        key,
+        feeling,
+      });
+
+      setSelectedEmotion(emotionRaw);
+      setMappedFeeling(feeling);
+      setShowEmotionCard(true);
+      setRecommendedTrails([]);
+      setRecommendationError(null);
+
+      // Se não temos mapeamento ainda, apenas mostra um texto genérico
+      if (!feeling) {
+        setRecommendationError(
+          'Ainda não sei sugerir trilhas específicas para essa emoção, mas você pode explorar todas na tela de Trilhas. 💜'
+        );
+        return;
+      }
+
+      try {
+        setLoadingRecommendation(true);
+        const resp: IRecommendedTrailsResponse =
+          await fetchRecommendedTrailsByFeeling(feeling);
+
+        setRecommendedTrails(resp.recommended ?? []);
+      } catch (err) {
+        console.error('🔴 [ChatBot] Erro ao buscar trilhas recomendadas:', err);
+        setRecommendationError(
+          'Tive um problema para buscar trilhas recomendadas agora. Tente novamente em instantes.'
+        );
+      } finally {
+        setLoadingRecommendation(false);
+      }
+    },
+    []
+  );
+
   // Padding inferior dinâmico
   const contentBottomPad = isKeyboardVisible
     ? INPUT_HEIGHT + 16
@@ -204,7 +296,7 @@ export default function ChatBotScreen() {
     <SafeAreaView style={styles.background} edges={['top']}>
       {/* HEADER */}
       <View style={styles.header}>
-        {/* (pode virar botão de voltar futuramente, por enquanto só está aí) */}
+        {/* por enquanto botão de "enviar" reaproveitado aqui */}
         <TouchableOpacity
           style={styles.sendButton}
           onPress={handleSend}
@@ -248,6 +340,14 @@ export default function ChatBotScreen() {
           >
             {messages.map(message => {
               const isUser = message.sender === 'user';
+              const emotionKey = (message.emotion ?? '').toLowerCase();
+              const isKnownEmotion = [
+                'felicidade',
+                'tristeza',
+                'ansiedade',
+                'estresse',
+              ].includes(emotionKey);
+
               return (
                 <View
                   key={message.id}
@@ -287,22 +387,17 @@ export default function ChatBotScreen() {
                       )}
 
                     {/* Botão de "Trilha Sugerida" para emoções conhecidas */}
-                    {!isUser &&
-                      [
-                        'felicidade',
-                        'tristeza',
-                        'ansiedade',
-                        'estresse',
-                      ].includes(message.emotion ?? '') && (
+                    {!isUser && isKnownEmotion && (
+                      <View style={{ marginTop: 8 }}>
                         <Button
-                          onPress={() => {
-                            setSelectedEmotion(message.emotion ?? null);
-                            setShowEmotionCard(true);
-                          }}
+                          onPress={() =>
+                            handleOpenRecommendation(message.emotion)
+                          }
                         >
-                          <Text>Trilha Sugerida</Text>
+                          <Text>Trilha sugerida para esse momento</Text>
                         </Button>
-                      )}
+                      </View>
+                    )}
                   </View>
 
                   {isUser && (
@@ -315,7 +410,7 @@ export default function ChatBotScreen() {
             })}
           </ScrollView>
 
-          {/* Modal com emoção detectada (futuro: sugerir trilha específica) */}
+          {/* Modal com emoção detectada + trilhas recomendadas */}
           {showEmotionCard && (
             <Modal
               transparent
@@ -357,21 +452,155 @@ export default function ChatBotScreen() {
                     style={styles.sessionIconCircle}
                   >
                     <Text style={styles.sessionIconText}>
-                      {selectedEmotion?.charAt(0).toUpperCase()}
+                      {(mappedFeeling ?? selectedEmotion ?? '?')
+                        .charAt(0)
+                        .toUpperCase()}
                     </Text>
                   </LinearGradient>
 
-                  <Text style={styles.sessionTitle}>{selectedEmotion}</Text>
+                  <Text style={styles.sessionTitle}>
+                    {mappedFeeling
+                      ? `Trilhas para ${mappedFeeling}`
+                      : selectedEmotion}
+                  </Text>
 
                   <Text style={styles.sessionDescription}>
-                    Em breve iremos sugerir trilhas com base em como você está
-                    se sentindo 💜
+                    {mappedFeeling
+                      ? 'Encontrei algumas trilhas que podem ajudar você com esse sentimento. 💜'
+                      : 'Ainda não sei mapear essa emoção diretamente para uma trilha específica, mas você pode explorar as trilhas disponíveis.'}
                   </Text>
                 </View>
 
+                {/* Conteúdo: estados de carregamento / erro / lista */}
+                <View style={{ marginTop: 16 }}>
+                  {loadingRecommendation && (
+                    <Text style={styles.sessionDescription}>
+                      Carregando trilhas recomendadas...
+                    </Text>
+                  )}
+
+                  {!loadingRecommendation && recommendationError && (
+                    <Text
+                      style={[styles.sessionDescription, { color: '#DC2626' }]}
+                    >
+                      {recommendationError}
+                    </Text>
+                  )}
+
+                  {!loadingRecommendation &&
+                    !recommendationError &&
+                    mappedFeeling &&
+                    recommendedTrails.length === 0 && (
+                      <Text style={styles.sessionDescription}>
+                        Ainda não há trilhas específicas cadastradas para esse
+                        sentimento, mas você pode explorar todas na tela de
+                        Trilhas. 💜
+                      </Text>
+                    )}
+
+                  {!loadingRecommendation &&
+                    !recommendationError &&
+                    recommendedTrails.length > 0 && (
+                      <View>
+                        {recommendedTrails.map(trail => (
+                          <View
+                            key={trail.id}
+                            style={{
+                              paddingVertical: 10,
+                              paddingHorizontal: 12,
+                              borderRadius: 12,
+                              backgroundColor: '#F5F3FF',
+                              marginBottom: 8,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontFamily: 'System',
+                                fontWeight: '600',
+                                color: '#312E81',
+                                fontSize: 15,
+                                marginBottom: 4,
+                              }}
+                            >
+                              {trail.nome}
+                            </Text>
+
+                            {trail.descricao ? (
+                              <Text
+                                style={{
+                                  color: '#4B5563',
+                                  fontSize: 13,
+                                  marginBottom: 8,
+                                }}
+                              >
+                                {trail.descricao}
+                              </Text>
+                            ) : null}
+
+                            {mappedFeeling && (
+                              <Text
+                                style={{
+                                  color: '#6D28D9',
+                                  fontSize: 12,
+                                  marginBottom: 8,
+                                }}
+                              >
+                                Focada em {mappedFeeling}
+                              </Text>
+                            )}
+
+                            {/* Botão para abrir a tela de trilhas já no detalhe */}
+                            <TouchableOpacity
+                              activeOpacity={0.9}
+                              onPress={() => {
+                                setShowEmotionCard(false);
+                                router.push({
+                                  pathname: '/trails',
+                                  params: {
+                                    trailId: String(trail.trailId),
+                                  },
+                                });
+                              }}
+                              style={{
+                                paddingVertical: 8,
+                                borderRadius: 999,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: '#6D28D9',
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  color: '#F9FAFB',
+                                  fontWeight: '600',
+                                  fontSize: 13,
+                                }}
+                              >
+                                Ver detalhes da trilha
+                              </Text>
+                            </TouchableOpacity>
+                          </View>
+                        ))}
+                      </View>
+                    )}
+                </View>
+
+                {/* Botões de ação gerais */}
                 <View style={{ marginTop: 20 }}>
+                  {/* Ver trilha recomendada */}
                   <TouchableOpacity
-                    onPress={() => setShowEmotionCard(false)}
+                    onPress={() => {
+                      if (selectedEmotion) {
+                        router.push({
+                          pathname: '/trails',
+                          params: {
+                            emotion: selectedEmotion, // ex.: 'tristeza', 'ansiedade'...
+                            autoStart: '1',
+                          },
+                        });
+                        setShowEmotionCard(false);
+                      }
+                    }}
                     activeOpacity={0.9}
                   >
                     <LinearGradient
@@ -381,9 +610,23 @@ export default function ChatBotScreen() {
                       style={styles.sessionCompleteButton}
                     >
                       <Text style={styles.sessionCompleteButtonText}>
-                        Fechar
+                        Ver trilha recomendada
                       </Text>
                     </LinearGradient>
+                  </TouchableOpacity>
+
+                  {/* Ver todas as trilhas */}
+                  <TouchableOpacity
+                    onPress={() => {
+                      router.push('/trails');
+                      setShowEmotionCard(false);
+                    }}
+                    activeOpacity={0.9}
+                    style={styles.sessionSecondaryButton}
+                  >
+                    <Text style={styles.sessionSecondaryButtonText}>
+                      Ver todas as trilhas
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
