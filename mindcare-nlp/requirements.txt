@@ -8,6 +8,5 @@ pandas
 numpy
 datasets
 pytest
-datasets
 deep-translator
 pydantic-settings

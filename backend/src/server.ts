@@ -6,6 +6,8 @@ import { ensureDefaultTrails } from './database/seedTrails';
 
 const PORT = Number(process.env.PORT || 3000);
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/mindcare';
+const BACKEND_LOCAL_API_URL =
+  process.env.BACKEND_LOCAL_API_URL || 'http://192.168.18.20:';
 
 async function start() {
   try {

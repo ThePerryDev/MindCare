@@ -2,9 +2,13 @@ name: CI
 
 on:
   push:
-    branches: ['develop', 'SP-002/daniel/backend-pipeline']
+    branches: ['develop', 'SP3-01/Daniel/Container-chatbot']
   pull_request:
-    branches: ['develop', 'SP-002/daniel/backend-pipeline']
+    branches: ['develop', 'SP3-01/Daniel/Container-chatbot']
+env:
+  # Variáveis de ambiente para o novo job de Docker
+  NLP_DOCKERFILE_PATH: ./mindcare-nlp
+  NLP_IMAGE_NAME: mindcare-nlp-api
 
 jobs:
   # 🔹 LINT / FORMAT / TEST FRONTEND
@@ -138,3 +142,65 @@ jobs:
       - name: Check TypeScript (backend)
         working-directory: backend
         run: npx tsc --noEmit
+
+  # 🐳 BUILD, TEST & PUSH DOCKER IMAGE (MindCare NLP)
+  build-test-push-nlp-docker:
+    runs-on: ubuntu-latest
+    # Este job deve rodar após o checkout e os testes de frontend/backend (se houver dependência)
+    # Como o NLP é um serviço separado, ele pode rodar em paralelo ou após o checkout
+    needs: [lint-format-test-frontend, lint-format-test-backend, ts-expo-check, ts-backend-check]
+    permissions:
+      contents: read
+      packages: write # Permissão necessária para fazer push no GHCR
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}/${{ env.NLP_IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=sha,format=long
+
+      # 1. Build da imagem (sem push ainda)
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ env.NLP_DOCKERFILE_PATH }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # Não faz push ainda, apenas build
+          push: false
+          load: true # Carrega a imagem para o Docker daemon para o próximo passo (teste)
+
+      # 2. Teste da Imagem (Rodando os testes unitários do Python)
+      # O diretório de testes é MindCare/mindcare-nlp/nlp/tests
+      - name: Run Python Unit Tests inside Docker
+        run: |
+          # Executa o container com o comando de teste
+          docker run --rm ${{ steps.meta.outputs.tags }} pytest app/tests || true
+
+      # 3. Push da Imagem (Apenas se o teste passar)
+      - name: Push Docker image to GHCR
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ env.NLP_DOCKERFILE_PATH }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

@@ -4,6 +4,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import UserModel from '../models/user.model';
+import { sendSms } from '../services/sms.service';
 
 const ACCESS_TTL = process.env.ACCESS_TOKEN_TTL || '15m';
 const REFRESH_TTL = process.env.REFRESH_TOKEN_TTL || '7d';
@@ -194,4 +195,185 @@ export const logout = async (_req: Request, res: Response) => {
   console.log('[AUTH] POST /api/v1/auth/logout');
   res.clearCookie('refreshToken', { path: '/api/v1/auth/refresh' });
   return res.status(200).json({ message: 'logout efetuado' });
+};
+
+/* ------------------------------------------------------------------
+ *  FLUXO "ESQUECEU A SENHA?"
+ *  1) POST /auth/forgot-password/request-code  -> envia SMS com código
+ *  2) POST /auth/forgot-password/verify-code   -> valida email+codigo
+ *  3) POST /auth/forgot-password/reset         -> troca a senha
+ * -----------------------------------------------------------------*/
+
+function generateNumericCode(length = 6): string {
+  const min = 10 ** (length - 1); // 100000
+  const max = 10 ** length - 1; // 999999
+  return Math.floor(Math.random() * (max - min + 1) + min).toString();
+}
+
+// 1) Enviar código por SMS
+export const requestPasswordResetCode = async (req: Request, res: Response) => {
+  console.log(
+    '[AUTH] POST /api/v1/auth/forgot-password/request-code body:',
+    req.body
+  );
+
+  try {
+    const { email } = req.body as { email?: string };
+
+    if (!email) {
+      return res.status(400).json({ message: 'E-mail é obrigatório.' });
+    }
+
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      // não revela se o e-mail existe ou não
+      return res.status(200).json({
+        message:
+          'Se o e-mail estiver cadastrado, enviaremos um código de verificação.',
+      });
+    }
+
+    const code = generateNumericCode(6);
+    const expires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutos
+
+    user.resetPasswordCode = code;
+    user.resetPasswordExpires = expires;
+    await user.save();
+
+    const message = `Seu código de verificação MindCare é: ${code}. Ele expira em 15 minutos.`;
+
+    // SMS fictício / log (método do "admin")
+    await sendSms(user.phone, message);
+
+    // Ajuste: agora também devolvemos o code para o app poder mostrar na notificação
+    return res.status(200).json({
+      message:
+        'Se o e-mail estiver cadastrado, enviaremos um código de verificação.',
+      code,
+    });
+  } catch (err: any) {
+    console.error('[AUTH] erro em requestPasswordResetCode:', err);
+    return res.status(500).json({
+      message: 'Erro ao solicitar código de verificação.',
+      error: err?.message,
+    });
+  }
+};
+
+// 2) Verificar código (usado pela primeira tela antes de ir para nova senha)
+export const verifyPasswordResetCode = async (req: Request, res: Response) => {
+  console.log(
+    '[AUTH] POST /api/v1/auth/forgot-password/verify-code body:',
+    req.body
+  );
+
+  try {
+    const { email, code } = req.body as { email?: string; code?: string };
+
+    if (!email || !code) {
+      return res
+        .status(400)
+        .json({ message: 'E-mail e código são obrigatórios.' });
+    }
+
+    const user = await UserModel.findOne({ email }).select(
+      '+resetPasswordCode +resetPasswordExpires'
+    );
+    if (!user || !user.resetPasswordCode || !user.resetPasswordExpires) {
+      return res
+        .status(400)
+        .json({ message: 'Código de verificação inválido ou expirado.' });
+    }
+
+    if (user.resetPasswordCode !== code) {
+      return res
+        .status(400)
+        .json({ message: 'Código de verificação inválido.' });
+    }
+
+    if (user.resetPasswordExpires < new Date()) {
+      return res
+        .status(400)
+        .json({ message: 'Código de verificação expirado.' });
+    }
+
+    return res.status(200).json({ valid: true });
+  } catch (err: any) {
+    console.error('[AUTH] erro em verifyPasswordResetCode:', err);
+    return res.status(500).json({
+      message: 'Erro ao verificar código de verificação.',
+      error: err?.message,
+    });
+  }
+};
+
+// 3) Resetar senha usando email + código + nova senha
+export const resetPassword = async (req: Request, res: Response) => {
+  console.log('[AUTH] POST /api/v1/auth/forgot-password/reset body:', req.body);
+
+  try {
+    const { email, code, newPassword, confirmPassword } = req.body as {
+      email?: string;
+      code?: string;
+      newPassword?: string;
+      confirmPassword?: string;
+    };
+
+    if (!email || !code || !newPassword || !confirmPassword) {
+      return res.status(400).json({
+        message:
+          'E-mail, código de verificação, nova senha e confirmação são obrigatórios.',
+      });
+    }
+
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({ message: 'As senhas não coincidem.' });
+    }
+
+    const user = await UserModel.findOne({ email }).select(
+      '+password +resetPasswordCode +resetPasswordExpires'
+    );
+    if (!user || !user.resetPasswordCode || !user.resetPasswordExpires) {
+      return res
+        .status(400)
+        .json({ message: 'Código de verificação inválido ou expirado.' });
+    }
+
+    if (user.resetPasswordCode !== code) {
+      return res
+        .status(400)
+        .json({ message: 'Código de verificação inválido.' });
+    }
+
+    if (user.resetPasswordExpires < new Date()) {
+      return res
+        .status(400)
+        .json({ message: 'Código de verificação expirado.' });
+    }
+
+    // Atualiza senha (Mongoose valida a política de senha)
+    const hash = await bcrypt.hash(newPassword, 10);
+    user.password = hash;
+    user.resetPasswordCode = null;
+    user.resetPasswordExpires = null;
+
+    await user.save();
+
+    return res.status(200).json({ message: 'Senha atualizada com sucesso.' });
+  } catch (err: any) {
+    console.error('[AUTH] erro em resetPassword:', err);
+
+    // Se for erro de validação de senha, retorna 400 com mensagem amigável
+    if (err?.name === 'ValidationError') {
+      const messages = Object.values(err.errors || {}).map(
+        (e: any) => e.message
+      );
+      return res.status(400).json({ message: messages.join(' ') });
+    }
+
+    return res.status(500).json({
+      message: 'Erro ao redefinir a senha.',
+      error: err?.message,
+    });
+  }
 };

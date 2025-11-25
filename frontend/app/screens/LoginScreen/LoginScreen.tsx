@@ -129,7 +129,13 @@ export default function LoginScreen() {
               {isSubmitting ? <ActivityIndicator /> : <Text>Login</Text>}
             </Button>
 
-            <Pressable onPress={() => router.push('/')}>
+            <Pressable
+              onPress={() =>
+                router.push(
+                  '/screens/ForgotPasswordSteps/ForgotPasswordCodeScreen/ForgotPasswordCodeScreen'
+                )
+              }
+            >
               <Text style={styles.linkForgot}>Esqueceu sua senha?</Text>
             </Pressable>
 
