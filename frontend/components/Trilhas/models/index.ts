@@ -1,4 +1,5 @@
-// components/Trilhas/models/index.ts
+// frontend/components/Trilhas/models/index.ts
+
 import { TrilhaModel } from '../types';
 import { trilhaAlivioEstresse } from './trilhaAlivioEstresse';
 import { trilhaAnsiedadeLeve } from './trilhaAnsiedadeLeve';
@@ -14,21 +15,21 @@ import { trilhaNeutro } from './trilhaNeutro';
 import { trilhaSonoRelaxamento } from './trilhaSonoRelaxamento';
 import { trilhaTriste } from './trilhaTriste';
 
+/**
+ * Trilhas realmente disponíveis na experiência atual:
+ * - Ansiedade Leve
+ * - Estresse Trabalho/Estudo
+ * - Muito Feliz
+ * - Muito Triste
+ */
 export const allTrilhas: TrilhaModel[] = [
   trilhaAnsiedadeLeve,
   trilhaEstresseTrabalho,
-  trilhaSonoRelaxamento,
-  trilhaHumorPositivoMotivacao,
   trilhaMuitoFeliz,
-  trilhaNeutro,
-  trilhaTriste,
-  trilhaIrritado,
   trilhaMuitoTriste,
-  trilhaMindfulnessBasico,
-  trilhaAlivioEstresse,
-  trilhaGratidaoFelicidade,
-  trilhaControleAnsiedade,
 ];
+
+// Mantém exports individuais caso você use em outros pontos
 export {
   trilhaAnsiedadeLeve,
   trilhaEstresseTrabalho,

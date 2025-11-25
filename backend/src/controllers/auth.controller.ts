@@ -1,3 +1,5 @@
+// src/controllers/auth.controller.ts
+
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -82,6 +84,12 @@ export const register = async (req: Request, res: Response) => {
       password: hash,
     });
 
+    console.log('🟢 [AUTH] Usuário registrado:', {
+      id: user.id,
+      email: user.email,
+      fullName: user.fullName,
+    });
+
     const accessToken = signAccess({ sub: user.id, email: user.email });
     const refreshToken = signRefresh({ sub: user.id });
 
@@ -128,7 +136,11 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ error: 'credenciais inválidas' });
     }
 
-    console.log('[AUTH] login -> login bem-sucedido para:', email);
+    console.log('🟢 [AUTH] login bem-sucedido. Usuário:', {
+      id: user.id,
+      email: user.email,
+      fullName: user.fullName,
+    });
 
     const accessToken = signAccess({ sub: user.id, email: user.email });
     const refreshToken = signRefresh({ sub: user.id });

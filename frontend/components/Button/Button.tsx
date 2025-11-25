@@ -1,3 +1,5 @@
+// frontend/components/Button/Button.tsx
+
 import React from 'react';
 import { Text, Pressable, GestureResponderEvent } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';

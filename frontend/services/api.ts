@@ -5,7 +5,7 @@ import { Platform } from 'react-native';
 // IP da SUA MÁQUINA (ipconfig mostrou 192.168.18.20)
 const LAN = '192.168.18.20';
 
-// Para emulador Android oficial (AVD), o "localhost" do PC é 10.0.2.2.
+// Para emulador Android oficial (AVD), o "192.168.0.112" do PC é 10.0.2.2.
 // Se você estiver no EXPO GO em um celular físico, use o LAN.
 const ANDROID_HOST = LAN; // pode trocar por '10.0.2.2' se estiver no EMULADOR
 

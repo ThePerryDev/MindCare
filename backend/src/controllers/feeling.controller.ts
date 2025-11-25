@@ -1,3 +1,5 @@
+// src/controllers/feeling.controller.ts
+
 import { Response } from 'express';
 import FeelingModel, { FEELINGS } from '../models/feeling.model';
 import { AuthRequest } from '../security/auth.middleware';
@@ -37,21 +39,43 @@ async function createEntrada(req: AuthRequest, res: Response) {
       });
     }
 
-    const doc = await FeelingModel.findOneAndUpdate(
-      { user_id: userId, day },
-      {
-        $setOnInsert: {
-          user_id: userId,
-          day,
-          // Schema exige ambos: inicializa saída com o mesmo valor no "primeiro create"
-          sentimento_de_saida: sentimento_de_entrada,
-        },
-        $set: { sentimento_de_entrada },
-      },
-      { new: true, upsert: true, runValidators: true }
-    );
+    // 1) Verifica se já existe registro para (user, day)
+    const existing = await FeelingModel.findOne({ user_id: userId, day });
 
-    return res.status(201).json({ feeling: doc.toJSON() });
+    let doc;
+
+    if (!existing) {
+      // 2A) Não existe ainda -> cria com entrada = saída = novo valor
+      doc = await FeelingModel.create({
+        user_id: userId,
+        day,
+        sentimento_de_entrada,
+        sentimento_de_saida: sentimento_de_entrada,
+      });
+    } else {
+      // 2B) Já existe -> atualiza entrada
+      // Se ainda não houve "saída real", saída == entrada antiga.
+      // Nesse caso, sincronizamos saída com o novo valor também.
+      const update: Partial<{
+        sentimento_de_entrada: string;
+        sentimento_de_saida: string;
+      }> = {
+        sentimento_de_entrada,
+      };
+
+      if (existing.sentimento_de_saida === existing.sentimento_de_entrada) {
+        // ainda não houve uma saída diferente da entrada -> reseta saída também
+        update.sentimento_de_saida = sentimento_de_entrada;
+      }
+
+      doc = await FeelingModel.findOneAndUpdate(
+        { user_id: userId, day },
+        { $set: update },
+        { new: true, runValidators: true }
+      );
+    }
+
+    return res.status(201).json({ feeling: doc!.toJSON() });
   } catch (err: any) {
     return res
       .status(500)

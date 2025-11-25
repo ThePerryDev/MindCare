@@ -1,23 +1,21 @@
 // frontend/app/screens/MoodScreen/MoodScreen.tsx
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import dayjs from 'dayjs';
 import { router } from 'expo-router';
 
 import { styles } from './styles';
 import Card from '@/components/Card/Card';
 import { theme } from '@/styles/theme';
-
-type MoodLabel =
-  | 'Muito Feliz'
-  | 'Irritado'
-  | 'Neutro'
-  | 'Triste'
-  | 'Muito Triste';
+import Navbar from '@/components/Navbar/Navbar';
+import {
+  MoodLabel,
+  IFeelingEntradaPayload,
+} from '@/interfaces/feeling.interface';
+import { registrarSentimentoEntrada } from '@/services/feeling';
 
 type Mood = {
   emoji: string;
@@ -25,55 +23,83 @@ type Mood = {
 };
 
 const MOODS: Mood[] = [
-  { emoji: '😄', label: 'Muito Feliz' },
-  { emoji: '😡', label: 'Irritado' },
-  { emoji: '😐', label: 'Neutro' },
-  { emoji: '😔', label: 'Triste' },
-  { emoji: '😭', label: 'Muito Triste' },
+  { emoji: '😐', label: 'Ansiedade' },
+  { emoji: '😡', label: 'Estresse' },
+  { emoji: '😄', label: 'Felicidade' },
+  { emoji: '😭', label: 'Tristeza' },
 ];
-
-const STORAGE_KEYS = {
-  SELECTED_MOOD: '@mood/selected',
-  LAST_LOG_DATE: '@mood/lastLogDate',
-};
 
 export default function MoodScreen() {
   const [selected, setSelected] = useState<Mood | null>(null);
-  const today = useMemo(() => dayjs().format('YYYY-MM-DD'), []);
+  const [submitting, setSubmitting] = useState(false);
+
+  // guarda o timeout pendente pra poder cancelar
+  const pendingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const moodJSON = await AsyncStorage.getItem(STORAGE_KEYS.SELECTED_MOOD);
-        if (moodJSON) setSelected(JSON.parse(moodJSON) as Mood);
-      } catch (err) {
-        console.error('Erro ao carregar humor do storage:', err);
+    // se a tela desmontar, cancela o envio pendente
+    return () => {
+      if (pendingTimeoutRef.current) {
+        clearTimeout(pendingTimeoutRef.current);
       }
-    })();
+    };
   }, []);
 
-  const handleSelect = async (mood: Mood) => {
-    setSelected(mood);
+  const handleSelect = (mood: Mood) => {
     Haptics.selectionAsync();
-    try {
-      await AsyncStorage.setItem(
-        STORAGE_KEYS.SELECTED_MOOD,
-        JSON.stringify(mood)
-      );
-      await AsyncStorage.setItem(STORAGE_KEYS.LAST_LOG_DATE, today);
+    setSelected(mood);
 
-      // ➜ Navega para o chat levando o humor selecionado
-      router.push({
-        pathname: '/chat',
-        params: { mood: mood.label, emoji: mood.emoji },
-      });
-    } catch (err) {
-      console.error('Erro ao salvar humor no storage:', err);
+    // cancela qualquer timer antigo
+    if (pendingTimeoutRef.current) {
+      clearTimeout(pendingTimeoutRef.current);
     }
+
+    const today = dayjs().format('YYYY-MM-DD');
+
+    console.log('🟣 [MoodScreen] Humor selecionado:', {
+      label: mood.label,
+      day: today,
+    });
+
+    setSubmitting(true);
+
+    pendingTimeoutRef.current = setTimeout(async () => {
+      try {
+        const payload: IFeelingEntradaPayload = {
+          day: today,
+          sentimento_de_entrada: mood.label,
+        };
+
+        console.log(
+          '🟣 [MoodScreen] Enviando sentimento de entrada para o backend...',
+          payload
+        );
+
+        await registrarSentimentoEntrada(payload);
+
+        console.log(
+          '🟢 [MoodScreen] Sentimento de entrada enviado com sucesso.'
+        );
+
+        // navega para o chat levando o humor selecionado
+        router.push({
+          pathname: '/chat',
+          params: { mood: mood.label, emoji: mood.emoji },
+        });
+      } catch (err) {
+        console.error(
+          '🔴 [MoodScreen] Erro ao registrar sentimento de entrada:',
+          err
+        );
+      } finally {
+        setSubmitting(false);
+        pendingTimeoutRef.current = null;
+      }
+    }, 5000);
   };
 
   const feelingText = selected
-    ? `Você está se sentindo ${selected.label.replace('Muito ', '')} !`
+    ? `Você está se sentindo ${selected.label.replace('Muito ', '')}!`
     : '';
 
   return (
@@ -88,7 +114,6 @@ export default function MoodScreen() {
 
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          {/* ⬇️ Voltar para a Home explicitamente */}
           <TouchableOpacity
             onPress={() => router.replace('/home')}
             accessibilityLabel='Voltar para Home'
@@ -112,6 +137,7 @@ export default function MoodScreen() {
                       onPress={() => handleSelect(mood)}
                       activeOpacity={0.85}
                       style={styles.moodInner}
+                      disabled={submitting}
                     >
                       <Text style={styles.selectedEmoji}>{mood.emoji}</Text>
                       <Text style={styles.selectedLabel}>{mood.label}</Text>
@@ -128,6 +154,7 @@ export default function MoodScreen() {
                     onPress={() => handleSelect(mood)}
                     activeOpacity={0.85}
                     style={styles.moodInner}
+                    disabled={submitting}
                   >
                     <Text style={styles.emoji}>{mood.emoji}</Text>
                     <Text style={styles.label}>{mood.label}</Text>
@@ -138,7 +165,15 @@ export default function MoodScreen() {
           })}
         </View>
 
-        {selected && <Text style={styles.feedbackText}>{feelingText}</Text>}
+        {selected && (
+          <Text style={styles.feedbackText}>
+            {submitting
+              ? `${feelingText} (confirmando em instantes...)`
+              : feelingText}
+          </Text>
+        )}
+
+        <Navbar />
       </SafeAreaView>
     </View>
   );

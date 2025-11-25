@@ -6,6 +6,7 @@ import { View, StyleSheet } from 'react-native';
 import { theme } from '../styles/theme';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { RegisterFlowProvider } from '@/contexts/RegisterFlowContext';
+import { HomeDashboardProvider } from '@/contexts/HomeDashboardContext';
 import * as Notifications from 'expo-notifications';
 import { useEffect } from 'react';
 
@@ -41,7 +42,9 @@ export default function RootLayout() {
         />
         <AuthProvider>
           <RegisterFlowProvider>
-            <Slot />
+            <HomeDashboardProvider>
+              <Slot />
+            </HomeDashboardProvider>
           </RegisterFlowProvider>
         </AuthProvider>
       </View>

@@ -1,3 +1,5 @@
+// src/models/user.model.ts
+
 import mongoose, { Schema, Document } from 'mongoose';
 
 // Interface do documento

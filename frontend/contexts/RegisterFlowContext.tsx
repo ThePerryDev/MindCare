@@ -1,4 +1,4 @@
-// contexts/RegisterFlowContext.tsx
+// frontend/contexts/RegisterFlowContext.tsx
 import React, { createContext, useContext, useState } from 'react';
 
 type Step1 = {

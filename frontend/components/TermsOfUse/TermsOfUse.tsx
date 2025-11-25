@@ -1,3 +1,5 @@
+// frontend/components/TermsOfUse/TermsOfUse.tsx
+
 import React from 'react';
 import { Modal, View, Text, ScrollView, Pressable } from 'react-native';
 import CloseButton from '../CloseButton/CloseButton';

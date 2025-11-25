@@ -1,4 +1,4 @@
-// app/interfaces/auth.interface.ts
+// frontend/interfaces/auth.interface.ts
 export interface IUser {
   _id: string;
   fullName: string;

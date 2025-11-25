@@ -1,4 +1,4 @@
-// src/services/user.ts
+// frontend/services/user.ts
 import { api } from '@/services/api';
 
 export type UpdateMeInput = Partial<{
