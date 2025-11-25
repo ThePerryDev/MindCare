@@ -13,18 +13,17 @@ describe('Feeling Model Coverage', () => {
 
   it('deve executar as constantes FEELINGS definidas no modelo', () => {
     const expectedFeelings = [
-      'Muito Feliz',
-      'Irritado',
-      'Neutro',
-      'Triste',
-      'Muito Triste',
+      'Felicidade',
+      'Tristeza',
+      'Ansiedade',
+      'Estresse',
     ];
 
     expect(FEELINGS).toEqual(expectedFeelings);
     expect(FEELINGS.length).toBe(5);
 
     // Teste de tipo
-    const testFeeling: FeelingValue = 'Muito Feliz';
+    const testFeeling: FeelingValue = 'Felicidade';
     expect(FEELINGS.includes(testFeeling)).toBe(true);
   });
 
@@ -49,7 +48,7 @@ describe('Feeling Model Coverage', () => {
     // Validador de sentimentos através do enum
     const feelingValidator = (v: string) =>
       FEELINGS.includes(v as FeelingValue);
-    expect(feelingValidator('Muito Feliz')).toBe(true);
+    expect(feelingValidator('Felicidade')).toBe(true);
     expect(feelingValidator('Triste')).toBe(true);
     expect(feelingValidator('Feliz Demais')).toBe(false);
     expect(feelingValidator('')).toBe(false);
@@ -134,7 +133,7 @@ describe('Feeling Model Coverage', () => {
       _id: '507f1f77bcf86cd799439011',
       user_id: '507f1f77bcf86cd799439012',
       day: '2025-10-21',
-      sentimento_de_entrada: 'Muito Feliz',
+      sentimento_de_entrada: 'Felicidade',
       sentimento_de_saida: 'Neutro',
       __v: 0,
     };
@@ -321,7 +320,7 @@ describe('Feeling Model Coverage', () => {
       _id: '507f1f77bcf86cd799439011',
       user_id: '507f1f77bcf86cd799439012',
       day: '2025-10-21',
-      sentimento_de_entrada: 'Muito Feliz',
+      sentimento_de_entrada: 'Felicidade',
       sentimento_de_saida: 'Neutro',
       __v: 0,
       createdAt: new Date(),
@@ -341,7 +340,7 @@ describe('Feeling Model Coverage', () => {
     expect(mockDocument._id).toBeUndefined();
     expect(mockDocument.__v).toBeUndefined();
     expect(mockDocument.day).toBe('2025-10-21');
-    expect(mockDocument.sentimento_de_entrada).toBe('Muito Feliz');
+    expect(mockDocument.sentimento_de_entrada).toBe('Felicidade');
   });
 
   it('deve testar a criação condicional do modelo mongoose', () => {
