@@ -6,7 +6,7 @@
 | ------------- | -------------- | -------------- | -------------- | -------------- | -------------- |
 | **Eduardo**   | LDM-092        | LDM-099        | XXX-106        | XXX-113        | XXX-120        |
 | **Franciele** | LDM-093        | LDM-100        | LDM-107        | LDM-114        | LDM-121        |
-| **Claudia**   | LDM-094        | LDM-101        | LDM108        | LDM-115        | LDM-122        |
+| **Claudia**   | LDM-094        | LDM-101        | LDM-108        | LDM-115        | LDM-122        |
 | **Willian**   | XXX-095        | XXX-102        | XXX-109        | XXX-116        | XXX-123        |
 | **Bianca**    | XXX-096        | XXX-103        | XXX-110        | XXX-117        | XXX-124        |
 | **Daniel**    | LDM-097        | QT-104         | QT -111        | QT -118        | QT -125        |
