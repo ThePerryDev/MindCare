@@ -38,7 +38,7 @@
 | **10/11/2025** | LDM-101 | Conexeão back  e front Tela Petfil, gráfico entrada e saída |
 | **12/11/2025** | LDM-108 | Conexeão back  e front, resultado semanal|
 | **14/11/2025** | LDM-115 | Conexeão back  e front check in contagem e atovidades|
-| **18/11/2025** | LDM-122 |  |
+| **18/11/2025** | LDM-122 | conexeão back  e front atividades agrupadas por categorias|
 
 
 | **Willian** | **Nome da tarefa** | **Descrição** |
