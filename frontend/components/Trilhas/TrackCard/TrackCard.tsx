@@ -16,79 +16,42 @@ export type Track = {
   duration: string;
   progressPercent: number;
   totalSteps: number;
-  completedSteps: number;
+  // AGORA: lista dos steps concluídos nesse ciclo (ex.: [1, 5])
+  completedSteps: number[];
   status: TrackStatus;
   backgroundColor: string;
+  // quantas vezes a trilha foi concluída por completo
+  completionCount: number;
 };
 
 type TrackCardProps = {
   track: Track;
   onPrimaryPress: () => void;
   onDetailsPress: () => void;
+  selectedStep: number;
+  onStepSelect: (step: number) => void;
 };
 
+// 🔧 Regra do texto do botão primário:
+// - locked      -> "Bloqueado"
+// - completed   -> "Recomeçar"
+// - outros      -> "Começar"
 function renderPrimaryButtonLabel(status: TrackStatus) {
-  switch (status) {
-    case 'completed':
-      return 'Concluído';
-    case 'in_progress':
-      return 'Continuar';
-    case 'not_started':
-      return 'Começar';
-    case 'locked':
-      return 'Bloqueado';
-    default:
-      return 'Começar';
+  if (status === 'locked') {
+    return 'Bloqueado';
   }
-}
-
-function renderStep(track: Track, index: number) {
-  const stepNumber = index + 1;
-
-  if (track.status === 'locked') {
-    return (
-      <View key={stepNumber} style={[styles.step, styles.stepLocked]}>
-        <Text style={[styles.stepText, styles.stepTextLocked]}>
-          {stepNumber}
-        </Text>
-      </View>
-    );
+  if (status === 'completed') {
+    return 'Recomeçar';
   }
-
-  if (stepNumber <= track.completedSteps) {
-    return (
-      <View key={stepNumber} style={[styles.step, styles.stepCompleted]}>
-        <Text style={[styles.stepText, styles.stepTextCompleted]}>
-          {stepNumber}
-        </Text>
-      </View>
-    );
-  }
-
-  if (
-    track.status === 'in_progress' &&
-    stepNumber === track.completedSteps + 1
-  ) {
-    return (
-      <View key={stepNumber} style={[styles.step, styles.stepCurrent]}>
-        <Text style={[styles.stepText, styles.stepTextCurrent]}>
-          {stepNumber}
-        </Text>
-      </View>
-    );
-  }
-
-  return (
-    <View key={stepNumber} style={styles.step}>
-      <Text style={styles.stepText}>{stepNumber}</Text>
-    </View>
-  );
+  return 'Começar';
 }
 
 const TrackCard: React.FC<TrackCardProps> = ({
   track,
   onPrimaryPress,
   onDetailsPress,
+  selectedStep,
+  onStepSelect,
 }) => {
   const isPrimaryButtonDisabled = track.status === 'locked';
   const primaryLabel = renderPrimaryButtonLabel(track.status);
@@ -102,12 +65,14 @@ const TrackCard: React.FC<TrackCardProps> = ({
       ? 'Trilha concluída'
       : 'Progresso';
 
+  const lastCompleted =
+    track.completedSteps.length > 0 ? Math.max(...track.completedSteps) : 0;
+
   return (
     <View
       style={[styles.trackCard, { backgroundColor: track.backgroundColor }]}
     >
       <View style={styles.trackHeader}>
-        <View style={styles.trackIcon} />
         <View style={styles.trackHeaderText}>
           <Text style={styles.trackTitle}>{track.title}</Text>
           <View style={styles.trackMetaRow}>
@@ -117,6 +82,13 @@ const TrackCard: React.FC<TrackCardProps> = ({
             <Text style={styles.durationText}>{track.duration}</Text>
           </View>
         </View>
+
+        <View style={styles.completionBadge}>
+          <Text style={styles.completionBadgeLabel}>Concluído</Text>
+          <Text style={styles.completionBadgeCount}>
+            {track.completionCount}x
+          </Text>
+        </View>
       </View>
 
       <View style={styles.progressRow}>
@@ -125,9 +97,50 @@ const TrackCard: React.FC<TrackCardProps> = ({
       </View>
 
       <View style={styles.stepsRow}>
-        {Array.from({ length: track.totalSteps }).map((_, i) =>
-          renderStep(track, i)
-        )}
+        {Array.from({ length: track.totalSteps }).map((_, index) => {
+          const stepNumber = index + 1;
+
+          const isStepCompleted = track.completedSteps.includes(stepNumber);
+
+          const isCurrentStep =
+            track.status === 'in_progress' &&
+            !isStepCompleted &&
+            stepNumber === lastCompleted + 1;
+
+          const isLockedStep = track.status === 'locked';
+          const isSelected = selectedStep === stepNumber;
+
+          return (
+            <TouchableOpacity
+              key={stepNumber}
+              style={[
+                styles.step,
+                isLockedStep && styles.stepLocked,
+                isStepCompleted && styles.stepCompleted,
+                isCurrentStep && styles.stepCurrent,
+                !isLockedStep && isSelected && styles.stepSelected,
+              ]}
+              disabled={isLockedStep}
+              activeOpacity={0.8}
+              onPress={() => {
+                if (!isLockedStep) {
+                  onStepSelect(stepNumber);
+                }
+              }}
+            >
+              <Text
+                style={[
+                  styles.stepText,
+                  isLockedStep && styles.stepTextLocked,
+                  isStepCompleted && styles.stepTextCompleted,
+                  isCurrentStep && styles.stepTextCurrent,
+                ]}
+              >
+                {stepNumber}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
       </View>
 
       <View style={styles.trackActions}>

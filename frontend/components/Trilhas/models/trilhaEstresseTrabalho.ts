@@ -1,3 +1,4 @@
+// frontend/components/Trilhas/models/trilhaEstresseTrabalho.ts
 import { TrilhaModel } from '../types';
 
 /**
@@ -19,6 +20,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Criar estabilidade',
+      mode: 'timer',
       benefits: [
         'Ajuda a estabilizar a respiração e o ritmo interno',
         'Reduz a sensação de urgência constante',
@@ -40,6 +42,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
       durationMinutes: 8,
       durationLabel: '8 min',
       goal: 'Reduzir sobrecarga mental',
+      mode: 'checklist',
       benefits: [
         'Organiza o dia de forma objetiva',
         'Evita espalhar energia em tarefas pouco importantes',
@@ -60,6 +63,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
       durationMinutes: 6,
       durationLabel: '6 min',
       goal: 'Prevenir tensão',
+      mode: 'timer',
       benefits: [
         'Reduz dores relacionadas a digitação e postura prolongada',
         'Melhora circulação em membros superiores',
@@ -80,6 +84,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
       durationMinutes: 7,
       durationLabel: '7 min',
       goal: 'Recuperar confiança',
+      mode: 'timer',
       benefits: [
         'Ajuda a reduzir pensamentos de incapacidade',
         'Fortalece uma imagem interna de competência',
@@ -100,6 +105,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
       durationMinutes: 6,
       durationLabel: '6 min',
       goal: 'Reprogramar autodiálogo',
+      mode: 'timer',
       benefits: [
         'Substitui pensamentos autocríticos por frases de apoio',
         'Fortalece autoestima e senso de capacidade',
@@ -107,7 +113,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
       ],
       howTo: [
         'Encontre um lugar em que você possa falar ou pensar em voz baixa sem interrupções.',
-        'Escolha algumas frases curtas como: “Eu sou capaz”, “Eu aprendo com os desafios”, “Eu estou fazendo o meu melhor”.',
+        'Escolha algumas frases curtas como: “Eu sou capaz”, “Eu aprendo com os desafios”, “Eu está fazendo o meu melhor”.',
         'Repita cerca de 10 afirmações, podendo repetir as mesmas ou variar.',
         'Se quiser, fale em voz baixa ou apenas mentalmente, sentindo o efeito das palavras.',
         'Ao final, respire fundo e note se a sua fala interna ficou um pouco mais suave.',
@@ -119,6 +125,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Equilibrar percepção',
+      mode: 'checklist',
       benefits: [
         'Ajuda a não focar apenas nos problemas do dia',
         'Torna mais visível o que também funcionou bem',
@@ -138,6 +145,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Fechar ciclo',
+      mode: 'checklist',
       benefits: [
         'Ajuda a perceber o que mudou em relação ao estresse ao longo da semana',
         'Facilita identificar hábitos que funcionaram melhor para você',
@@ -145,7 +153,7 @@ export const trilhaEstresseTrabalho: TrilhaModel = {
       ],
       howTo: [
         'Reserve alguns minutos para pensar na sua semana de trabalho ou estudo.',
-        'Pergunte a si mesma: “Em quais dias me senti mais sobrecarregada?”',
+        'Pergunte a si mesma: “Em quais dias me senti mais sobrecarregada?”.',
         'Observe quais práticas da trilha ajudaram mais nesses momentos.',
         'Anote um aprendizado ou algo que você quer manter para a próxima semana.',
         'Com base nisso, escolha se deseja repetir esta trilha ou experimentar uma trilha diferente no app.',

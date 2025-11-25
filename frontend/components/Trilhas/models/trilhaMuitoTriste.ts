@@ -1,5 +1,4 @@
 // frontend/components/Trilhas/models/trilhaMuitoTriste.ts
-
 import { TrilhaModel } from '../types';
 
 /**
@@ -20,6 +19,7 @@ export const trilhaMuitoTriste: TrilhaModel = {
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Gerar sensação de acolhimento interno',
+      mode: 'timer',
       benefits: [
         'Ajuda a regular o ritmo da respiração em momentos de tristeza',
         'Traz sensação de aconchego por meio do toque',
@@ -40,6 +40,7 @@ export const trilhaMuitoTriste: TrilhaModel = {
       durationMinutes: 8,
       durationLabel: '8 min',
       goal: 'Falar consigo mesma com gentileza',
+      mode: 'checklist',
       benefits: [
         'Ajuda a diminuir a autocrítica em momentos difíceis',
         'Cria uma voz interna mais acolhedora',
@@ -59,6 +60,7 @@ export const trilhaMuitoTriste: TrilhaModel = {
       durationMinutes: 10,
       durationLabel: '10 min',
       goal: 'Reduzir a sensação de dor emocional bruta',
+      mode: 'timer',
       benefits: [
         'Oferece um espaço guiado para sentir sem se perder na dor',
         'Ajuda a acalmar a mente com instruções simples',
@@ -78,6 +80,7 @@ export const trilhaMuitoTriste: TrilhaModel = {
       durationMinutes: 8,
       durationLabel: '8 min',
       goal: 'Tirar o corpo da imobilidade',
+      mode: 'timer',
       benefits: [
         'Ajuda a ativar suavemente a circulação',
         'Reduz a sensação de corpo pesado e parado',
@@ -97,6 +100,7 @@ export const trilhaMuitoTriste: TrilhaModel = {
       durationMinutes: 7,
       durationLabel: '7 min',
       goal: 'Reconectar-se com momentos de alegria',
+      mode: 'checklist',
       benefits: [
         'Ajuda a lembrar que sua história também tem momentos felizes',
         'Pode despertar emoções de carinho, saudade boa ou gratidão',
@@ -116,6 +120,7 @@ export const trilhaMuitoTriste: TrilhaModel = {
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Ativar suavemente corpo e mente',
+      mode: 'timer',
       benefits: [
         'Ajuda a regular o relógio biológico e o humor',
         'Traz uma sensação física agradável de calor suave',
@@ -135,6 +140,7 @@ export const trilhaMuitoTriste: TrilhaModel = {
       durationMinutes: 8,
       durationLabel: '8 min',
       goal: 'Reduzir sensação de isolamento',
+      mode: 'checklist',
       benefits: [
         'Ajuda a lembrar que você não está sozinha no mundo',
         'Abre espaço para receber apoio emocional',

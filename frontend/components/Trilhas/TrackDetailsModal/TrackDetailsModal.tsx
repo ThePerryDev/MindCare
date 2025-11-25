@@ -16,6 +16,7 @@ type TrackDetailsModalProps = {
   visible: boolean;
   track: Track | null;
   trilha: TrilhaModel | null;
+  selectedDay?: number | null; // ✅ novo
   onClose: () => void;
   onStart: (event: GestureResponderEvent) => void;
 };
@@ -24,6 +25,7 @@ export const TrackDetailsModal: React.FC<TrackDetailsModalProps> = ({
   visible,
   track,
   trilha,
+  selectedDay,
   onClose,
   onStart,
 }) => {
@@ -31,12 +33,15 @@ export const TrackDetailsModal: React.FC<TrackDetailsModalProps> = ({
     return null;
   }
 
-  // Define qual dia mostrar com base no progresso da trilha
   const totalDays = trilha.days.length || 1;
-  const currentDayIndex = Math.max(
-    0,
-    Math.min(track.completedSteps, totalDays - 1)
-  );
+
+  // ✅ Sempre prioriza o dia selecionado (bolinha roxa)
+  const dayNumber =
+    selectedDay && selectedDay >= 1 && selectedDay <= totalDays
+      ? selectedDay
+      : 1;
+
+  const currentDayIndex = dayNumber - 1;
   const currentDay = trilha.days[currentDayIndex];
 
   const activityTitle = currentDay?.microHabit ?? trilha.name;

@@ -1,6 +1,7 @@
 // frontend/interfaces/auth.interface.ts
 export interface IUser {
-  _id: string;
+  _id?: string; // pode vir como _id
+  id?: string; // ou como id
   fullName: string;
   email: string;
   phone?: string;

@@ -1,12 +1,12 @@
 // frontend/app/TrailCompleteScreen/TrailCompleteScreen.tsx
+
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { styles } from './styles';
 import { theme } from '@/styles/theme';
-import Navbar from '@/components/Navbar/Navbar';
 import Platypus from '../../../assets/images/Platypus.png';
 import type { TrilhaModel } from '@/components/Trilhas/types';
 import {
@@ -16,6 +16,7 @@ import {
   trilhaMuitoTriste,
 } from '@/components/Trilhas/models';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Button from '@/components/Button/Button';
 
 const PROGRESS_PREFIX = '@mindcare/trilha-progress/';
 
@@ -52,7 +53,6 @@ export default function TrailCompleteScreen() {
     if (!trilhaKey) return;
     void (async () => {
       const currentDay = await getCurrentDay(trilhaKey);
-      // dia completado é o anterior ao dia atual salvo
       const done = Math.max(1, currentDay - 1);
       setCompletedDay(done);
     })();
@@ -63,6 +63,26 @@ export default function TrailCompleteScreen() {
       ? `Você completou a atividade ${completedDay} da trilha ${trilha.name}.`
       : `Você completou mais uma atividade na trilha ${trilha.name}.`
     : 'Você completou uma atividade com sucesso!';
+
+  // Ir para o próximo exercício
+  const handleNextExercise = () => {
+    if (trilha) {
+      router.replace({
+        pathname: '/trails',
+        params: {
+          trailId: trilha.key,
+          autoStart: '1',
+        },
+      });
+    } else {
+      router.replace('/trails');
+    }
+  };
+
+  // Voltar para trilhas
+  const handleBackToTrails = () => {
+    router.replace('/trails');
+  };
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -78,16 +98,27 @@ export default function TrailCompleteScreen() {
 
           <Image source={Platypus} style={styles.image} />
 
-          <TouchableOpacity
-            style={styles.buttonPrimary}
-            activeOpacity={0.9}
-            onPress={() => router.replace('/trails')}
-          >
-            <Text style={styles.buttonPrimaryText}>Voltar para as trilhas</Text>
-          </TouchableOpacity>
-        </View>
+          {/* Botão: próximo exercício */}
+          <View style={styles.buttonWrapper}>
+            <Button onPress={handleNextExercise}>
+              <Text>Ir para o próximo exercício</Text>
+            </Button>
+          </View>
 
-        <Navbar />
+          {/* Botão: registrar humor */}
+          <View style={styles.buttonWrapper}>
+            <Button onPress={() => router.push('/checkoutmood')}>
+              <Text>Como esta se sentindo agora?</Text>
+            </Button>
+          </View>
+
+          {/* Botão: voltar para as trilhas */}
+          <View style={styles.buttonWrapper}>
+            <Button onPress={handleBackToTrails}>
+              <Text>Voltar para as trilhas</Text>
+            </Button>
+          </View>
+        </View>
       </LinearGradient>
     </SafeAreaView>
   );

@@ -1,5 +1,4 @@
 // frontend/components/Trilhas/models/trilhaAnsiedadeLeve.ts
-
 import { TrilhaModel } from '../types';
 
 /**
@@ -20,6 +19,7 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Acalmar corpo e mente',
+      mode: 'timer',
       benefits: [
         'Reduz rapidamente ansiedade fisiológica',
         'Diminui frequência cardíaca e tensão muscular',
@@ -40,6 +40,7 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
       durationMinutes: 7,
       durationLabel: '7 min',
       goal: 'Criar clareza mental',
+      mode: 'checklist',
       benefits: [
         'Ajuda a diferenciar o que é real do que é antecipação',
         'Reduz sensação de sobrecarga mental',
@@ -60,6 +61,7 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
       durationMinutes: 6,
       durationLabel: '6 min',
       goal: 'Reduzir tensão física',
+      mode: 'timer',
       benefits: [
         'Libera tensão acumulada típica da ansiedade',
         'Melhora a postura e respiração',
@@ -80,6 +82,7 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Recentrar atenção',
+      mode: 'timer',
       benefits: [
         'Reduz distração e pensamentos invasivos',
         'Aumenta foco no presente',
@@ -100,6 +103,7 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
       durationMinutes: 7,
       durationLabel: '7 min',
       goal: 'Processar sentimentos',
+      mode: 'checklist',
       benefits: [
         'Ajuda a expressar emoções acumuladas',
         'Aumenta clareza emocional',
@@ -120,6 +124,7 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
       durationMinutes: 8,
       durationLabel: '8 min',
       goal: 'Relaxamento profundo',
+      mode: 'timer',
       benefits: [
         'Diminui tensão corporal e mental',
         'Melhora humor e sensação de segurança',
@@ -140,6 +145,7 @@ export const trilhaAnsiedadeLeve: TrilhaModel = {
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Reforço positivo',
+      mode: 'checklist',
       benefits: [
         'Aumenta percepção de evolução',
         'Fortalece motivação para continuar hábitos saudáveis',

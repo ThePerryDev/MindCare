@@ -28,8 +28,20 @@ export const styles = StyleSheet.create({
     width: '100%',
   },
 
+  barChartOuter: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    width: '100%',
+  },
+
+  barChartScrollContent: {
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    gap: 16,
+  },
+
   barGratitude: {
-    backgroundColor: '#06B6D4',
+    backgroundColor: '#06B6D4', // Muito Feliz
   },
 
   barGroup: {
@@ -44,11 +56,15 @@ export const styles = StyleSheet.create({
   },
 
   barMindfulness: {
-    backgroundColor: '#EF4444',
+    backgroundColor: '#EF4444', // Ansiedade
   },
 
   barStress: {
-    backgroundColor: '#10B981',
+    backgroundColor: '#10B981', // Estresse
+  },
+
+  barVerySad: {
+    backgroundColor: '#F97316', // Muito Triste
   },
 
   barsWrapper: {

@@ -38,6 +38,12 @@ export interface IHumorEvolucaoPoint {
   counts: Record<string, number>; // { Felicidade: 2, Tristeza: 1, ... }
 }
 
+export interface ITrailStatsByMesTrilha {
+  month: string; // '01'..'12'
+  trailId: number | null; // pode ser null se algo estiver sem trilha
+  totalExercicios: number;
+}
+
 export interface ITrailStats {
   period: 'day' | 'week' | 'month' | 'year' | 'all';
   inicio: string | null;
@@ -54,6 +60,7 @@ export interface ITrailStats {
   porSentimento: { _id: string | null; totalExercicios: number }[];
   humorEvolucaoEntrada: IHumorEvolucaoPoint[];
   humorEvolucaoSaida: IHumorEvolucaoPoint[];
+  porMesTrilha?: ITrailStatsByMesTrilha[];
 }
 
 export interface INextExerciseResponse {

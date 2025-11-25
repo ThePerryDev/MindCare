@@ -1,16 +1,12 @@
-// frontend/app/screens/TrilhaScreen/styles.ts
 import { StyleSheet } from 'react-native';
 import { theme } from '@/styles/theme';
 
 export const styles = StyleSheet.create({
   backButton: {
     alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.7)',
-    borderRadius: 16,
-    height: 32,
+    height: 36,
     justifyContent: 'center',
-    marginRight: 8,
-    width: 32,
+    width: 36,
   },
 
   bg: {
@@ -76,14 +72,33 @@ export const styles = StyleSheet.create({
   },
 
   content: {
-    padding: 20,
-    paddingBottom: 70,
+    flex: 1,
   },
-
   header: {
     alignItems: 'center',
     flexDirection: 'row',
-    marginBottom: 12,
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    width: '100%',
+  },
+
+  headerRight: {
+    height: 24,
+    width: 24,
+  },
+
+  headerTitle: {
+    color: '#4C46B6',
+    fontFamily: theme.fonts.bold,
+    fontSize: 18,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+
+  listContent: {
+    paddingBottom: 100,
+    paddingHorizontal: 20,
   },
 
   safe: {
@@ -91,7 +106,10 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
 
+  // legado – pode remover se não estiver usando
   title: {
+    alignContent: 'center',
+    alignSelf: 'center',
     color: '#4C46B6',
     fontFamily: theme.fonts.bold,
     fontSize: 22,

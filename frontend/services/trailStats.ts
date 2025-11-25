@@ -47,6 +47,11 @@ export interface TrailStatsResponse {
   porSentimento: PorSentimento[];
   humorEvolucaoEntrada: HumorEvolucaoItem[];
   humorEvolucaoSaida: HumorEvolucaoItem[];
+  porMesTrilha?: {
+    month: string; // '01'..'12'
+    trailId: number | null;
+    totalExercicios: number;
+  }[];
 }
 
 // 🔹 Função “base” que você já tinha
@@ -71,8 +76,6 @@ export async function fetchTrailStats(
 
 // 🔹 Próximo exercício (ajuste a rota se a sua for diferente)
 export async function fetchNextExercise(): Promise<INextExerciseResponse> {
-  const { data } = await api.get<INextExerciseResponse>(
-    '/trails/next-exercise'
-  );
+  const { data } = await api.get<INextExerciseResponse>('/trails/next');
   return data;
 }

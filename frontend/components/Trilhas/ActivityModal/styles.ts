@@ -21,6 +21,26 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.35)',
   },
 
+  checklistCompleteButton: {
+    alignItems: 'center',
+    backgroundColor: '#6C4FF6',
+    borderRadius: 999,
+    justifyContent: 'center',
+    paddingVertical: 12,
+  },
+
+  checklistCompleteButtonDisabled: {
+    backgroundColor: '#D1D4DE',
+  },
+
+  checklistCompleteButtonText: {
+    color: '#FFFFFF',
+    fontFamily: theme.fonts.semi,
+    fontSize: 15,
+  },
+  checklistFooter: {
+    marginTop: 4,
+  },
   divider: {
     backgroundColor: '#EEE9FF',
     height: 1,
