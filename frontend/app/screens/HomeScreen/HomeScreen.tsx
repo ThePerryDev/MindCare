@@ -5,6 +5,7 @@ import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
+
 import Button from '@/components/Button/Button';
 import styles from './styles';
 import WeeklyResults from '@/components/WeeklyResults/WeeklyResults';
@@ -57,13 +58,17 @@ export default function HomeScreen() {
           <Text style={{ color: 'red', marginBottom: 12 }}>{error}</Text>
         ) : null}
 
+        {/* ✅ Sem props aqui, ele usa o contexto por dentro */}
         <WeeklyResults />
+
         <ContinueImproving />
+
         <View style={styles.buttonWrapper}>
           <Button onPress={() => router.push('/checkoutmood')}>
             <Text>Sentimento de Saida (Excluir Depois)</Text>
           </Button>
         </View>
+
         <Navbar />
       </SafeAreaView>
     </LinearGradient>

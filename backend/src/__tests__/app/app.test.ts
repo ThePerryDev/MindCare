@@ -45,11 +45,12 @@ describe('App Configuration', () => {
     it('deve configurar CORS corretamente para origin válida', async () => {
       // Mock da variável de ambiente
       const originalEnv = process.env.CORS_ORIGINS;
-      process.env.CORS_ORIGINS = 'http://localhost:3000,https://example.com';
+      process.env.CORS_ORIGINS =
+        'http://192.168.0.112:3000,https://example.com';
 
       const response = await request(app)
         .get('/health')
-        .set('Origin', 'http://localhost:3000');
+        .set('Origin', 'http://192.168.0.112:3000');
 
       expect(response.status).toBe(200);
 
@@ -66,7 +67,7 @@ describe('App Configuration', () => {
     it('deve configurar credentials como true', async () => {
       const response = await request(app)
         .options('/health')
-        .set('Origin', 'http://localhost:3000')
+        .set('Origin', 'http://192.168.0.112:3000')
         .set('Access-Control-Request-Method', 'GET');
 
       // CORS deve estar configurado
@@ -80,7 +81,7 @@ describe('App Configuration', () => {
       for (const method of methods) {
         const response = await request(app)
           .options('/health')
-          .set('Origin', 'http://localhost:3000')
+          .set('Origin', 'http://192.168.0.112:3000')
           .set('Access-Control-Request-Method', method);
 
         // Não deve retornar erro de método não permitido
@@ -175,7 +176,7 @@ describe('App Configuration', () => {
           callback: (err: Error | null, allow?: boolean) => void
         ) => {
           if (!origin) return callback(null, true); // non-browser or same-origin
-          const allowedOrigins = ['http://localhost:3000'];
+          const allowedOrigins = ['http://192.168.0.112:3000'];
           if (allowedOrigins.length === 0 || allowedOrigins.includes(origin))
             return callback(null, true);
           return callback(new Error('Origin not allowed by CORS'));
@@ -193,7 +194,7 @@ describe('App Configuration', () => {
 
     it('deve cobrir linha 21 - erro CORS com lista restritiva', async () => {
       // Testa exatamente a lógica da linha 21 do app.ts
-      const allowedOrigins = ['http://localhost:3000']; // Lista restritiva não vazia
+      const allowedOrigins = ['http://192.168.0.112:3000']; // Lista restritiva não vazia
       const origin = 'http://site-nao-permitido.com';
 
       const corsLogic = (
@@ -217,7 +218,7 @@ describe('App Configuration', () => {
     it('deve cobrir linha 21 com CORS_ORIGINS definido', async () => {
       // Definir CORS_ORIGINS para criar uma lista restritiva
       const originalCorsOrigins = process.env.CORS_ORIGINS;
-      process.env.CORS_ORIGINS = 'http://localhost:3000';
+      process.env.CORS_ORIGINS = 'http://192.168.0.112:3000';
 
       // Reimportar o app para pegar a nova configuração
       jest.resetModules();
@@ -243,7 +244,7 @@ describe('App Configuration', () => {
 
       // Define CORS_ORIGINS restritivo para que allowedOrigins.length > 0
       process.env.CORS_ORIGINS =
-        'http://localhost:3000,https://app.mindcare.com';
+        'http://192.168.0.112:3000,https://app.mindcare.com';
 
       const allowedOrigins = (process.env.CORS_ORIGINS || '')
         .split(',')

@@ -187,7 +187,7 @@ export const styles = StyleSheet.create({
   },
 
   legendDotRed: {
-    backgroundColor: '#EF4444',
+    backgroundColor: '#4C46B6',
   },
 
   legendDotYellow: {

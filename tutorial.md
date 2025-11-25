@@ -41,9 +41,9 @@ MindCare/
    ```
 
 3. **Acesse os serviços:**
-   - Backend API: http://localhost:3000
-   - Frontend Expo: http://localhost:19000
-   - MongoDB: localhost:27017
+   - Backend API: http://192.168.0.112:3000
+   - Frontend Expo: http://192.168.0.112:19000
+   - MongoDB: 192.168.0.112:27017
 
 ## 🐳 Containers Disponíveis
 

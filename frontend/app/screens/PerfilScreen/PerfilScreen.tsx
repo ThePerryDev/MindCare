@@ -1,78 +1,48 @@
 // frontend/app/screens/PerfilScreen/PerfilScreen.tsx
-import React, { useState } from 'react';
+
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   View,
   Text,
   ScrollView,
   TouchableOpacity,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
+import dayjs from 'dayjs';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-chart-kit';
 import { useRouter } from 'expo-router';
+
 import { styles } from './styles';
 import Navbar from '@/components/Navbar/Navbar';
+import WeeklyResults from '@/components/WeeklyResults/WeeklyResults';
+
+import {
+  FEELINGS_SCALE,
+  feelingToValue,
+  FeelingLabel,
+} from '@/constants/feelingsScale';
+import { listarFeelings, FeelingDTO } from '@/services/feelingHistory';
 
 const screenWidth = Dimensions.get('window').width;
 
 export default function PerfilScreen() {
   const router = useRouter();
 
-  const [profileData] = useState({
+  const [feelings, setFeelings] = useState<FeelingDTO[]>([]);
+  const [loadingFeelings, setLoadingFeelings] = useState(false);
+
+  // Agora só mantemos em state:
+  // - Dias consecutivos / total de check-ins
+  // - Atividades por categoria (placeholder)
+  const [profileData, setProfileData] = useState({
     consecutiveDays: {
-      bestStreak: 5,
-      totalCheckins: 15,
+      bestStreak: 0,
+      totalCheckins: 0,
     },
-    weeklyResults: {
-      activeDays: 0,
-      averageMood: 0.0,
-      completedActivities: 0,
-      completedTrails: 0,
-    },
-    moodEvolution: [
-      {
-        day: 'Seg',
-        'Muito Feliz': 5,
-        Irritado: 2,
-        Triste: 3,
-        Neutro: 4,
-        'Muito Triste': 1,
-      },
-      {
-        day: 'Ter',
-        'Muito Feliz': 7,
-        Irritado: 4,
-        Triste: 2,
-        Neutro: 5,
-        'Muito Triste': 3,
-      },
-      {
-        day: 'Qua',
-        'Muito Feliz': 10,
-        Irritado: 6,
-        Triste: 4,
-        Neutro: 7,
-        'Muito Triste': 2,
-      },
-      {
-        day: 'Qui',
-        'Muito Feliz': 8,
-        Irritado: 5,
-        Triste: 7,
-        Neutro: 6,
-        'Muito Triste': 4,
-      },
-      {
-        day: 'Sex',
-        'Muito Feliz': 12,
-        Irritado: 8,
-        Triste: 5,
-        Neutro: 9,
-        'Muito Triste': 3,
-      },
-    ],
     activitiesByCategory: [
       { month: 'Jan', mindfulness: 5, stress: 6, gratitude: 7 },
       { month: 'Fev', mindfulness: 6, stress: 5, gratitude: 8 },
@@ -83,36 +53,83 @@ export default function PerfilScreen() {
     ],
   });
 
-  const moodChartData = {
-    labels: profileData.moodEvolution.map(d => d.day),
-    datasets: [
-      {
-        data: profileData.moodEvolution.map(d => d['Irritado']),
-        color: () => '#EF4444',
-        strokeWidth: 2,
-      },
-      {
-        data: profileData.moodEvolution.map(d => d['Triste']),
-        color: () => '#F97316',
-        strokeWidth: 2,
-      },
-      {
-        data: profileData.moodEvolution.map(d => d['Neutro']),
-        color: () => '#FCD34D',
-        strokeWidth: 2,
-      },
-      {
-        data: profileData.moodEvolution.map(d => d['Muito Feliz']),
-        color: () => '#10B981',
-        strokeWidth: 2,
-      },
-      {
-        data: profileData.moodEvolution.map(d => d['Muito Triste']),
-        color: () => '#06B6D4',
-        strokeWidth: 2,
-      },
-    ],
-  };
+  // Carrega feelings dos últimos 7 dias ao montar a tela
+  useEffect(() => {
+    const fetchFeelings = async () => {
+      try {
+        setLoadingFeelings(true);
+
+        const today = dayjs();
+        const inicio = today.subtract(6, 'day').format('YYYY-MM-DD');
+        const fim = today.format('YYYY-MM-DD');
+
+        const data = await listarFeelings({ inicio, fim });
+
+        // ordena do mais antigo para o mais novo
+        const ordered = [...data].sort((a, b) => a.day.localeCompare(b.day));
+        setFeelings(ordered);
+
+        // Atualiza apenas os indicadores de dias consecutivos / check-ins
+        if (ordered.length > 0) {
+          const activeDays = ordered.length;
+          const totalCheckins = ordered.length;
+
+          setProfileData(prev => ({
+            ...prev,
+            consecutiveDays: {
+              ...prev.consecutiveDays,
+              bestStreak: activeDays, // simplificado: pode ser refinado depois
+              totalCheckins,
+            },
+          }));
+        }
+      } catch (err) {
+        console.error('🔴 [PerfilScreen] Erro ao carregar feelings:', err);
+      } finally {
+        setLoadingFeelings(false);
+      }
+    };
+
+    void fetchFeelings();
+  }, []);
+
+  // Gráfico com duas séries: entrada x saída
+  const moodChartData = useMemo(() => {
+    if (!feelings.length) {
+      return {
+        labels: [],
+        datasets: [],
+      };
+    }
+
+    const labels = feelings.map(f => dayjs(f.day).format('DD/MM'));
+
+    const dataEntrada = feelings.map(
+      f => feelingToValue[f.sentimento_de_entrada as FeelingLabel] ?? 0
+    );
+
+    const dataSaida = feelings.map(
+      f => feelingToValue[f.sentimento_de_saida as FeelingLabel] ?? 0
+    );
+
+    return {
+      labels,
+      datasets: [
+        {
+          data: dataEntrada,
+          strokeWidth: 2,
+          // roxo principal
+          color: (opacity = 1) => `rgba(76, 70, 182, ${opacity})`,
+        },
+        {
+          data: dataSaida,
+          strokeWidth: 2,
+          // ciano para diferenciar saída
+          color: (opacity = 1) => `rgba(56, 189, 248, ${opacity})`,
+        },
+      ],
+    };
+  }, [feelings]);
 
   return (
     <LinearGradient
@@ -160,40 +177,8 @@ export default function PerfilScreen() {
             </View>
           </View>
 
-          {/* Card Resultado Semanal */}
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Resultado Semanal</Text>
-            <View style={styles.statsGrid}>
-              <View style={styles.gridItem}>
-                <Text style={styles.gridLabel}>Dias Ativos</Text>
-                <Text style={styles.gridValue}>
-                  {profileData.weeklyResults.activeDays}/7
-                </Text>
-              </View>
-              <View style={styles.gridItem}>
-                <Text style={styles.gridLabel}>Humor Médio</Text>
-                <Text style={styles.gridValue}>
-                  {profileData.weeklyResults.averageMood.toFixed(1)}
-                </Text>
-              </View>
-              <View style={styles.gridItem}>
-                <Text style={styles.gridLabel}>Atividades Feitas</Text>
-                <Text style={styles.gridValue}>
-                  {profileData.weeklyResults.completedActivities}/7
-                </Text>
-              </View>
-              <View style={styles.gridItem}>
-                <Text style={styles.gridLabel}>Trilhas Feitas</Text>
-                <Text style={styles.gridValue}>
-                  {profileData.weeklyResults.completedTrails}/10
-                </Text>
-              </View>
-            </View>
-            <View style={styles.pageIndicators}>
-              <View style={[styles.indicator, styles.indicatorActive]} />
-              <View style={styles.indicator} />
-            </View>
-          </View>
+          {/* ✅ Usa o mesmo componente de Resultado Semanal da Home */}
+          <WeeklyResults />
 
           {/* Card Evolução do Humor */}
           <View style={styles.card}>
@@ -210,61 +195,76 @@ export default function PerfilScreen() {
             <Text style={styles.cardSubtitle}>Últimos 7 dias</Text>
 
             <View style={styles.chartContainer}>
-              <LineChart
-                data={moodChartData}
-                width={screenWidth - 72}
-                height={220}
-                chartConfig={{
-                  backgroundColor: '#FFFFFF',
-                  backgroundGradientFrom: '#FFFFFF',
-                  backgroundGradientTo: '#FFFFFF',
-                  decimalPlaces: 0,
-                  color: (opacity = 1) => `rgba(76, 70, 182, ${opacity})`,
-                  labelColor: () => '#94A3B8',
-                  style: { borderRadius: 16 },
-                  propsForDots: { r: '4', strokeWidth: '2' },
-                }}
-                bezier
-                style={styles.chart}
-                withInnerLines
-                withOuterLines={false}
-                withVerticalLines={false}
-                withHorizontalLines
-                withDots
-                withShadow={false}
-              />
+              {loadingFeelings ? (
+                <ActivityIndicator color='#4C46B6' />
+              ) : feelings.length === 0 ? (
+                <Text style={styles.cardSubtitle}>
+                  Ainda não há registros de humor suficientes.
+                </Text>
+              ) : (
+                <LineChart
+                  data={moodChartData}
+                  width={screenWidth - 72}
+                  height={220}
+                  fromZero
+                  yAxisInterval={1}
+                  chartConfig={{
+                    backgroundColor: '#FFFFFF',
+                    backgroundGradientFrom: '#FFFFFF',
+                    backgroundGradientTo: '#FFFFFF',
+                    decimalPlaces: 0,
+                    color: (opacity = 1) => `rgba(76, 70, 182, ${opacity})`,
+                    labelColor: () => '#94A3B8',
+                    style: { borderRadius: 16 },
+                    propsForDots: { r: '5', strokeWidth: '2' },
+                  }}
+                  style={styles.chart}
+                  withInnerLines
+                  withOuterLines={false}
+                  withVerticalLines={false}
+                  withHorizontalLines
+                  withDots
+                  withShadow={false}
+                  formatYLabel={value => {
+                    const v = Math.round(Number(value));
+                    const feeling = FEELINGS_SCALE.find(f => f.value === v);
+                    return feeling ? feeling.emoji : '';
+                  }}
+                />
+              )}
             </View>
 
-            <View style={styles.legend}>
-              <View style={styles.legendRow}>
-                <View style={styles.legendItem}>
-                  <View style={[styles.legendDot, styles.legendDotRed]} />
-                  <Text style={styles.legendText}>Irritado</Text>
-                </View>
-                <View style={styles.legendItem}>
-                  <View style={[styles.legendDot, styles.legendDotOrange]} />
-                  <Text style={styles.legendText}>Triste</Text>
-                </View>
-                <View style={styles.legendItem}>
-                  <View style={[styles.legendDot, styles.legendDotYellow]} />
-                  <Text style={styles.legendText}>Neutro</Text>
+            {/* Legenda: Entrada x Saída */}
+            {feelings.length > 0 && (
+              <View style={styles.legend}>
+                <View style={styles.legendRow}>
+                  <View style={styles.legendItem}>
+                    <View style={[styles.legendDot, styles.legendDotRed]} />
+                    <Text style={styles.legendText}>Sentimento de entrada</Text>
+                  </View>
+                  <View style={styles.legendItem}>
+                    <View style={[styles.legendDot, styles.legendDotCyan]} />
+                    <Text style={styles.legendText}>Sentimento de saída</Text>
+                  </View>
                 </View>
               </View>
+            )}
 
-              <View style={styles.legendRow}>
-                <View style={styles.legendItem}>
-                  <View style={[styles.legendDot, styles.legendDotGreen]} />
-                  <Text style={styles.legendText}>Muito Feliz</Text>
+            {/* Legenda baseada no FEELINGS_SCALE */}
+            <View style={styles.legend}>
+              {FEELINGS_SCALE.map(item => (
+                <View key={item.label} style={styles.legendRow}>
+                  <View style={styles.legendItem}>
+                    <Text style={styles.legendText}>
+                      {item.emoji} {item.label}
+                    </Text>
+                  </View>
                 </View>
-                <View style={styles.legendItem}>
-                  <View style={[styles.legendDot, styles.legendDotCyan]} />
-                  <Text style={styles.legendText}>Muito Triste</Text>
-                </View>
-              </View>
+              ))}
             </View>
           </View>
 
-          {/* Card Atividades por Categoria */}
+          {/* Card Atividades por Categoria (mantido como estava) */}
           <View style={[styles.card, styles.cardBottomSpace]}>
             <View style={styles.cardHeader}>
               <Text style={styles.cardTitle}>Atividades por Categoria</Text>
@@ -328,6 +328,7 @@ export default function PerfilScreen() {
             </View>
           </View>
         </ScrollView>
+
         <Navbar />
       </SafeAreaView>
     </LinearGradient>

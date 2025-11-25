@@ -103,14 +103,14 @@ describe('Server Configuration', () => {
       try {
         await mockConnect(MONGO_URI);
         mockApp.listen(PORT, () => {
-          mockConsole.log(`Server ouvindo em http://localhost:${PORT}`);
+          mockConsole.log(`Server ouvindo em http://192.168.0.112:${PORT}`);
         });
 
         // Verifica se tudo foi chamado corretamente
         expect(mockConnect).toHaveBeenCalledWith(MONGO_URI);
         expect(mockApp.listen).toHaveBeenCalledWith(PORT, expect.any(Function));
         expect(mockConsole.log).toHaveBeenCalledWith(
-          'Server ouvindo em http://localhost:3000'
+          'Server ouvindo em http://192.168.0.112:3000'
         );
       } catch (e) {
         mockConsole.error('Falha ao iniciar', e);
