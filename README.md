@@ -7,7 +7,7 @@
 | **Eduardo**   | LDM-092        | LDM-099        | LDM-106        | LDM-113        | LDM-120        |
 | **Franciele** | LDM-093        | LDM-100        | LDM-107        | LDM-114        | LDM-121        |
 | **Claudia**   | LDM-094        | LDM-101        | LDM-108        | LDM-115        | LDM-122        |
-| **Willian**   | XXX-095        | XXX-102        | XXX-109        | XXX-116        | XXX-123        |
+| **Willian**   | LDM-095        | LDM-102        | LDM-109        | LDM-116        | LDM-123        |
 | **Bianca**    | XXX-096        | XXX-103        | XXX-110        | XXX-117        | XXX-124        |
 | **Daniel**    | LDM-097        | QT-104         | QT -111        | QT -118        | QT -125        |
 | **Heclair**   | XXX-098        | XXX-105        | XXX-112        | XXX-119        | XXX-126        |
@@ -43,11 +43,11 @@
 
 | **Willian** | **Nome da tarefa** | **Descrição** |
 |-----------|---------------|---------------|
-| **06/11/2025** | XXX-095 |  |
-| **10/11/2025** | XXX-102 |  |
-| **12/11/2025** | XXX-109 |  |
-| **14/11/2025** | XXX-116 |  |
-| **18/11/2025** | XXX-123 |  |
+| **06/11/2025** | XXX-095 | Refinamento de negócio e alinhamento com o time |
+| **10/11/2025** | XXX-102 | Refinamento técnico do Sistema de Trilhas |
+| **12/11/2025** | XXX-109 | Implementação Completa do Sistema de Trilhas |
+| **14/11/2025** | XXX-116 | Implementação do Fluxo Completo de Recuperação de Senha e Correção de conexão Frontend e Backend |
+| **18/11/2025** | XXX-123 | Correção de Conexão Frontend e Backend Geral |
 
 
 | **Bianca** | **Nome da tarefa** | **Descrição** |
