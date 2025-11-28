@@ -26,12 +26,14 @@ export const styles = StyleSheet.create({
   tipRow: {
     alignItems: 'flex-start',
     flexDirection: 'row',
-    marginBottom: 4,
+    marginBottom: 8,
+    marginTop: 8,
   },
   tipText: {
     color: '#4F4F70',
     flex: 1,
     fontFamily: theme.fonts.regular,
     fontSize: 13,
+    paddingLeft: 5,
   },
 });

@@ -1,10 +1,8 @@
 // frontend/components/Trilhas/models/trilhaMuitoFeliz.ts
-
 import { TrilhaModel } from '../types';
 
 /**
  * Trilha 3 – Muito Feliz
- * (Objetivo da trilha aplicado como foco; como não há duração, usei null/“—”)
  */
 export const trilhaMuitoFeliz: TrilhaModel = {
   id: 3,
@@ -21,6 +19,7 @@ export const trilhaMuitoFeliz: TrilhaModel = {
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Cultivar gratidão',
+      mode: 'checklist',
       benefits: [
         'Torna mais visíveis as coisas boas do dia a dia',
         'Fortalece a sensação de satisfação com a vida',
@@ -40,6 +39,7 @@ export const trilhaMuitoFeliz: TrilhaModel = {
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Espalhar positividade',
+      mode: 'checklist',
       benefits: [
         'Fortalece vínculos com outras pessoas',
         'Melhora o humor de quem envia e de quem recebe',
@@ -59,6 +59,7 @@ export const trilhaMuitoFeliz: TrilhaModel = {
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Aprofundar sensação de bem-estar',
+      mode: 'timer',
       benefits: [
         'Regula a respiração e o ritmo cardíaco',
         'Amplia a sensação de calma e presença',
@@ -78,6 +79,7 @@ export const trilhaMuitoFeliz: TrilhaModel = {
       durationMinutes: 10,
       durationLabel: '10 min',
       goal: 'Potencializar o bom humor',
+      mode: 'timer',
       benefits: [
         'Combina movimento físico com estímulo musical positivo',
         'Ajuda a manter a energia alta de forma saudável',
@@ -97,6 +99,7 @@ export const trilhaMuitoFeliz: TrilhaModel = {
       durationMinutes: 7,
       durationLabel: '7 min',
       goal: 'Fixar memórias positivas',
+      mode: 'checklist',
       benefits: [
         'Ajuda a guardar lembranças boas com mais detalhes',
         'Fortalece a sensação de que o dia valeu a pena',
@@ -116,6 +119,7 @@ export const trilhaMuitoFeliz: TrilhaModel = {
       durationMinutes: 5,
       durationLabel: '5 min',
       goal: 'Cuidar do corpo com leveza',
+      mode: 'timer',
       benefits: [
         'Ajuda a manter o corpo solto e confortável',
         'Reduz pequenos desconfortos musculares ao longo do dia',
@@ -136,6 +140,7 @@ export const trilhaMuitoFeliz: TrilhaModel = {
       durationMinutes: 7,
       durationLabel: '7 min',
       goal: 'Reforçar alegria',
+      mode: 'timer',
       benefits: [
         'Libera tensão emocional por meio da voz e do som',
         'Aumenta a sensação de liberdade e autenticidade',

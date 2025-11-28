@@ -3,6 +3,7 @@
 import { Response } from 'express';
 import moment from 'moment-timezone';
 import mongoose from 'mongoose';
+import type { PipelineStage } from 'mongoose';
 import TrailModel from '../models/trail.model';
 import TrailLogModel from '../models/trail_log.model';
 import { AuthRequest } from '../security/auth.middleware';
@@ -212,8 +213,7 @@ export async function stats(req: AuthRequest, res: Response) {
       };
     }
 
-    // Aggregation de exercícios
-    const pipeline = [
+    const pipeline: PipelineStage[] = [
       { $match: match },
       { $unwind: '$exercicios' },
       {
@@ -274,6 +274,45 @@ export async function stats(req: AuthRequest, res: Response) {
               },
             },
           ],
+          // 🔹 NOVO: total de exercícios por mês + trailId (no período filtrado)
+          porMesTrilha: [
+            {
+              $lookup: {
+                from: 'trails',
+                localField: 'exercicios.trail_id',
+                foreignField: '_id',
+                as: 'trail',
+              },
+            },
+            {
+              $unwind: {
+                path: '$trail',
+                preserveNullAndEmptyArrays: true,
+              },
+            },
+            {
+              $addFields: {
+                // '2025-07-10' -> '07'
+                month: { $substr: ['$day', 5, 2] },
+                trailId: '$trail.trailId',
+              },
+            },
+            {
+              $group: {
+                _id: { month: '$month', trailId: '$trailId' },
+                totalExercicios: { $sum: 1 },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                month: '$_id.month', // '01'..'12'
+                trailId: '$_id.trailId',
+                totalExercicios: 1,
+              },
+            },
+            { $sort: { month: 1, trailId: 1 } },
+          ],
         },
       },
     ];
@@ -292,6 +331,7 @@ export async function stats(req: AuthRequest, res: Response) {
     const porTrilha = result[0]?.porTrilha ?? [];
     const porSentimento = result[0]?.porSentimento ?? [];
     const porTrilhaDetalhada = result[0]?.porTrilhaDetalhada ?? [];
+    const porMesTrilha = result[0]?.porMesTrilha ?? []; // 👈 NOVO
 
     // Dias ativos = quantos dias têm pelo menos 1 exercício (TrailLogDay)
     const diasAtivos = await TrailLogModel.distinct('day', match).then(
@@ -424,12 +464,111 @@ export async function stats(req: AuthRequest, res: Response) {
       porTrilha,
       porTrilhaDetalhada,
       porSentimento,
+      porMesTrilha, // 👈 incluído na resposta
       humorEvolucaoEntrada,
       humorEvolucaoSaida,
     });
   } catch (err) {
     const message =
       err instanceof Error ? err.message : 'erro ao calcular estatísticas';
+    return res.status(500).json({ error: message });
+  }
+}
+
+// NOVO: progresso detalhado por trilha (steps feitos, ciclos, etc.)
+// GET /api/v1/trails/progress
+export async function progress(req: AuthRequest, res: Response) {
+  try {
+    const userId = req.user?.sub;
+    if (!userId) return res.status(401).json({ error: 'não autenticado' });
+
+    const userObjectId = new mongoose.Types.ObjectId(userId);
+
+    const agg = await TrailLogModel.aggregate([
+      { $match: { user_id: userObjectId } },
+      { $unwind: '$exercicios' },
+      {
+        $group: {
+          _id: '$exercicios.trail_id',
+          stepsDone: { $addToSet: '$exercicios.diaDaTrilha' },
+          totalExecutions: { $sum: 1 },
+          lastStep: { $max: '$exercicios.diaDaTrilha' },
+        },
+      },
+      {
+        $lookup: {
+          from: 'trails',
+          localField: '_id',
+          foreignField: '_id',
+          as: 'trail',
+        },
+      },
+      {
+        $unwind: {
+          path: '$trail',
+          preserveNullAndEmptyArrays: false,
+        },
+      },
+      {
+        $addFields: {
+          totalSteps: {
+            $cond: [{ $isArray: '$trail.dias' }, { $size: '$trail.dias' }, 0],
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          trailDbId: '$_id',
+          trailId: '$trail.trailId',
+          code: '$trail.code',
+          nome: '$trail.nome',
+          stepsDone: 1,
+          totalExecutions: 1,
+          lastStep: 1,
+          totalSteps: 1,
+        },
+      },
+      {
+        $addFields: {
+          cyclesCompleted: {
+            $cond: [
+              { $gt: ['$totalSteps', 0] },
+              {
+                $floor: {
+                  $divide: ['$totalExecutions', '$totalSteps'],
+                },
+              },
+              0,
+            ],
+          },
+        },
+      },
+      { $sort: { trailId: 1 } },
+    ]);
+
+    // Garante que stepsDone venha ordenado crescentemente
+    const payload = agg.map(doc => {
+      const d = doc as {
+        stepsDone?: number[];
+        [k: string]: unknown;
+      };
+      const stepsDoneSorted = Array.isArray(d.stepsDone)
+        ? [...d.stepsDone].sort((a, b) => a - b)
+        : [];
+      return {
+        ...doc,
+        stepsDone: stepsDoneSorted,
+      };
+    });
+
+    return res.status(200).json(payload);
+  } catch (err) {
+    const message =
+      err instanceof Error
+        ? err.message
+        : 'erro ao calcular progresso das trilhas';
+    console.error('[trails.progress] erro', message);
     return res.status(500).json({ error: message });
   }
 }

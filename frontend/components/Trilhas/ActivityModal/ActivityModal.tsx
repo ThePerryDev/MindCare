@@ -1,9 +1,11 @@
+// frontend/components/Trilhas/ActivityModal/ActivityModal.tsx
 import React from 'react';
 import { Modal, View, Text, Pressable, ScrollView } from 'react-native';
 import { styles } from './styles';
 import ActivityHeader from '../ActivityHeader/ActivityHeader';
 import ActivitySteps from '../ActivitySteps/ActivitySteps';
 import ActivityStatusTimer from '../ActivityStatusTimer/ActivityStatusTimer';
+import type { TrilhaDayMode } from '../types';
 
 export interface ActivityModalProps {
   /** Se o modal está visível */
@@ -27,16 +29,16 @@ export interface ActivityModalProps {
   /** Lista de passos (howTo) */
   tips?: string[];
 
-  /** Tempo restante em segundos */
+  /** Tempo restante em segundos (usado só no modo 'timer') */
   remainingSeconds: number;
 
-  /** Tempo total da atividade em segundos */
+  /** Tempo total da atividade em segundos (usado só no modo 'timer') */
   totalSeconds: number;
 
-  /** Timer está rodando? */
+  /** Timer está rodando? (usado só no modo 'timer') */
   isPlaying: boolean;
 
-  /** Alternar play/pause */
+  /** Alternar play/pause (usado só no modo 'timer') */
   onTogglePlayPause: () => void;
 
   /** Concluir atividade (botão sempre visível) */
@@ -47,6 +49,13 @@ export interface ActivityModalProps {
 
   /** Desabilitar botões (ex: salvando no backend) */
   disabledControls?: boolean;
+
+  /**
+   * Modo da atividade:
+   *  - 'timer' -> mostra timer + play/pause + concluir
+   *  - 'checklist' -> sem timer, só botão "Concluir atividade"
+   */
+  mode?: TrilhaDayMode;
 }
 
 const ActivityModal: React.FC<ActivityModalProps> = ({
@@ -64,8 +73,11 @@ const ActivityModal: React.FC<ActivityModalProps> = ({
   onCompletePress,
   onClose,
   disabledControls = false,
+  mode = 'timer',
 }) => {
   if (!visible) return null;
+
+  const isChecklist = mode === 'checklist';
 
   return (
     <Modal
@@ -104,18 +116,41 @@ const ActivityModal: React.FC<ActivityModalProps> = ({
           ) : null}
 
           {/* Descrição + passo a passo (ActivitySteps) */}
-          <ActivitySteps description={description} tips={tips} />
+          <ActivitySteps description={description} tips={tips} mode={mode} />
         </ScrollView>
 
-        {/* Status + Timer + Play/Pause + Concluir */}
-        <ActivityStatusTimer
-          remainingSeconds={remainingSeconds}
-          totalSeconds={totalSeconds}
-          isPlaying={isPlaying}
-          onTogglePlayPause={onTogglePlayPause}
-          onCompletePress={onCompletePress}
-          disabled={disabledControls}
-        />
+        {/* Rodapé: depende do modo */}
+        {isChecklist ? (
+          // ✅ MODO CHECKLIST: só botão de concluir
+          <View style={styles.checklistFooter}>
+            <Pressable
+              onPress={onCompletePress}
+              disabled={disabledControls}
+              android_ripple={{ color: '#5534d4' }}
+            >
+              <View
+                style={[
+                  styles.checklistCompleteButton,
+                  disabledControls && styles.checklistCompleteButtonDisabled,
+                ]}
+              >
+                <Text style={styles.checklistCompleteButtonText}>
+                  Concluir atividade
+                </Text>
+              </View>
+            </Pressable>
+          </View>
+        ) : (
+          // ⏱️ MODO TIMER: timer + play/pause + concluir (como já era)
+          <ActivityStatusTimer
+            remainingSeconds={remainingSeconds}
+            totalSeconds={totalSeconds}
+            isPlaying={isPlaying}
+            onTogglePlayPause={onTogglePlayPause}
+            onCompletePress={onCompletePress}
+            disabled={disabledControls}
+          />
+        )}
       </View>
     </Modal>
   );

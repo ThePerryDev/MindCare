@@ -2,6 +2,24 @@ import { StyleSheet } from 'react-native';
 import { theme } from '@/styles/theme';
 
 export const styles = StyleSheet.create({
+  completionBadge: {
+    alignItems: 'center',
+    backgroundColor: '#F2ECFF',
+    borderRadius: 12,
+    marginLeft: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  completionBadgeCount: {
+    color: '#4C46B6',
+    fontFamily: theme.fonts.bold,
+    fontSize: 14,
+  },
+  completionBadgeLabel: {
+    color: '#6C4FF6',
+    fontFamily: theme.fonts.semi,
+    fontSize: 10,
+  },
   durationText: {
     color: '#8C8CA3',
     fontFamily: theme.fonts.regular,
@@ -95,6 +113,10 @@ export const styles = StyleSheet.create({
   stepLocked: {
     backgroundColor: '#E2E4EC',
   },
+  stepSelected: {
+    borderColor: '#6C4FF6',
+    borderWidth: 2,
+  },
   stepText: {
     color: '#8C8CA3',
     fontFamily: theme.fonts.semi,
@@ -119,6 +141,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
   },
+
   trackCard: {
     backgroundColor: 'rgba(255,255,255,0.9)',
     borderRadius: 20,
@@ -132,13 +155,6 @@ export const styles = StyleSheet.create({
   },
   trackHeaderText: {
     flex: 1,
-  },
-  trackIcon: {
-    backgroundColor: '#7D8CFF',
-    borderRadius: 16,
-    height: 48,
-    marginRight: 12,
-    width: 48,
   },
   trackMetaRow: {
     alignItems: 'center',

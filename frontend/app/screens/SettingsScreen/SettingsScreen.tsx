@@ -166,7 +166,7 @@ export default function SettingsScreen() {
 
           {/* Sobre */}
           <SectionCard title='Sobre'>
-            <RowItem label='Versão do App' value='MindCare v1.0.0' />
+            <RowItem label='Versão do App' value='MindCare v2.0.0' />
             <RowItem
               label='Termos de Uso'
               value='Leia nossos termos de uso'

@@ -10,6 +10,7 @@ import {
   stats,
   getNextExercise,
   recommendTrails,
+  progress,
 } from '../controllers/trail.controller';
 
 const router = Router();
@@ -23,5 +24,6 @@ router.post('/registro', registrarExercicio);
 router.get('/stats', stats);
 router.get('/next', getNextExercise);
 router.get('/recommendations', recommendTrails);
+router.get('/progress', progress);
 
 export default router;

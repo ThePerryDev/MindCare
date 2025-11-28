@@ -1,5 +1,4 @@
 // frontend/app/screens/PerfilScreen/PerfilScreen.tsx
-
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   View,
@@ -15,19 +14,42 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-chart-kit';
 import { useRouter } from 'expo-router';
-
 import { styles } from './styles';
 import Navbar from '@/components/Navbar/Navbar';
 import WeeklyResults from '@/components/WeeklyResults/WeeklyResults';
-
 import {
   FEELINGS_SCALE,
   feelingToValue,
   FeelingLabel,
 } from '@/constants/feelingsScale';
 import { listarFeelings, FeelingDTO } from '@/services/feelingHistory';
+import { getTrailStats } from '../../../services/trailStats';
+import { ITrailStatsByMesTrilha } from '@/interfaces/trail.interface';
 
 const screenWidth = Dimensions.get('window').width;
+
+export type TrailYearStat = {
+  month: string; // "Jan", "Fev", ...
+  trilha1: number; // Trilha 1 – Ansiedade Leve
+  trilha2: number; // Trilha 2 – Estresse Trabalho/Estudo
+  trilha3: number; // Trilha 3 – Muito Feliz
+  trilha4: number; // Trilha 4 – Muito Triste
+};
+
+const MONTH_LABELS = [
+  'Jan',
+  'Fev',
+  'Mar',
+  'Abr',
+  'Mai',
+  'Jun',
+  'Jul',
+  'Ago',
+  'Set',
+  'Out',
+  'Nov',
+  'Dez',
+];
 
 export default function PerfilScreen() {
   const router = useRouter();
@@ -35,23 +57,14 @@ export default function PerfilScreen() {
   const [feelings, setFeelings] = useState<FeelingDTO[]>([]);
   const [loadingFeelings, setLoadingFeelings] = useState(false);
 
-  // Agora só mantemos em state:
-  // - Dias consecutivos / total de check-ins
-  // - Atividades por categoria (placeholder)
-  const [profileData, setProfileData] = useState({
-    consecutiveDays: {
-      bestStreak: 0,
-      totalCheckins: 0,
-    },
-    activitiesByCategory: [
-      { month: 'Jan', mindfulness: 5, stress: 6, gratitude: 7 },
-      { month: 'Fev', mindfulness: 6, stress: 5, gratitude: 8 },
-      { month: 'Mar', mindfulness: 4, stress: 7, gratitude: 6 },
-      { month: 'Abr', mindfulness: 7, stress: 8, gratitude: 9 },
-      { month: 'Mai', mindfulness: 10, stress: 7, gratitude: 8 },
-      { month: 'Jun', mindfulness: 8, stress: 9, gratitude: 10 },
-    ],
+  const [consecutiveDays, setConsecutiveDays] = useState({
+    bestStreak: 0,
+    totalCheckins: 0,
   });
+
+  // 🔹 Dados do gráfico de trilhas no ano
+  const [yearTrailStats, setYearTrailStats] = useState<TrailYearStat[]>([]);
+  const [loadingYearStats, setLoadingYearStats] = useState(false);
 
   // Carrega feelings dos últimos 7 dias ao montar a tela
   useEffect(() => {
@@ -69,19 +82,15 @@ export default function PerfilScreen() {
         const ordered = [...data].sort((a, b) => a.day.localeCompare(b.day));
         setFeelings(ordered);
 
-        // Atualiza apenas os indicadores de dias consecutivos / check-ins
+        // Atualiza indicadores de dias consecutivos / check-ins (simples)
         if (ordered.length > 0) {
           const activeDays = ordered.length;
           const totalCheckins = ordered.length;
 
-          setProfileData(prev => ({
-            ...prev,
-            consecutiveDays: {
-              ...prev.consecutiveDays,
-              bestStreak: activeDays, // simplificado: pode ser refinado depois
-              totalCheckins,
-            },
-          }));
+          setConsecutiveDays({
+            bestStreak: activeDays, // simplificado
+            totalCheckins,
+          });
         }
       } catch (err) {
         console.error('🔴 [PerfilScreen] Erro ao carregar feelings:', err);
@@ -91,6 +100,64 @@ export default function PerfilScreen() {
     };
 
     void fetchFeelings();
+  }, []);
+
+  // 🔹 Carrega stats de trilhas do ANO (para o gráfico de barras)
+  useEffect(() => {
+    const fetchYearStats = async () => {
+      try {
+        setLoadingYearStats(true);
+
+        const stats = await getTrailStats('year');
+        const raw = (stats.porMesTrilha ?? []) as ITrailStatsByMesTrilha[];
+
+        // Começa com 12 meses zerados
+        const base: TrailYearStat[] = MONTH_LABELS.map(label => ({
+          month: label,
+          trilha1: 0,
+          trilha2: 0,
+          trilha3: 0,
+          trilha4: 0,
+        }));
+
+        for (const item of raw) {
+          if (!item.month) continue;
+          const monthIndex = parseInt(item.month, 10) - 1; // '01' -> 0
+          if (Number.isNaN(monthIndex) || monthIndex < 0 || monthIndex > 11) {
+            continue;
+          }
+
+          const bucket = base[monthIndex];
+          const count = item.totalExercicios ?? 0;
+
+          switch (item.trailId) {
+            case 1:
+              bucket.trilha1 += count;
+              break;
+            case 2:
+              bucket.trilha2 += count;
+              break;
+            case 3:
+              bucket.trilha3 += count;
+              break;
+            case 4:
+              bucket.trilha4 += count;
+              break;
+            default:
+              // se tiver outras trilhas no futuro, pode tratar aqui
+              break;
+          }
+        }
+
+        setYearTrailStats(base);
+      } catch (err) {
+        console.error('🔴 [PerfilScreen] Erro ao carregar stats do ano:', err);
+      } finally {
+        setLoadingYearStats(false);
+      }
+    };
+
+    void fetchYearStats();
   }, []);
 
   // Gráfico com duas séries: entrada x saída
@@ -131,6 +198,14 @@ export default function PerfilScreen() {
     };
   }, [feelings]);
 
+  // Fator para altura das barras (multiplica o número de atividades)
+  const barHeightFactor = 6;
+
+  // Tem pelo menos alguma atividade no ano?
+  const hasAnyYearActivity = yearTrailStats.some(
+    m => m.trilha1 || m.trilha2 || m.trilha3 || m.trilha4
+  );
+
   return (
     <LinearGradient
       colors={['#F4EFFF', '#D6F0F0']}
@@ -158,20 +233,18 @@ export default function PerfilScreen() {
           {/* Card Dias Consecutivos */}
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Dias Consecutivos</Text>
-            <View style={styles.statsRow}>
+            <View className='statsRow' style={styles.statsRow}>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Melhor Sequência</Text>
                 <Text style={styles.statValue}>
-                  {profileData.consecutiveDays.bestStreak
-                    .toString()
-                    .padStart(2, '0')}
+                  {consecutiveDays.bestStreak.toString().padStart(2, '0')}
                 </Text>
               </View>
               <View style={styles.statDivider} />
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Total de check-ins</Text>
                 <Text style={styles.statValue}>
-                  {profileData.consecutiveDays.totalCheckins}
+                  {consecutiveDays.totalCheckins}
                 </Text>
               </View>
             </View>
@@ -264,10 +337,10 @@ export default function PerfilScreen() {
             </View>
           </View>
 
-          {/* Card Atividades por Categoria (mantido como estava) */}
+          {/* Card Atividades de Trilhas no Ano */}
           <View style={[styles.card, styles.cardBottomSpace]}>
             <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>Atividades por Categoria</Text>
+              <Text style={styles.cardTitle}>Atividades por trilha no ano</Text>
               <TouchableOpacity>
                 <Ionicons
                   name='information-circle-outline'
@@ -277,52 +350,105 @@ export default function PerfilScreen() {
               </TouchableOpacity>
             </View>
 
-            <Text style={styles.cardSubtitle}>Últimos 6 meses</Text>
+            <Text style={styles.cardSubtitle}>
+              Total de atividades por mês · Arraste para ver todos os meses
+            </Text>
 
-            <View style={styles.barChartContainer}>
-              {profileData.activitiesByCategory.map((item, index) => (
-                <View key={index} style={styles.barGroup}>
-                  <View style={styles.barsWrapper}>
-                    <View
-                      style={[
-                        styles.bar,
-                        styles.barMindfulness,
-                        { height: item.mindfulness * 8 },
-                      ]}
-                    />
-                    <View
-                      style={[
-                        styles.bar,
-                        styles.barStress,
-                        { height: item.stress * 8 },
-                      ]}
-                    />
-                    <View
-                      style={[
-                        styles.bar,
-                        styles.barGratitude,
-                        { height: item.gratitude * 8 },
-                      ]}
-                    />
-                  </View>
-                  <Text style={styles.barLabel}>{item.month}</Text>
-                </View>
-              ))}
+            <View style={styles.barChartOuter}>
+              {loadingYearStats ? (
+                <ActivityIndicator color='#4C46B6' />
+              ) : !hasAnyYearActivity ? (
+                <Text style={styles.cardSubtitle}>
+                  Ainda não há atividades registradas neste ano.
+                </Text>
+              ) : (
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.barChartScrollContent}
+                >
+                  {yearTrailStats.map(item => (
+                    <View key={item.month} style={styles.barGroup}>
+                      <View style={styles.barsWrapper}>
+                        {/* Trilha 1 – Ansiedade Leve */}
+                        <View
+                          style={[
+                            styles.bar,
+                            styles.barMindfulness,
+                            {
+                              height: item.trilha1 * barHeightFactor,
+                            },
+                          ]}
+                        />
+                        {/* Trilha 2 – Estresse */}
+                        <View
+                          style={[
+                            styles.bar,
+                            styles.barStress,
+                            {
+                              height: item.trilha2 * barHeightFactor,
+                            },
+                          ]}
+                        />
+                        {/* Trilha 3 – Muito Feliz */}
+                        <View
+                          style={[
+                            styles.bar,
+                            styles.barGratitude,
+                            {
+                              height: item.trilha3 * barHeightFactor,
+                            },
+                          ]}
+                        />
+                        {/* Trilha 4 – Muito Triste */}
+                        <View
+                          style={[
+                            styles.bar,
+                            styles.barVerySad,
+                            {
+                              height: item.trilha4 * barHeightFactor,
+                            },
+                          ]}
+                        />
+                      </View>
+                      <Text style={styles.barLabel}>{item.month}</Text>
+                    </View>
+                  ))}
+                </ScrollView>
+              )}
             </View>
 
+            {/* Legenda das trilhas */}
             <View style={styles.legend}>
               <View style={styles.legendRow}>
                 <View style={styles.legendItem}>
                   <View style={[styles.legendDot, styles.legendDotRed]} />
-                  <Text style={styles.legendText}>Mindfulness</Text>
+                  <Text style={styles.legendText}>
+                    Trilha 1 – Ansiedade Leve
+                  </Text>
                 </View>
+              </View>
+
+              <View style={styles.legendRow}>
                 <View style={styles.legendItem}>
                   <View style={[styles.legendDot, styles.legendDotGreen]} />
-                  <Text style={styles.legendText}>Alívio Estresse</Text>
+                  <Text style={styles.legendText}>
+                    Trilha 2 – Estresse Trabalho/Estudo
+                  </Text>
                 </View>
+              </View>
+
+              <View style={styles.legendRow}>
                 <View style={styles.legendItem}>
                   <View style={[styles.legendDot, styles.legendDotCyan]} />
-                  <Text style={styles.legendText}>Gratidão</Text>
+                  <Text style={styles.legendText}>Trilha 3 – Muito Feliz</Text>
+                </View>
+              </View>
+
+              <View style={styles.legendRow}>
+                <View style={styles.legendItem}>
+                  <View style={[styles.legendDot, styles.legendDotOrange]} />
+                  <Text style={styles.legendText}>Trilha 4 – Muito Triste</Text>
                 </View>
               </View>
             </View>
