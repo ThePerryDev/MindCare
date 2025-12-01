@@ -7,19 +7,18 @@
     <a href="#backlogs">Backlog</a>  |  
     <a href="#user-stories">User Stories</a>  |    
     <a href="#tecnologias">Tecnologias</a>  |  
-    <a href="#equipe">Equipe</a>  | 
-    <a href="#comorodar">Como Rodar</a>
+    <a href="#equipe">Equipe</a>
 </p>
 
 <span id="sobre">
 
 ## :bookmark_tabs: Sobre o projeto
 
-A partir do desafio proposto pela FATEC, a equipe The Perry Dev apresentou como solução o desenvolvimento de um aplicativo móvel que possibilita ao usuário monitorar seu humor e, ao mesmo tempo, receber sugestões de hábitos voltados à melhoria do bem-estar.
+A partir do desafio proposto pela FATEC, a equipe The PerryDev apresentou como solução o desenvolvimento de um aplicativo móvel que possibilita ao usuário monitorar seu humor e, ao mesmo tempo, receber sugestões de hábitos voltados à melhoria do bem-estar.
 
 Projeto conduzido a partir da metodologia ágil, aplicando o framework Scrum, para incentivar a proatividade, autonomia, colaboração e a entrega de valor de todos os envolvidos.
 
-:pushpin: Status do Projeto: [**Em andamento**]
+:pushpin: Status do Projeto: [**Finalizado**]
 
 ### Entregas de Sprints
 
@@ -27,9 +26,10 @@ Cada entrega do projeto será identificada por meio da criação de uma tag no r
 
 | Sprint | Previsão | Status | Histórico/Releases | Link da Apresentação | Gráfico Burndown |
 | :----: | :------------------------: | :-------------- | :----------------------------------: | :-----------------------------------------------------------------------: | :-----------------------------------------------------------------------: |
-| 01 | De 16/09/25 a 02/10/25 | 🟢 Finalizado | [Ver relatório](https://github.com/ThePerryDev/MindCare/releases/tag/sprint_1) | [Apresentação SPRINT 01](https://youtu.be/lf4rOiNSk8A) | <a href="sp1.png" target="_blank"><img width="120" alt="sp1" src="https://github.com/user-attachments/assets/8cf45486-1f73-4187-a6b6-df2bd86954c9" /></a> |
-| 02 | De 13/10/25 a 31/10/25 | 🟢 Finalizado | [Ver relatório](https://github.com/ThePerryDev/MindCare/releases/tag/sprint_2) | [Apresentação SPRINT 02](https://www.youtube.com/watch?v=OspOHwWwxlQ) | <a href="sp2.png" target="_blank"> <img width="120" alt="sp2" src="https://github.com/user-attachments/assets/909b35d9-8d62-4af9-865b-7063474b4e16" /></a> |
-| 03 | De 06/11/25 a 18/11/25 | 🟡 Em andamento | [Ver relatório](#sprint3) | [Apresentação SPRINT 03](xxxx) | – |
+| 01 | De 16/09/25 a 02/10/25 | 🟢 Finalizado | [Ver relatório](https://github.com/ThePerryDev/MindCare/releases/tag/sprint_1) | [Apresentação SPRINT 01](https://youtu.be/lf4rOiNSk8A) | <a href="/assets/burndownsp1.png" target="_blank"><img width="120" alt="sp1" src="https://github.com/user-attachments/assets/8cf45486-1f73-4187-a6b6-df2bd86954c9" /></a> |
+| 02 | De 13/10/25 a 31/10/25 | 🟢 Finalizado | [Ver relatório](https://github.com/ThePerryDev/MindCare/releases/tag/sprint_2) | [Apresentação SPRINT 02](https://www.youtube.com/watch?v=OspOHwWwxlQ) | <a href="/assets/burndownsp2.png" target="_blank"> <img width="120" alt="sp2" src="https://github.com/user-attachments/assets/909b35d9-8d62-4af9-865b-7063474b4e16" /></a> |
+| 03 | De 06/11/25 a 18/11/25 | 🟢 Finalizado | [Ver relatório](https://github.com/ThePerryDev/MindCare/releases/tag/sprint_3) | [Apresentação SPRINT 03](https://youtu.be/goeCbbWa77U) | <a href="/assets/burndownsp3.png" target="_blank"> <img width="120" alt="sp3" src="https://github.com/user-attachments/assets/ae61e691-f56a-4c9d-920d-a1d223cce13c" /></a> |
+
 
 <span id="backlogs">
 
